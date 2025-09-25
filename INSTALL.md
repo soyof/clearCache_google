@@ -7,7 +7,7 @@
 确保您已经下载了完整的插件文件夹，包含以下文件：
 
 ```
-clearCache/
+clearCache_google/
 ├── manifest.json
 ├── popup.html
 ├── popup.css
@@ -19,6 +19,9 @@ clearCache/
 │   ├── icon32.png
 │   ├── icon48.png
 │   └── icon128.png
+├── INSTALL.md
+├── TROUBLESHOOTING.md
+├── LICENSE
 └── README.md
 ```
 

@@ -532,7 +532,7 @@ async function clearDownloadFiles() {
 // 处理来自内容脚本的消息
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === 'storageCleared') {
-        console.log('页面存储已清理:', message.types);
+        // 页面存储已清理
     }
 });
 
