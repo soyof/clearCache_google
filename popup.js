@@ -6,9 +6,10 @@ let currentUrl = '';
 const elements = {
     currentUrl: document.getElementById('current-url'),
     status: document.getElementById('status'),
+    statusContainer: document.querySelector('.status-container'),
     progress: document.getElementById('progress'),
     progressFill: document.querySelector('.progress-fill'),
-    
+
     // 针对当前网站的按钮
     clearCurrentAll: document.getElementById('clear-current-all'),
     hardReload: document.getElementById('hard-reload'),
@@ -16,7 +17,7 @@ const elements = {
     clearLocalStorage: document.getElementById('clear-localstorage'),
     clearSessionStorage: document.getElementById('clear-sessionstorage'),
     clearCurrentIndexedDB: document.getElementById('clear-current-indexeddb'),
-    
+
     // 针对整个浏览器的按钮
     clearAll: document.getElementById('clear-all'),
     clearCache: document.getElementById('clear-cache'),
@@ -25,7 +26,7 @@ const elements = {
     clearHistory: document.getElementById('clear-history'),
     clearDownloads: document.getElementById('clear-downloads'),
     clearDownloadsFiles: document.getElementById('clear-downloads-files'),
-    
+
     // 复选框
     clearPasswords: document.getElementById('clear-passwords'),
     clearFormData: document.getElementById('clear-formdata'),
@@ -46,7 +47,7 @@ async function initializeCurrentTab() {
         const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
         currentTab = tab;
         currentUrl = tab.url;
-        
+
         // 显示当前网站
         const domain = new URL(currentUrl).hostname;
         elements.currentUrl.textContent = domain || '未知网站';
@@ -61,7 +62,7 @@ async function initializeCurrentTab() {
 function bindEventListeners() {
     // Tab 切换
     bindTabListeners();
-    
+
     // 针对当前网站的清理
     elements.clearCurrentAll.addEventListener('click', () => clearCurrentWebsiteData());
     elements.hardReload.addEventListener('click', () => hardReloadPage());
@@ -69,7 +70,7 @@ function bindEventListeners() {
     elements.clearLocalStorage.addEventListener('click', () => clearLocalStorage());
     elements.clearSessionStorage.addEventListener('click', () => clearSessionStorage());
     elements.clearCurrentIndexedDB.addEventListener('click', () => clearCurrentIndexedDB());
-    
+
     // 针对整个浏览器的清理
     elements.clearAll.addEventListener('click', () => clearAllData());
     elements.clearCache.addEventListener('click', () => clearBrowserCache());
@@ -78,7 +79,7 @@ function bindEventListeners() {
     elements.clearHistory.addEventListener('click', () => clearBrowsingHistory());
     elements.clearDownloads.addEventListener('click', () => clearDownloadHistory());
     elements.clearDownloadsFiles.addEventListener('click', () => clearDownloadFiles());
-    
+
     // 保存设置
     Object.values(elements).forEach(element => {
         if (element && element.type === 'checkbox') {
@@ -91,22 +92,22 @@ function bindEventListeners() {
 function bindTabListeners() {
     const tabButtons = document.querySelectorAll('.tab-btn');
     const tabContents = document.querySelectorAll('.tab-content');
-    
+
     tabButtons.forEach(button => {
         button.addEventListener('click', () => {
             const targetTab = button.getAttribute('data-tab');
-            
+
             // 移除所有活动状态
             tabButtons.forEach(btn => btn.classList.remove('active'));
             tabContents.forEach(content => content.classList.remove('active'));
-            
+
             // 激活当前Tab
             button.classList.add('active');
             const targetContent = document.getElementById(targetTab + '-tab');
             if (targetContent) {
                 targetContent.classList.add('active');
             }
-            
+
             // 保存当前Tab状态
             chrome.storage.local.set({ activeTab: targetTab });
         });
@@ -133,10 +134,10 @@ async function loadSettings() {
     try {
         const settings = await chrome.storage.local.get([
             'clearPasswords',
-            'clearFormData', 
+            'clearFormData',
             'includeProtected'
         ]);
-        
+
         elements.clearPasswords.checked = settings.clearPasswords !== false;
         elements.clearFormData.checked = settings.clearFormData !== false;
         elements.includeProtected.checked = settings.includeProtected !== false;
@@ -161,21 +162,27 @@ async function saveSettings() {
 // 显示状态消息
 function showStatus(message, type = 'info', duration = 3000) {
     elements.status.textContent = message;
-    elements.status.className = `status-message show ${type}`;
-    
+    elements.status.className = `status-message ${type}`;
+    elements.statusContainer.classList.add('show');
+
     setTimeout(() => {
-        elements.status.classList.remove('show');
+        elements.statusContainer.classList.remove('show');
     }, duration);
 }
 
 // 显示进度条
 function showProgress(percent = 0) {
+    elements.statusContainer.classList.add('show');
     elements.progress.classList.add('show');
     elements.progressFill.style.width = `${percent}%`;
-    
+
     if (percent >= 100) {
         setTimeout(() => {
             elements.progress.classList.remove('show');
+            // 延迟隐藏容器，让用户看到完成状态
+            setTimeout(() => {
+                elements.statusContainer.classList.remove('show');
+            }, 500);
         }, 1000);
     }
 }
@@ -183,7 +190,7 @@ function showProgress(percent = 0) {
 // 设置按钮状态
 function setButtonState(button, state) {
     button.classList.remove('loading', 'success');
-    
+
     switch (state) {
         case 'loading':
             button.classList.add('loading');
@@ -208,13 +215,13 @@ async function executeCleanup(cleanupFunction, button, successMessage, errorMess
     try {
         setButtonState(button, 'loading');
         showProgress(0);
-        
+
         const result = await cleanupFunction();
-        
+
         showProgress(100);
         setButtonState(button, 'success');
         showStatus(successMessage, 'success');
-        
+
         return result;
     } catch (error) {
         console.error('清理操作失败:', error);
@@ -228,49 +235,49 @@ async function executeCleanup(cleanupFunction, button, successMessage, errorMess
 async function clearCurrentWebsiteData() {
     await executeCleanup(async () => {
         const promises = [];
-        
+
         // 清理当前网站的浏览器数据
         promises.push(chrome.browsingData.removeCache({
             since: 0,
             origins: [currentUrl]
         }));
-        
+
         promises.push(chrome.browsingData.removeCookies({
             since: 0,
             origins: [currentUrl]
         }));
-        
+
         promises.push(chrome.browsingData.removeLocalStorage({
             since: 0,
             origins: [currentUrl]
         }));
-        
+
         promises.push(chrome.browsingData.removeIndexedDB({
             since: 0,
             origins: [currentUrl]
         }));
-        
+
         promises.push(chrome.browsingData.removeWebSQL({
             since: 0,
             origins: [currentUrl]
         }));
-        
+
         // 清理页面级存储
         if (currentTab) {
             promises.push(chrome.tabs.sendMessage(currentTab.id, {
                 action: 'clearPageStorage',
                 types: ['localStorage', 'sessionStorage']
-            }).catch(() => {})); // 忽略错误，某些页面可能不支持
+            }).catch(() => { })); // 忽略错误，某些页面可能不支持
         }
-        
+
         await Promise.all(promises);
-        
+
         // 更新进度
         for (let i = 20; i <= 100; i += 20) {
             showProgress(i);
             await new Promise(resolve => setTimeout(resolve, 100));
         }
-        
+
     }, elements.clearCurrentAll, '🎉 当前网站缓存已清空！', '❌ 清空当前网站缓存失败');
 }
 
@@ -278,49 +285,49 @@ async function clearCurrentWebsiteData() {
 async function clearAllData() {
     await executeCleanup(async () => {
         const promises = [];
-        
+
         // 清理浏览器数据
         promises.push(chrome.browsingData.removeCache({
             since: 0,
             origins: elements.includeProtected.checked ? undefined : [currentUrl]
         }));
-        
+
         promises.push(chrome.browsingData.removeCookies({
             since: 0,
             origins: elements.includeProtected.checked ? undefined : [currentUrl]
         }));
-        
+
         promises.push(chrome.browsingData.removeLocalStorage({
             since: 0,
             origins: elements.includeProtected.checked ? undefined : [currentUrl]
         }));
-        
+
         promises.push(chrome.browsingData.removeIndexedDB({
             since: 0,
             origins: elements.includeProtected.checked ? undefined : [currentUrl]
         }));
-        
+
         promises.push(chrome.browsingData.removeWebSQL({
             since: 0,
             origins: elements.includeProtected.checked ? undefined : [currentUrl]
         }));
-        
+
         // 清理页面级存储
         if (currentTab) {
             promises.push(chrome.tabs.sendMessage(currentTab.id, {
                 action: 'clearPageStorage',
                 types: ['localStorage', 'sessionStorage']
-            }).catch(() => {})); // 忽略错误，某些页面可能不支持
+            }).catch(() => { })); // 忽略错误，某些页面可能不支持
         }
-        
+
         await Promise.all(promises);
-        
+
         // 更新进度
         for (let i = 20; i <= 100; i += 20) {
             showProgress(i);
             await new Promise(resolve => setTimeout(resolve, 100));
         }
-        
+
     }, elements.clearAll, '🎉 所有缓存已清空！', '❌ 清空所有缓存失败');
 }
 
@@ -328,30 +335,30 @@ async function clearAllData() {
 async function hardReloadPage() {
     await executeCleanup(async () => {
         if (!currentTab) throw new Error('无法获取当前标签页');
-        
+
         // 先清理当前页面的缓存
         await chrome.browsingData.removeCache({
             since: 0,
             origins: [currentUrl]
         });
-        
+
         await chrome.browsingData.removeCookies({
             since: 0,
             origins: [currentUrl]
         });
-        
+
         // 清理页面存储
         await chrome.tabs.sendMessage(currentTab.id, {
             action: 'clearPageStorage',
             types: ['localStorage', 'sessionStorage']
-        }).catch(() => {});
-        
+        }).catch(() => { });
+
         // 硬性重新加载页面
         await chrome.tabs.reload(currentTab.id, { bypassCache: true });
-        
+
         // 关闭弹窗
         setTimeout(() => window.close(), 500);
-        
+
     }, elements.hardReload, '🔄 页面正在重新加载...', '❌ 重新加载失败');
 }
 
@@ -362,7 +369,7 @@ async function clearCurrentCookies() {
             since: 0,
             origins: [currentUrl]
         });
-        
+
     }, elements.clearCurrentCookies, '🍪 当前网站 Cookies 已清空', '❌ 清空当前网站 Cookies 失败');
 }
 
@@ -372,13 +379,13 @@ async function clearCookies() {
         const options = {
             since: 0
         };
-        
+
         if (!elements.includeProtected.checked) {
             options.origins = [currentUrl];
         }
-        
+
         await chrome.browsingData.removeCookies(options);
-        
+
     }, elements.clearCookies, '🍪 Cookies 已清空', '❌ 清空 Cookies 失败');
 }
 
@@ -389,21 +396,21 @@ async function clearLocalStorage() {
         const options = {
             since: 0
         };
-        
+
         if (!elements.includeProtected.checked) {
             options.origins = [currentUrl];
         }
-        
+
         await chrome.browsingData.removeLocalStorage(options);
-        
+
         // 通过内容脚本清理当前页面
         if (currentTab) {
             await chrome.tabs.sendMessage(currentTab.id, {
                 action: 'clearPageStorage',
                 types: ['localStorage']
-            }).catch(() => {});
+            }).catch(() => { });
         }
-        
+
     }, elements.clearLocalStorage, '💾 LocalStorage 已清空', '❌ 清空 LocalStorage 失败');
 }
 
@@ -411,13 +418,13 @@ async function clearLocalStorage() {
 async function clearSessionStorage() {
     await executeCleanup(async () => {
         if (!currentTab) throw new Error('无法获取当前标签页');
-        
+
         // SessionStorage 只能通过内容脚本清理
         await chrome.tabs.sendMessage(currentTab.id, {
             action: 'clearPageStorage',
             types: ['sessionStorage']
         });
-        
+
     }, elements.clearSessionStorage, '📂 SessionStorage 已清空', '❌ 清空 SessionStorage 失败');
 }
 
@@ -428,7 +435,7 @@ async function clearCurrentIndexedDB() {
             since: 0,
             origins: [currentUrl]
         });
-        
+
     }, elements.clearCurrentIndexedDB, '🗄️ 当前网站 IndexedDB 已清空', '❌ 清空当前网站 IndexedDB 失败');
 }
 
@@ -438,13 +445,13 @@ async function clearIndexedDB() {
         const options = {
             since: 0
         };
-        
+
         if (!elements.includeProtected.checked) {
             options.origins = [currentUrl];
         }
-        
+
         await chrome.browsingData.removeIndexedDB(options);
-        
+
     }, elements.clearIndexedDB, '🗄️ IndexedDB 已清空', '❌ 清空 IndexedDB 失败');
 }
 
@@ -454,13 +461,13 @@ async function clearBrowserCache() {
         const options = {
             since: 0
         };
-        
+
         if (!elements.includeProtected.checked) {
             options.origins = [currentUrl];
         }
-        
+
         await chrome.browsingData.removeCache(options);
-        
+
     }, elements.clearCache, '📋 浏览器缓存已清除', '❌ 清除缓存失败');
 }
 
@@ -470,15 +477,15 @@ async function clearBrowsingHistory() {
         const options = {
             since: 0
         };
-        
+
         if (!elements.includeProtected.checked) {
             // 只清除当前域名的历史记录
             const domain = new URL(currentUrl).hostname;
             options.originTypes = { unprotectedWeb: true };
         }
-        
+
         await chrome.browsingData.removeHistory(options);
-        
+
     }, elements.clearHistory, '📖 历史记录已清除', '❌ 清除历史记录失败');
 }
 
@@ -486,7 +493,7 @@ async function clearBrowsingHistory() {
 async function clearDownloadHistory() {
     await executeCleanup(async () => {
         await chrome.browsingData.removeDownloads({ since: 0 });
-        
+
     }, elements.clearDownloads, '⬇️ 下载记录已清除', '❌ 清除下载记录失败');
 }
 
@@ -495,11 +502,11 @@ async function clearDownloadFiles() {
     // 显示确认对话框
     const confirmed = confirm('⚠️ 警告：此操作将删除所有下载的文件，且无法恢复。确定要继续吗？');
     if (!confirmed) return;
-    
+
     await executeCleanup(async () => {
         // 获取所有下载项
         const downloads = await chrome.downloads.search({});
-        
+
         // 删除文件并清除记录
         const deletePromises = downloads.map(async (download) => {
             try {
@@ -513,12 +520,12 @@ async function clearDownloadFiles() {
                 console.warn(`删除下载项 ${download.id} 失败:`, error);
             }
         });
-        
+
         await Promise.all(deletePromises);
-        
+
         // 清除下载历史
         await chrome.browsingData.removeDownloads({ since: 0 });
-        
+
     }, elements.clearDownloadsFiles, '🗂️ 下载文件已删除', '❌ 删除下载文件失败');
 }
 
@@ -566,7 +573,7 @@ function addTooltips() {
         'clear-downloads': '清空下载历史记录',
         'clear-downloads-files': '警告：将删除所有下载的文件'
     };
-    
+
     Object.entries(tooltips).forEach(([id, tooltip]) => {
         const element = document.getElementById(id);
         if (element) {

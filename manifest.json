@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "清理缓存助手",
+  "name": "缓存清理助手",
   "version": "1.0.0",
   "description": "一键清理浏览器缓存、Cookies、LocalStorage、SessionStorage等数据的强大工具",
   "permissions": [
