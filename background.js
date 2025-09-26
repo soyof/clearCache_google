@@ -59,9 +59,16 @@ function createContextMenus() {
         });
 
         chrome.contextMenus.create({
+            id: 'hardReloadCacheOnly',
+            parentId: 'clearCache',
+            title: '仅缓存重载（保留登录）',
+            contexts: ['page', 'frame']
+        });
+
+        chrome.contextMenus.create({
             id: 'hardReload',
             parentId: 'clearCache',
-            title: '清空缓存并重新加载',
+            title: '全部重载',
             contexts: ['page', 'frame']
         });
 
@@ -93,6 +100,9 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
                 break;
             case 'clearLocalStorage':
                 await clearLocalStorageData(tab);
+                break;
+            case 'hardReloadCacheOnly':
+                await hardReloadCacheOnly(tab);
                 break;
             case 'hardReload':
                 await hardReloadPage(tab);
@@ -184,16 +194,44 @@ async function clearLocalStorageData(tab) {
     }
 }
 
-// 硬性重新加载页面
+// 清空文件缓存并硬性重新加载（保留登录状态）
+async function hardReloadCacheOnly(tab) {
+    try {
+        const url = tab.url;
+
+        // 只清理文件缓存，不清理 Cookies 和用户数据
+        await chrome.browsingData.removeCache({
+            since: 0,
+            origins: [url]
+        });
+
+        // 清理 Service Worker 缓存和 Cache API
+        await chrome.tabs.sendMessage(tab.id, {
+            action: 'clearPageStorage',
+            types: ['cacheAPI', 'serviceWorker']
+        }).catch(() => { });
+
+        // 重新加载页面（绕过缓存）
+        await chrome.tabs.reload(tab.id, { bypassCache: true });
+
+        showNotification('文件缓存已清空，页面正在重载', 'success');
+
+    } catch (error) {
+        console.error('清空文件缓存并重载失败:', error);
+        throw error;
+    }
+}
+
+// 清空所有数据并硬性重新加载（包括登录状态）
 async function hardReloadPage(tab) {
     try {
-        // 先清理缓存
+        // 先清理所有数据
         await clearAllData(tab);
 
         // 重新加载页面
         await chrome.tabs.reload(tab.id, { bypassCache: true });
 
-        showNotification('页面正在重新加载', 'info');
+        showNotification('所有数据已清空，页面正在重载', 'info');
 
     } catch (error) {
         console.error('硬性重新加载失败:', error);

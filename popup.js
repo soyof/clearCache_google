@@ -12,6 +12,7 @@ const elements = {
 
     // 针对当前网站的按钮
     clearCurrentAll: document.getElementById('clear-current-all'),
+    hardReloadCacheOnly: document.getElementById('hard-reload-cache-only'),
     hardReload: document.getElementById('hard-reload'),
     clearCurrentCookies: document.getElementById('clear-current-cookies'),
     clearLocalStorage: document.getElementById('clear-localstorage'),
@@ -65,6 +66,7 @@ function bindEventListeners() {
 
     // 针对当前网站的清理
     elements.clearCurrentAll.addEventListener('click', () => clearCurrentWebsiteData());
+    elements.hardReloadCacheOnly.addEventListener('click', () => hardReloadCacheOnly());
     elements.hardReload.addEventListener('click', () => hardReloadPage());
     elements.clearCurrentCookies.addEventListener('click', () => clearCurrentCookies());
     elements.clearLocalStorage.addEventListener('click', () => clearLocalStorage());
@@ -331,12 +333,38 @@ async function clearAllData() {
     }, elements.clearAll, '🎉 所有缓存已清空！', '❌ 清空所有缓存失败');
 }
 
-// 清空缓存并硬性重新加载
+// 清空文件缓存并硬性重新加载（保留登录状态）
+async function hardReloadCacheOnly() {
+    await executeCleanup(async () => {
+        if (!currentTab) throw new Error('无法获取当前标签页');
+
+        // 只清理文件缓存，不清理 Cookies 和用户数据
+        await chrome.browsingData.removeCache({
+            since: 0,
+            origins: [currentUrl]
+        });
+
+        // 清理 Service Worker 缓存和 Cache API
+        await chrome.tabs.sendMessage(currentTab.id, {
+            action: 'clearPageStorage',
+            types: ['cacheAPI', 'serviceWorker']
+        }).catch(() => { });
+
+        // 硬性重新加载页面（绕过缓存）
+        await chrome.tabs.reload(currentTab.id, { bypassCache: true });
+
+        // 关闭弹窗
+        setTimeout(() => window.close(), 500);
+
+    }, elements.hardReloadCacheOnly, '🔄 文件缓存已清空，页面正在重载...', '❌ 重新加载失败');
+}
+
+// 清空所有数据并硬性重新加载（包括登录状态）
 async function hardReloadPage() {
     await executeCleanup(async () => {
         if (!currentTab) throw new Error('无法获取当前标签页');
 
-        // 先清理当前页面的缓存
+        // 清理当前页面的所有数据（包括 Cookies）
         await chrome.browsingData.removeCache({
             since: 0,
             origins: [currentUrl]
@@ -350,7 +378,7 @@ async function hardReloadPage() {
         // 清理页面存储
         await chrome.tabs.sendMessage(currentTab.id, {
             action: 'clearPageStorage',
-            types: ['localStorage', 'sessionStorage']
+            types: ['localStorage', 'sessionStorage', 'cacheAPI', 'serviceWorker']
         }).catch(() => { });
 
         // 硬性重新加载页面
@@ -359,7 +387,7 @@ async function hardReloadPage() {
         // 关闭弹窗
         setTimeout(() => window.close(), 500);
 
-    }, elements.hardReload, '🔄 页面正在重新加载...', '❌ 重新加载失败');
+    }, elements.hardReload, '🔄 所有数据已清空，页面正在重载...', '❌ 重新加载失败');
 }
 
 // 清空当前网站 Cookies
@@ -549,8 +577,15 @@ document.addEventListener('keydown', (event) => {
                 elements.clearAll.click();
                 break;
             case 'r':
-                event.preventDefault();
-                elements.hardReload.click();
+                if (event.shiftKey) {
+                    // Ctrl+Shift+R - 清空文件缓存并重载（保留登录）
+                    event.preventDefault();
+                    elements.hardReloadCacheOnly.click();
+                } else {
+                    // Ctrl+R - 清空全部并刷新
+                    event.preventDefault();
+                    elements.hardReload.click();
+                }
                 break;
         }
     }
@@ -561,7 +596,8 @@ function addTooltips() {
     const tooltips = {
         'clear-current-all': 'Ctrl+1 - 清空当前网站的所有缓存数据',
         'clear-all': 'Ctrl+2 - 清空所有网站的缓存数据',
-        'hard-reload': 'Ctrl+R - 清空当前网站缓存并强制刷新页面',
+        'hard-reload-cache-only': 'Ctrl+Shift+R - 仅清空文件缓存并重载（保留登录状态，类似开发者工具）',
+        'hard-reload': 'Ctrl+R - 清空所有数据并重载页面（包括登录状态）',
         'clear-current-cookies': '清空当前网站的 Cookie 数据',
         'clear-cookies': '清空所有网站的 Cookie 数据',
         'clear-localstorage': '清空当前网站的本地存储数据',
