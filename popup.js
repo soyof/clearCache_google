@@ -52,7 +52,7 @@ function loadVersionInfo() {
             versionElement.textContent = `v${manifest.version}`;
         }
     } catch (error) {
-        console.error('加载版本信息失败:', error);
+        // 静默处理版本信息加载错误
     }
 }
 
@@ -68,7 +68,6 @@ async function initializeCurrentTab() {
         elements.currentUrl.textContent = domain || '未知网站';
         elements.currentUrl.title = currentUrl;
     } catch (error) {
-        console.error('获取当前标签页失败:', error);
         elements.currentUrl.textContent = '获取失败';
     }
 }
@@ -141,7 +140,7 @@ async function restoreTabState() {
             }
         }
     } catch (error) {
-        console.error('恢复Tab状态失败:', error);
+        // 静默处理Tab状态恢复错误
     }
 }
 
@@ -158,7 +157,7 @@ async function loadSettings() {
         elements.clearFormData.checked = settings.clearFormData !== false;
         elements.includeProtected.checked = settings.includeProtected !== false;
     } catch (error) {
-        console.error('加载设置失败:', error);
+        // 静默处理设置加载错误
     }
 }
 
@@ -171,7 +170,7 @@ async function saveSettings() {
             includeProtected: elements.includeProtected.checked
         });
     } catch (error) {
-        console.error('保存设置失败:', error);
+        // 静默处理设置保存错误
     }
 }
 
@@ -240,7 +239,6 @@ async function executeCleanup(cleanupFunction, button, successMessage, errorMess
 
         return result;
     } catch (error) {
-        console.error('清理操作失败:', error);
         setButtonState(button, 'normal');
         showStatus(errorMessage || '操作失败，请重试', 'error');
         throw error;
@@ -559,7 +557,7 @@ async function clearDownloadFiles() {
                 // 清除下载记录
                 await chrome.downloads.erase({ id: download.id });
             } catch (error) {
-                console.warn(`删除下载项 ${download.id} 失败:`, error);
+                // 静默处理删除失败
             }
         });
 
@@ -577,6 +575,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         // 页面存储已清理
     }
 });
+
+// 调试代码已清理
 
 // 键盘快捷键支持
 document.addEventListener('keydown', (event) => {

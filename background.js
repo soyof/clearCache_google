@@ -1,10 +1,7 @@
 // 后台服务工作器
-// 清理缓存助手后台脚本已启动
 
 // 插件安装时的初始化
 chrome.runtime.onInstalled.addListener((details) => {
-    // 插件已安装/更新
-
     if (details.reason === 'install') {
         // 首次安装时设置默认设置
         chrome.storage.local.set({
@@ -13,78 +10,94 @@ chrome.runtime.onInstalled.addListener((details) => {
             includeProtected: false, // 默认不包含受保护数据
             autoCleanOnStartup: false,
             showNotifications: true,
-            version: '1.0.0'
+            version: '1.1.0'
         });
-
-        // 创建右键菜单
-        createContextMenus();
-
-        // 插件初始化完成
-    } else if (details.reason === 'update') {
-        // 插件已更新到版本
     }
+
+    // 无论安装还是更新，都重新创建右键菜单
+    createContextMenus();
+});
+
+// 扩展启动时也创建菜单（确保菜单始终存在）
+chrome.runtime.onStartup.addListener(() => {
+    createContextMenus();
+    // 执行定期清理
+    scheduleCleanup();
 });
 
 // 创建右键菜单
 function createContextMenus() {
     // 清除现有菜单
     chrome.contextMenus.removeAll(() => {
-        // 主菜单
-        chrome.contextMenus.create({
-            id: 'clearCache',
-            title: '清理缓存助手',
-            contexts: ['page', 'frame']
-        });
+        if (chrome.runtime.lastError) {
+            return;
+        }
 
-        // 子菜单
-        chrome.contextMenus.create({
-            id: 'clearAll',
-            parentId: 'clearCache',
-            title: '一键清空所有缓存',
-            contexts: ['page', 'frame']
-        });
+        try {
+            // 主菜单
+            const mainMenuId = chrome.contextMenus.create({
+                id: 'clearCache',
+                title: '清理缓存助手',
+                contexts: ['page', 'frame', 'selection', 'link', 'editable', 'image', 'video', 'audio']
+            }, () => {
+                if (chrome.runtime.lastError) {
+                    return;
+                }
+            });
 
-        chrome.contextMenus.create({
-            id: 'clearCookies',
-            parentId: 'clearCache',
-            title: '清空 Cookies',
-            contexts: ['page', 'frame']
-        });
+            // 子菜单
+            chrome.contextMenus.create({
+                id: 'clearCurrentWebsiteCache',
+                parentId: 'clearCache',
+                title: '清空当前网站缓存',
+                contexts: ['page', 'frame', 'selection', 'link', 'editable', 'image', 'video', 'audio']
+            });
 
-        chrome.contextMenus.create({
-            id: 'clearLocalStorage',
-            parentId: 'clearCache',
-            title: '清空 LocalStorage',
-            contexts: ['page', 'frame']
-        });
+            chrome.contextMenus.create({
+                id: 'clearCookies',
+                parentId: 'clearCache',
+                title: '清空 Cookies',
+                contexts: ['page', 'frame', 'selection', 'link', 'editable', 'image', 'video', 'audio']
+            });
 
-        chrome.contextMenus.create({
-            id: 'hardReloadCacheOnly',
-            parentId: 'clearCache',
-            title: '仅缓存重载（保留登录）',
-            contexts: ['page', 'frame']
-        });
+            chrome.contextMenus.create({
+                id: 'clearLocalStorage',
+                parentId: 'clearCache',
+                title: '清空 LocalStorage',
+                contexts: ['page', 'frame', 'selection', 'link', 'editable', 'image', 'video', 'audio']
+            });
 
-        chrome.contextMenus.create({
-            id: 'hardReload',
-            parentId: 'clearCache',
-            title: '全部重载',
-            contexts: ['page', 'frame']
-        });
+            chrome.contextMenus.create({
+                id: 'hardReloadCacheOnly',
+                parentId: 'clearCache',
+                title: '仅缓存重载（保留登录）',
+                contexts: ['page', 'frame', 'selection', 'link', 'editable', 'image', 'video', 'audio']
+            });
 
-        chrome.contextMenus.create({
-            id: 'separator1',
-            parentId: 'clearCache',
-            type: 'separator',
-            contexts: ['page', 'frame']
-        });
+            chrome.contextMenus.create({
+                id: 'hardReload',
+                parentId: 'clearCache',
+                title: '全部清空重载',
+                contexts: ['page', 'frame', 'selection', 'link', 'editable', 'image', 'video', 'audio']
+            });
 
-        chrome.contextMenus.create({
-            id: 'openPopup',
-            parentId: 'clearCache',
-            title: '打开清理面板',
-            contexts: ['page', 'frame']
-        });
+            chrome.contextMenus.create({
+                id: 'separator1',
+                parentId: 'clearCache',
+                type: 'separator',
+                contexts: ['page', 'frame', 'selection', 'link', 'editable', 'image', 'video', 'audio']
+            });
+
+            chrome.contextMenus.create({
+                id: 'openPopup',
+                parentId: 'clearCache',
+                title: '打开清理面板',
+                contexts: ['page', 'frame', 'selection', 'link', 'editable', 'image', 'video', 'audio']
+            });
+
+        } catch (error) {
+            // 静默处理错误
+        }
     });
 }
 
@@ -92,8 +105,8 @@ function createContextMenus() {
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
     try {
         switch (info.menuItemId) {
-            case 'clearAll':
-                await clearAllData(tab);
+            case 'clearCurrentWebsiteCache':
+                await clearCurrentWebsiteData(tab);
                 break;
             case 'clearCookies':
                 await clearCookiesData(tab);
@@ -108,15 +121,64 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
                 await hardReloadPage(tab);
                 break;
             case 'openPopup':
-                // 通过发送消息打开弹窗（这需要用户点击插件图标）
-                showNotification('请点击插件图标打开清理面板', 'info');
+                // 打开扩展选项页面或者新标签页显示扩展弹窗
+                try {
+                    // 方法1：尝试通过action API打开弹窗（可能不工作，但值得尝试）
+                    if (chrome.action && chrome.action.openPopup) {
+                        chrome.action.openPopup();
+                    } else {
+                        // 方法2：在新标签页中打开扩展页面
+                        chrome.tabs.create({
+                            url: `chrome-extension://${chrome.runtime.id}/popup.html`,
+                            active: true
+                        });
+                    }
+                } catch (error) {
+                    showNotification('请点击浏览器工具栏中的扩展图标打开清理面板', 'info');
+                }
                 break;
         }
     } catch (error) {
-        console.error('右键菜单操作失败:', error);
         showNotification('操作失败: ' + error.message, 'error');
     }
 });
+
+// 清理当前网站数据
+async function clearCurrentWebsiteData(tab) {
+    try {
+        const url = tab.url;
+
+        await Promise.all([
+            chrome.browsingData.removeCache({
+                since: 0,
+                origins: [url]
+            }),
+            chrome.browsingData.removeCookies({
+                since: 0,
+                origins: [url]
+            }),
+            chrome.browsingData.removeLocalStorage({
+                since: 0,
+                origins: [url]
+            }),
+            chrome.browsingData.removeIndexedDB({
+                since: 0,
+                origins: [url]
+            })
+        ]);
+
+        // 清理页面存储
+        await chrome.tabs.sendMessage(tab.id, {
+            action: 'clearPageStorage',
+            types: ['localStorage', 'sessionStorage']
+        }).catch(() => { });
+
+        showNotification('当前网站缓存已清空', 'success');
+
+    } catch (error) {
+        throw error;
+    }
+}
 
 // 快速清理所有数据
 async function clearAllData(tab) {
@@ -151,7 +213,6 @@ async function clearAllData(tab) {
         showNotification('所有缓存已清空', 'success');
 
     } catch (error) {
-        console.error('清理所有数据失败:', error);
         throw error;
     }
 }
@@ -167,7 +228,6 @@ async function clearCookiesData(tab) {
         showNotification('Cookies 已清空', 'success');
 
     } catch (error) {
-        console.error('清理 Cookies 失败:', error);
         throw error;
     }
 }
@@ -189,7 +249,6 @@ async function clearLocalStorageData(tab) {
         showNotification('LocalStorage 已清空', 'success');
 
     } catch (error) {
-        console.error('清理 LocalStorage 失败:', error);
         throw error;
     }
 }
@@ -217,7 +276,6 @@ async function hardReloadCacheOnly(tab) {
         showNotification('文件缓存已清空，页面正在重载', 'success');
 
     } catch (error) {
-        console.error('清空文件缓存并重载失败:', error);
         throw error;
     }
 }
@@ -234,7 +292,6 @@ async function hardReloadPage(tab) {
         showNotification('所有数据已清空，页面正在重载', 'info');
 
     } catch (error) {
-        console.error('硬性重新加载失败:', error);
         throw error;
     }
 }
@@ -255,7 +312,7 @@ async function showNotification(message, type = 'info') {
             priority: 1
         });
     } catch (error) {
-        console.error('显示通知失败:', error);
+        // 静默处理通知错误
     }
 }
 
@@ -270,6 +327,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                 .catch(error => sendResponse({ success: false, error: error.message }));
             return true; // 保持消息通道开放
 
+        case 'clearCurrentWebsiteFromBackground':
+            clearCurrentWebsiteData(sender.tab)
+                .then(() => sendResponse({ success: true }))
+                .catch(error => sendResponse({ success: false, error: error.message }));
+            return true;
+
         case 'showNotification':
             showNotification(message.message, message.type);
             sendResponse({ success: true });
@@ -280,6 +343,21 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                 .then(tabs => sendResponse({ tab: tabs[0] }))
                 .catch(error => sendResponse({ error: error.message }));
             return true;
+
+        case 'storageCleared':
+            // 接收来自内容脚本的存储清理通知
+            sendResponse({ success: true });
+            break;
+
+        case 'createContextMenus':
+            // 手动创建右键菜单（调试用）
+            try {
+                createContextMenus();
+                sendResponse({ success: true, message: '右键菜单已重新创建' });
+            } catch (error) {
+                sendResponse({ success: false, error: error.message });
+            }
+            break;
 
         default:
             sendResponse({ error: '未知操作' });
@@ -313,28 +391,24 @@ async function scheduleCleanup() {
             await chrome.browsingData.removeCache({ since: Date.now() - 24 * 60 * 60 * 1000 }); // 清理24小时内的缓存
             // 定期清理完成
         } catch (error) {
-            console.error('定期清理失败:', error);
+            // 静默处理定期清理错误
         }
     }
 }
 
-// 监听浏览器启动
-chrome.runtime.onStartup.addListener(() => {
-    // 浏览器启动
-    scheduleCleanup();
-});
+// 注意：浏览器启动监听器已在前面定义，这里删除重复的监听器
 
 // 错误处理
 chrome.runtime.onSuspend.addListener(() => {
     // 后台脚本即将被挂起
 });
 
-// 处理插件安装/卸载
-chrome.management.onUninstalled.addListener((info) => {
-    if (info.id === chrome.runtime.id) {
-        // 插件即将被卸载
-    }
-});
+// 处理插件安装/卸载（注释掉可能有问题的API）
+// chrome.management.onUninstalled.addListener((info) => {
+//     if (info.id === chrome.runtime.id) {
+//         // 插件即将被卸载
+//     }
+// });
 
 
-// 后台脚本初始化完成
+// 后台脚本加载完成

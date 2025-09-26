@@ -14,7 +14,6 @@
                 // 已清理 LocalStorage 项目
                 return { success: true, count: itemCount };
             } catch (error) {
-                console.error('清理 LocalStorage 失败:', error);
                 return { success: false, error: error.message };
             }
         },
@@ -27,7 +26,6 @@
                 // 已清理 SessionStorage 项目
                 return { success: true, count: itemCount };
             } catch (error) {
-                console.error('清理 SessionStorage 失败:', error);
                 return { success: false, error: error.message };
             }
         },
@@ -45,7 +43,6 @@
                         };
                         deleteRequest.onerror = () => reject(deleteRequest.error);
                         deleteRequest.onblocked = () => {
-                            console.warn(`删除 IndexedDB 数据库被阻止: ${db.name}`);
                             resolve(db.name); // 即使被阻止也算成功
                         };
                     });
@@ -54,7 +51,6 @@
                 const deletedDatabases = await Promise.all(deletePromises);
                 return { success: true, databases: deletedDatabases };
             } catch (error) {
-                console.error('清理 IndexedDB 失败:', error);
                 return { success: false, error: error.message };
             }
         },
@@ -69,7 +65,6 @@
                 }
                 return { success: true, message: '不支持 WebSQL' };
             } catch (error) {
-                console.error('清理 WebSQL 失败:', error);
                 return { success: false, error: error.message };
             }
         },
@@ -87,7 +82,6 @@
                     return { success: true, message: '不支持 Cache API' };
                 }
             } catch (error) {
-                console.error('清理 Cache API 失败:', error);
                 return { success: false, error: error.message };
             }
         },
@@ -107,7 +101,6 @@
                     return { success: true, message: '不支持 Service Worker' };
                 }
             } catch (error) {
-                console.error('清理 Service Worker 失败:', error);
                 return { success: false, error: error.message };
             }
         },
@@ -127,7 +120,6 @@
 
                 return { success: true, results };
             } catch (error) {
-                console.error('清理页面存储失败:', error);
                 return { success: false, error: error.message, results };
             }
         },
@@ -178,7 +170,6 @@
 
                 return usage;
             } catch (error) {
-                console.error('获取存储使用情况失败:', error);
                 return { error: error.message };
             }
         }
@@ -246,7 +237,6 @@
 
             sendResponse({ success: true, results });
         } catch (error) {
-            console.error('清理页面存储失败:', error);
             sendResponse({ success: false, error: error.message });
         }
     }
@@ -257,7 +247,6 @@
             const usage = await StorageCleaner.getStorageUsage();
             sendResponse({ success: true, usage });
         } catch (error) {
-            console.error('获取存储使用情况失败:', error);
             sendResponse({ success: false, error: error.message });
         }
     }
@@ -307,7 +296,6 @@
 
             sendResponse(result);
         } catch (error) {
-            console.error('清理特定存储失败:', error);
             sendResponse({ success: false, error: error.message });
         }
     }

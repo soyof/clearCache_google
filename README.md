@@ -6,9 +6,9 @@ _一个功能强大的现代浏览器扩展，支持 Chrome、Edge 及其他基�
 [![Edge Compatible](https://img.shields.io/badge/Edge-Compatible-0078D4?style=for-the-badge&logo=microsoftedge&logoColor=white)](https://microsoftedge.microsoft.com/addons)
 [![Manifest V3](https://img.shields.io/badge/Manifest-V3-green?style=for-the-badge)](https://developer.chrome.com/docs/extensions/mv3/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
-[![Version](https://img.shields.io/badge/Version-1.0.1-blue?style=for-the-badge)](manifest.json)
+[![Version](https://img.shields.io/badge/Version-1.1.0-blue?style=for-the-badge)](manifest.json)
 
-[功能特性](#-功能特性) • [安装指南](#-安装指南) • [使用方法](#-使用方法) • [技术实现](#-技术实现) • [贡献指南](#-贡献指南)
+[功能特性](#-功能特性) • [安装指南](#-安装指南) • [使用方法](#-使用方法) • [技术实现](#-技术实现) • [贡献指南](#-贡献指南) • [更新日志](CHANGELOG.md)
 
 ---
 
@@ -149,16 +149,18 @@ _一个功能强大的现代浏览器扩展，支持 Chrome、Edge 及其他基�
 | `Ctrl + Shift + R` | 仅缓存重载 🆕    | 类似开发者工具，保留登录状态 |
 | `Ctrl + R`         | 全部重载         | 清理后立即重载页面           |
 
-### 🖱️ 右键菜单
+### 🖱️ 右键菜单 🆕
 
 在任意网页上右键，选择"清理缓存助手"可快速执行常用操作：
 
-- 一键清空所有缓存
-- 清空 Cookies
-- 清空 LocalStorage
-- **仅缓存重载（保留登录）** 🆕
-- 全部重载
-- 打开清理面板
+- **清空当前网站缓存** - 清理当前网站的所有缓存数据
+- **清空 Cookies** - 清理当前网站的 Cookie 数据
+- **清空 LocalStorage** - 清理当前网站的本地存储
+- **仅缓存重载（保留登录）** - 只清理文件缓存，保留用户登录状态
+- **全部清空重载** - 清理所有数据并重新加载页面
+- **打开清理面板** - 在新标签页中打开完整的清理界面
+
+> 🎉 **v1.1.0 新增功能**：右键菜单让清理操作更加便捷，无需打开扩展弹窗即可快速清理缓存！
 
 ### ⚙️ 高级配置
 
@@ -471,46 +473,9 @@ function handleError(error, context) {
 - 文件名具有描述性
 - 遵循项目现有命名约定
 
-## 📝 版本历史
+## 📝 版本信息
 
-### 🎨 v1.0.1 (2024-09-26) - 图标优化更新
-
-#### 🎯 图标系统重构
-
-- 🧹 **全新红色扫帚图标**: 基于原始 SVG 设计的精确重现
-- 🔴 **统一红色主题**: 采用鲜艳的红色 (#f5222d) 突出清理功能
-- 🔲 **透明背景设计**: 适配各种浏览器主题和界面风格
-- 📏 **渐进式细节**: 小尺寸简化设计，大尺寸丰富细节
-- ✨ **清洁效果增强**: 白色闪光点提升视觉识别度
-
-#### 🛠️ 技术改进
-
-- 📐 **精确坐标转换**: 基于 1024×1024 SVG 的精确路径重现
-- 🎨 **多层次设计**: 16×16/32×32 简化版，48×48/128×128 完整版
-
-### 🎉 v1.0.0 (2024-09-25) - 首次发布
-
-#### ✨ 新功能
-
-- 🎯 **双模式清理**: 支持当前网站和全局浏览器清理
-- 🎨 **现代化界面**: 基于 Manifest V3 的美观界面设计
-- ⚙️ **高级选项**: 可配置的清理选项和安全设置
-- 🖱️ **右键菜单**: 快捷的上下文菜单操作
-- ⌨️ **快捷键**: 支持键盘快捷键操作
-- 🔄 **实时反馈**: 清理进度和状态提示
-
-#### 🛠️ 技术特性
-
-- 📱 **响应式设计**: 适配不同屏幕尺寸
-- 🔒 **安全可靠**: 本地处理，无数据上传
-- ⚡ **性能优化**: 异步处理，不阻塞浏览器
-- 🧩 **模块化架构**: 清晰的代码结构
-
-#### 📋 支持的清理类型
-
-- 🗑️ 浏览器缓存、🍪 Cookies、💾 LocalStorage
-- 📂 SessionStorage、🗄️ IndexedDB、📖 历史记录
-- ⬇️ 下载记录、🗂️ 下载文件删除
+当前版本：**v1.1.0** | 📋 查看完整更新历史请访问 **[更新日志](CHANGELOG.md)**
 
 ---
 
