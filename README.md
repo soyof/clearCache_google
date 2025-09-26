@@ -1,8 +1,9 @@
 # 🧹 缓存清理助手
 
-_一个功能强大的 Chrome 浏览器扩展，用于快速清理各种类型的浏览器缓存和数据_
+_一个功能强大的现代浏览器扩展，支持 Chrome、Edge 及其他基于 Chromium 的浏览器，用于快速清理各种类型的浏览器缓存和数据_
 
-[![Chrome Extension](https://img.shields.io/badge/Chrome-Extension-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white)](https://chrome.google.com/webstore)
+[![Browser Extension](https://img.shields.io/badge/Browser-Extension-4285F4?style=for-the-badge&logo=googlechrome&logoColor=white)](https://github.com/soyof/clearCache_google)
+[![Edge Compatible](https://img.shields.io/badge/Edge-Compatible-0078D4?style=for-the-badge&logo=microsoftedge&logoColor=white)](https://microsoftedge.microsoft.com/addons)
 [![Manifest V3](https://img.shields.io/badge/Manifest-V3-green?style=for-the-badge)](https://developer.chrome.com/docs/extensions/mv3/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 [![Version](https://img.shields.io/badge/Version-1.0.1-blue?style=for-the-badge)](manifest.json)
@@ -13,7 +14,7 @@ _一个功能强大的 Chrome 浏览器扩展，用于快速清理各种类型�
 
 ## 📋 项目概述
 
-缓存清理助手是一个基于 Manifest V3 的现代化 Chrome 浏览器扩展，提供了全面的缓存清理解决方案。无论是针对单个网站的精确清理，还是整个浏览器的全面清理，都能轻松胜任。
+缓存清理助手是一个基于 Manifest V3 的现代化浏览器扩展，支持 Chrome、Edge、Brave、Opera 等所有基于 Chromium 的浏览器，提供了全面的缓存清理解决方案。无论是针对单个网站的精确清理，还是整个浏览器的全面清理，都能轻松胜任。
 
 ### 🎯 设计理念
 
@@ -21,6 +22,18 @@ _一个功能强大的 Chrome 浏览器扩展，用于快速清理各种类型�
 - **安全可靠** - 提供多重确认机制，防止误操作
 - **现代化设计** - 采用最新的 Manifest V3 规范
 - **用户友好** - 直观的界面设计和丰富的交互反馈
+- **跨浏览器兼容** - 支持所有主流现代浏览器，一次开发，处处可用
+
+### 🌐 跨浏览器支持优势
+
+此扩展采用标准的 **Manifest V3** 规范开发，确保在所有基于 Chromium 的现代浏览器中都能完美运行：
+
+| 特性           | 优势                                       |
+| -------------- | ------------------------------------------ |
+| **通用兼容性** | 一套代码适配 Chrome、Edge、Brave、Opera 等 |
+| **API 统一性** | 使用标准浏览器 API，无需特殊适配           |
+| **功能一致性** | 在所有支持的浏览器中提供相同的功能体验     |
+| **更新同步性** | 统一的更新和维护，所有浏览器同步受益       |
 
 ## ✨ 功能特性
 
@@ -58,7 +71,12 @@ _一个功能强大的 Chrome 浏览器扩展，用于快速清理各种类型�
 
 ### 📦 系统要求
 
-- **浏览器**: Chrome 88+ 或基于 Chromium 的浏览器
+- **支持的浏览器**:
+  - Google Chrome 88+
+  - Microsoft Edge 88+
+  - Brave Browser 1.20+
+  - Opera 74+
+  - 其他基于 Chromium 88+ 的现代浏览器
 - **操作系统**: Windows, macOS, Linux
 - **权限**: 需要开启开发者模式（用于加载未打包扩展）
 
@@ -73,8 +91,27 @@ _一个功能强大的 Chrome 浏览器扩展，用于快速清理各种类型�
 
 2. **打开扩展管理页面**
 
+   根据你使用的浏览器选择对应方式：
+
+   **Chrome 浏览器**
+
    - 在地址栏输入 `chrome://extensions/`
    - 或通过菜单：Chrome 菜单 → 更多工具 → 扩展程序
+
+   **Edge 浏览器**
+
+   - 在地址栏输入 `edge://extensions/`
+   - 或通过菜单：Edge 菜单 → 扩展 → 管理扩展
+
+   **Brave 浏览器**
+
+   - 在地址栏输入 `brave://extensions/`
+   - 或通过菜单：Brave 菜单 → 更多工具 → 扩展程序
+
+   **Opera 浏览器**
+
+   - 在地址栏输入 `opera://extensions/`
+   - 或通过菜单：Opera 菜单 → 扩展 → 扩展程序
 
 3. **启用开发者模式**
 
@@ -82,7 +119,7 @@ _一个功能强大的 Chrome 浏览器扩展，用于快速清理各种类型�
 
 4. **加载扩展**
 
-   - 点击"加载已解压的扩展程序"
+   - 点击"加载已解压的扩展程序"（Chrome/Edge）或"加载解压缩的扩展"（其他浏览器）
    - 选择项目文件夹 `clearCache_google`
    - 点击"选择文件夹"
 
@@ -175,34 +212,36 @@ clearCache_google/
 
 ### 🏗️ 架构说明
 
-| 组件               | 功能                | 技术栈                       |
-| ------------------ | ------------------- | ---------------------------- |
-| **Popup**          | 用户界面和交互      | HTML5, CSS3, JavaScript ES6+ |
-| **Background**     | 后台服务和 API 调用 | Service Worker, Chrome APIs  |
-| **Content Script** | 页面级数据清理      | JavaScript, DOM APIs         |
-| **Manifest**       | 扩展配置和权限      | JSON, Manifest V3            |
+| 组件               | 功能                | 技术栈                             |
+| ------------------ | ------------------- | ---------------------------------- |
+| **Popup**          | 用户界面和交互      | HTML5, CSS3, JavaScript ES6+       |
+| **Background**     | 后台服务和 API 调用 | Service Worker, WebExtensions APIs |
+| **Content Script** | 页面级数据清理      | JavaScript, DOM APIs               |
+| **Manifest**       | 扩展配置和权限      | JSON, Manifest V3                  |
 
 ## 🔧 技术实现
 
 ### 🚀 核心技术栈
 
-| 技术                      | 版本    | 用途           |
-| ------------------------- | ------- | -------------- |
-| **Manifest V3**           | Latest  | 现代化扩展规范 |
-| **Service Worker**        | ES2020+ | 后台服务处理   |
-| **Chrome Extensions API** | Latest  | 浏览器原生接口 |
-| **Content Scripts**       | ES6+    | 页面级数据操作 |
-| **CSS3**                  | Latest  | 现代化界面设计 |
+| 技术                  | 版本    | 用途                         |
+| --------------------- | ------- | ---------------------------- |
+| **Manifest V3**       | Latest  | 现代化扩展规范，跨浏览器兼容 |
+| **Service Worker**    | ES2020+ | 后台服务处理                 |
+| **WebExtensions API** | Latest  | 标准化浏览器原生接口         |
+| **Content Scripts**   | ES6+    | 页面级数据操作               |
+| **CSS3**              | Latest  | 现代化界面设计               |
+| **Standard Web APIs** | Latest  | 确保跨浏览器一致性           |
 
 ### 🛠️ 清理机制详解
 
 #### 1. 🌐 浏览器级清理
 
 ```javascript
-// 使用 chrome.browsingData API 进行系统级清理
+// 使用标准 browsingData API 进行系统级清理
+// 在 Chrome/Edge/Brave/Opera 中都使用相同的 API
 chrome.browsingData.removeCache({
   since: 0,
-  origins: [currentUrl], // 可选：指定网站
+  origins: [currentUrl] // 可选：指定网站
 })
 ```
 
@@ -251,7 +290,7 @@ cacheNames.forEach((name) => caches.delete(name))
 ```mermaid
 graph TD
     A[用户界面 Popup] --> B[后台服务 Background]
-    B --> C[Chrome APIs]
+    B --> C[WebExtensions APIs]
     A --> D[内容脚本 Content Script]
     D --> E[页面存储 DOM Storage]
     C --> F[浏览器数据 Browser Data]
@@ -277,12 +316,16 @@ graph TD
 
 ### 🌐 兼容性支持
 
-| 浏览器     | 最低版本 | 支持状态    |
-| ---------- | -------- | ----------- |
-| **Chrome** | 88+      | ✅ 完全支持 |
-| **Edge**   | 88+      | ✅ 完全支持 |
-| **Brave**  | 1.20+    | ✅ 完全支持 |
-| **Opera**  | 74+      | ✅ 完全支持 |
+| 浏览器             | 最低版本 | 支持状态    | 扩展商店支持     |
+| ------------------ | -------- | ----------- | ---------------- |
+| **Google Chrome**  | 88+      | ✅ 完全支持 | Chrome Web Store |
+| **Microsoft Edge** | 88+      | ✅ 完全支持 | Edge Add-ons     |
+| **Brave Browser**  | 1.20+    | ✅ 完全支持 | Chrome Web Store |
+| **Opera**          | 74+      | ✅ 完全支持 | Opera addons     |
+| **Vivaldi**        | 4.0+     | ✅ 完全支持 | Chrome Web Store |
+| **其他 Chromium**  | 88+      | ✅ 完全支持 | 开发者模式安装   |
+
+> **注意**: 所有基于 Chromium 88+ 的现代浏览器都支持此扩展，因为它使用标准的 Manifest V3 规范和浏览器 API。
 
 ### ⚡ 性能优化
 
@@ -362,13 +405,13 @@ graph TD
 
 ```bash
 # 必需工具
-- Chrome 88+ 浏览器
+- 支持的浏览器 (Chrome 88+, Edge 88+, Brave 1.20+, Opera 74+ 等)
 - 代码编辑器 (推荐 VS Code)
 - Git 版本控制
 
 # 可选工具
 - Node.js (用于构建工具)
-- Chrome DevTools
+- 浏览器开发者工具
 ```
 
 #### 开发步骤
@@ -382,9 +425,9 @@ graph TD
 
 2. **加载扩展**
 
-   - 打开 `chrome://extensions/`
+   - 打开扩展管理页面（Chrome: `chrome://extensions/`, Edge: `edge://extensions/` 等）
    - 启用开发者模式
-   - 点击"加载已解压的扩展程序"
+   - 点击"加载已解压的扩展程序"或"加载解压缩的扩展"
    - 选择项目文件夹
 
 3. **开发调试**
@@ -551,7 +594,7 @@ _您可以自由使用、修改和分发本项目，但请保留原始许可证�
 - ⚠️ **责任** - 作者不承担任何责任
 - ⚠️ **保证** - 不提供任何保证
 
-详细条款请查看 [LICENSE](LICENSE) 文件。
+详细条款请查看 [LICENSE](https://github.com/soyof/clearCache_google/blob/main/LICENSE) 文件。
 
 ---
 
@@ -561,7 +604,7 @@ _您可以自由使用、修改和分发本项目，但请保留原始许可证�
 
 ### 🌟 特别感谢
 
-- **Chrome Extensions 团队** - 提供强大的扩展 API
+- **Chromium 开发团队** - 提供强大的 WebExtensions API
 - **开源社区** - 提供灵感和技术支持
 - **所有用户** - 提供反馈和建议
 
@@ -569,28 +612,34 @@ _您可以自由使用、修改和分发本项目，但请保留原始许可证�
 
 ## 📞 联系我们
 
+> somuns.os@qq.com
+
 ### 💬 获取帮助
 
-| 方式            | 链接                                                                          | 说明               |
-| --------------- | ----------------------------------------------------------------------------- | ------------------ |
-| 🐛 **报告问题** | [GitHub Issues](https://github.com/your-username/clearCache_google/issues)    | Bug 报告和功能请求 |
-| 💡 **功能建议** | [Discussions](https://github.com/your-username/clearCache_google/discussions) | 想法交流和讨论     |
-| 📧 **邮件联系** | [your-email@example.com](mailto:your-email@example.com)                       | 私人咨询和合作     |
-| 📖 **文档**     | [Wiki](https://github.com/your-username/clearCache_google/wiki)               | 详细使用指南       |
+| 方式            | 链接                                                                        | 说明               |
+| --------------- | --------------------------------------------------------------------------- | ------------------ |
+| 🐛 **报告问题** | [GitHub Issues](https://github.com/soyof/clearCache_google/issues)          | Bug 报告和功能请求 |
+| 💡 **功能建议** | [GitHub Issues](https://github.com/soyof/clearCache_google/issues)          | 想法交流和讨论     |
+| 📧 **邮件联系** | [somuns.os@qq.com](somuns.os@qq.com)                                        | 私人咨询和合作     |
+| 📖 **文档**     | [README.md](https://github.com/soyof/clearCache_google/blob/main/README.md) | 详细使用指南       |
 
 ### 🔗 相关链接
 
+**浏览器扩展开发文档**
+
 - 📚 [Chrome 扩展开发文档](https://developer.chrome.com/docs/extensions/)
+- 📘 [Edge 扩展开发文档](https://docs.microsoft.com/en-us/microsoft-edge/extensions-chromium/)
 - 🛠️ [Manifest V3 迁移指南](https://developer.chrome.com/docs/extensions/mv3/intro/)
 - 🎨 [Material Design 指南](https://material.io/design)
+
+**浏览器扩展商店**
+
+- 🏪 [Chrome Web Store](https://chrome.google.com/webstore)
+- 🏪 [Microsoft Edge Add-ons](https://microsoftedge.microsoft.com/addons)
+- 🏪 [Opera addons](https://addons.opera.com/)
 
 ---
 
 ## ⚡ 让浏览器保持清洁，让网页运行更快！
-
-**🧹 缓存清理助手 - 您的浏览器清理专家**
-
-[![Star this repo](https://img.shields.io/badge/⭐-Star%20this%20repo-yellow?style=for-the-badge)](https://github.com/your-username/clearCache_google)
-[![Fork this repo](https://img.shields.io/badge/🍴-Fork%20this%20repo-blue?style=for-the-badge)](https://github.com/your-username/clearCache_google/fork)
 
 _如果这个项目对您有帮助，请给我们一个 ⭐ Star！_
