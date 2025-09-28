@@ -39,20 +39,39 @@
         <div class="actions-container">
             <!-- 当前网站 Tab 内容 -->
             <div class="tab-content active" id="current-site-tab">
-                <div class="quick-actions">
-                    <button id="clear-current-all" class="btn btn-primary">
+                <!-- 重载功能区域 -->
+                <div class="actions-grid">
+                    <button id="normal-reload" class="btn btn-reload">
+                        <span class="btn-icon">🔄</span>
+                        <span class="btn-text">正常重新加载</span>
+                    </button>
+                    <button id="hard-reload-only" class="btn btn-reload">
+                        <span class="btn-icon">⚡</span>
+                        <span class="btn-text">硬性重新加载</span>
+                    </button>
+                    <button id="hard-reload-cache-only" class="btn btn-reload-cache">
+                        <span class="btn-icon">🧹</span>
+                        <span class="btn-text">清空缓存并硬性重新加载</span>
+                    </button>
+                </div>
+                
+                <!-- 分割线 -->
+                <div class="section-divider"></div>
+                
+                <!-- 清理功能区域 -->
+                <div class="actions-grid">
+                    <button id="clear-current-all" class="btn btn-clean-primary">
                         <span class="btn-icon">🗑️</span>
                         <span class="btn-text">清空缓存</span>
                     </button>
-                    <button id="hard-reload-cache-only" class="btn btn-success">
-                        <span class="btn-icon">🔄</span>
-                        <span class="btn-text">仅缓存重载</span>
-                    </button>
-                    <button id="hard-reload" class="btn btn-warning">
-                        <span class="btn-icon">🔄</span>
-                        <span class="btn-text">全部重载</span>
+                    <button id="hard-reload" class="btn btn-clean-danger">
+                        <span class="btn-icon">💥</span>
+                        <span class="btn-text">全部清空重载</span>
                     </button>
                 </div>
+                
+                <!-- 分割线 -->
+                <div class="section-divider"></div>
                 
                 <div class="actions-grid">
                     <button id="clear-current-cookies" class="btn btn-clean">
@@ -76,13 +95,18 @@
 
             <!-- 整个浏览器 Tab 内容 -->
             <div class="tab-content" id="all-browser-tab">
-                <div class="quick-actions">
+                <!-- 一键清理区域 -->
+                <div class="actions-grid single-button">
                     <button id="clear-all" class="btn btn-primary">
                         <span class="btn-icon">🗑️</span>
                         <span class="btn-text">一键清空所有缓存</span>
                     </button>
                 </div>
                 
+                <!-- 分割线 -->
+                <div class="section-divider"></div>
+                
+                <!-- 浏览器数据清理区域 -->
                 <div class="actions-grid">
                     <button id="clear-cache" class="btn btn-clean">
                         <span class="btn-icon">📋</span>
@@ -100,6 +124,13 @@
                         <span class="btn-icon">📖</span>
                         <span class="btn-text">清空历史记录</span>
                     </button>
+                </div>
+                
+                <!-- 分割线 -->
+                <div class="section-divider"></div>
+                
+                <!-- 下载管理区域 -->
+                <div class="actions-grid">
                     <button id="clear-downloads" class="btn btn-clean">
                         <span class="btn-icon">⬇️</span>
                         <span class="btn-text">下载记录</span>

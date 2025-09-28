@@ -11,6 +11,8 @@ const elements = {
     progressFill: document.querySelector('.progress-fill'),
 
     // 针对当前网站的按钮
+    normalReload: document.getElementById('normal-reload'),
+    hardReloadOnly: document.getElementById('hard-reload-only'),
     clearCurrentAll: document.getElementById('clear-current-all'),
     hardReloadCacheOnly: document.getElementById('hard-reload-cache-only'),
     hardReload: document.getElementById('hard-reload'),
@@ -78,6 +80,8 @@ function bindEventListeners() {
     bindTabListeners();
 
     // 针对当前网站的清理
+    elements.normalReload.addEventListener('click', () => normalReload());
+    elements.hardReloadOnly.addEventListener('click', () => hardReloadOnly());
     elements.clearCurrentAll.addEventListener('click', () => clearCurrentWebsiteData());
     elements.hardReloadCacheOnly.addEventListener('click', () => hardReloadCacheOnly());
     elements.hardReload.addEventListener('click', () => hardReloadPage());
@@ -243,6 +247,34 @@ async function executeCleanup(cleanupFunction, button, successMessage, errorMess
         showStatus(errorMessage || '操作失败，请重试', 'error');
         throw error;
     }
+}
+
+// 正常重新加载
+async function normalReload() {
+    await executeCleanup(async () => {
+        if (!currentTab) throw new Error('无法获取当前标签页');
+
+        // 普通重新加载页面
+        await chrome.tabs.reload(currentTab.id);
+
+        // 关闭弹窗
+        setTimeout(() => window.close(), 500);
+
+    }, elements.normalReload, '🔄 页面正在重新加载...', '❌ 重新加载失败');
+}
+
+// 硬性重新加载（绕过缓存）
+async function hardReloadOnly() {
+    await executeCleanup(async () => {
+        if (!currentTab) throw new Error('无法获取当前标签页');
+
+        // 硬性重新加载页面（绕过缓存）
+        await chrome.tabs.reload(currentTab.id, { bypassCache: true });
+
+        // 关闭弹窗
+        setTimeout(() => window.close(), 500);
+
+    }, elements.hardReloadOnly, '🔄 页面正在硬性重新加载...', '❌ 硬性重新加载失败');
 }
 
 // 清空当前网站的所有数据
@@ -608,9 +640,11 @@ document.addEventListener('keydown', (event) => {
 // 添加工具提示
 function addTooltips() {
     const tooltips = {
+        'normal-reload': '普通重新加载页面（F5）',
+        'hard-reload-only': '硬性重新加载页面，绕过缓存（Ctrl+F5）',
         'clear-current-all': 'Ctrl+1 - 清空当前网站的所有缓存数据',
         'clear-all': 'Ctrl+2 - 清空所有网站的缓存数据',
-        'hard-reload-cache-only': 'Ctrl+Shift+R - 仅清空文件缓存并重载（保留登录状态，类似开发者工具）',
+        'hard-reload-cache-only': 'Ctrl+Shift+R - 清空缓存并硬性重新加载（保留登录状态）',
         'hard-reload': 'Ctrl+R - 清空所有数据并重载页面（包括登录状态）',
         'clear-current-cookies': '清空当前网站的 Cookie 数据',
         'clear-cookies': '清空所有网站的 Cookie 数据',

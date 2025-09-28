@@ -10,7 +10,7 @@ chrome.runtime.onInstalled.addListener((details) => {
             includeProtected: false, // 默认不包含受保护数据
             autoCleanOnStartup: false,
             showNotifications: true,
-            version: '1.1.0'
+            version: '1.2.0'
         });
     }
 
@@ -45,7 +45,35 @@ function createContextMenus() {
                 }
             });
 
-            // 子菜单
+            // 子菜单 - 重载功能放在前面
+            chrome.contextMenus.create({
+                id: 'normalReload',
+                parentId: 'clearCache',
+                title: '正常重新加载',
+                contexts: ['page', 'frame', 'selection', 'link', 'editable', 'image', 'video', 'audio']
+            });
+
+            chrome.contextMenus.create({
+                id: 'hardReloadOnly',
+                parentId: 'clearCache',
+                title: '硬性重新加载',
+                contexts: ['page', 'frame', 'selection', 'link', 'editable', 'image', 'video', 'audio']
+            });
+
+            chrome.contextMenus.create({
+                id: 'hardReloadCacheOnly',
+                parentId: 'clearCache',
+                title: '清空缓存并硬性重新加载',
+                contexts: ['page', 'frame', 'selection', 'link', 'editable', 'image', 'video', 'audio']
+            });
+
+            chrome.contextMenus.create({
+                id: 'separator1',
+                parentId: 'clearCache',
+                type: 'separator',
+                contexts: ['page', 'frame', 'selection', 'link', 'editable', 'image', 'video', 'audio']
+            });
+
             chrome.contextMenus.create({
                 id: 'clearCurrentWebsiteCache',
                 parentId: 'clearCache',
@@ -68,9 +96,9 @@ function createContextMenus() {
             });
 
             chrome.contextMenus.create({
-                id: 'hardReloadCacheOnly',
+                id: 'clearSessionStorage',
                 parentId: 'clearCache',
-                title: '仅缓存重载（保留登录）',
+                title: '清空 SessionStorage',
                 contexts: ['page', 'frame', 'selection', 'link', 'editable', 'image', 'video', 'audio']
             });
 
@@ -82,7 +110,7 @@ function createContextMenus() {
             });
 
             chrome.contextMenus.create({
-                id: 'separator1',
+                id: 'separator2',
                 parentId: 'clearCache',
                 type: 'separator',
                 contexts: ['page', 'frame', 'selection', 'link', 'editable', 'image', 'video', 'audio']
@@ -105,6 +133,15 @@ function createContextMenus() {
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
     try {
         switch (info.menuItemId) {
+            case 'normalReload':
+                await normalReload(tab);
+                break;
+            case 'hardReloadOnly':
+                await hardReloadOnly(tab);
+                break;
+            case 'hardReloadCacheOnly':
+                await hardReloadCacheOnly(tab);
+                break;
             case 'clearCurrentWebsiteCache':
                 await clearCurrentWebsiteData(tab);
                 break;
@@ -114,8 +151,8 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
             case 'clearLocalStorage':
                 await clearLocalStorageData(tab);
                 break;
-            case 'hardReloadCacheOnly':
-                await hardReloadCacheOnly(tab);
+            case 'clearSessionStorage':
+                await clearSessionStorageData(tab);
                 break;
             case 'hardReload':
                 await hardReloadPage(tab);
@@ -142,6 +179,28 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
         showNotification('操作失败: ' + error.message, 'error');
     }
 });
+
+// 正常重新加载
+async function normalReload(tab) {
+    try {
+        // 普通重新加载页面
+        await chrome.tabs.reload(tab.id);
+        showNotification('页面正在重新加载', 'success');
+    } catch (error) {
+        throw error;
+    }
+}
+
+// 硬性重新加载（绕过缓存）
+async function hardReloadOnly(tab) {
+    try {
+        // 硬性重新加载页面（绕过缓存）
+        await chrome.tabs.reload(tab.id, { bypassCache: true });
+        showNotification('页面正在硬性重新加载', 'success');
+    } catch (error) {
+        throw error;
+    }
+}
 
 // 清理当前网站数据
 async function clearCurrentWebsiteData(tab) {
@@ -253,7 +312,23 @@ async function clearLocalStorageData(tab) {
     }
 }
 
-// 清空文件缓存并硬性重新加载（保留登录状态）
+// 清理 SessionStorage
+async function clearSessionStorageData(tab) {
+    try {
+        // SessionStorage 主要通过页面级清理
+        await chrome.tabs.sendMessage(tab.id, {
+            action: 'clearPageStorage',
+            types: ['sessionStorage']
+        }).catch(() => { });
+
+        showNotification('SessionStorage 已清空', 'success');
+
+    } catch (error) {
+        throw error;
+    }
+}
+
+// 清空缓存并硬性重新加载（保留登录状态）
 async function hardReloadCacheOnly(tab) {
     try {
         const url = tab.url;
@@ -273,7 +348,7 @@ async function hardReloadCacheOnly(tab) {
         // 重新加载页面（绕过缓存）
         await chrome.tabs.reload(tab.id, { bypassCache: true });
 
-        showNotification('文件缓存已清空，页面正在重载', 'success');
+        showNotification('缓存已清空，页面正在重载', 'success');
 
     } catch (error) {
         throw error;
