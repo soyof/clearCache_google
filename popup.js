@@ -33,7 +33,14 @@ const elements = {
     // 复选框
     clearPasswords: document.getElementById('clear-passwords'),
     clearFormData: document.getElementById('clear-formdata'),
-    includeProtected: document.getElementById('include-protected')
+    includeProtected: document.getElementById('include-protected'),
+
+    // 高级设置元素
+    themeRadios: document.querySelectorAll('input[name="theme"]'),
+    enableNotifications: document.getElementById('enable-notifications'),
+    notificationSound: document.getElementById('notification-sound'),
+    
+    // 设置管理按钮已移除
 };
 
 // 初始化
@@ -43,6 +50,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     bindEventListeners();
     loadSettings();
     restoreTabState();
+    initializeAdvancedSettings();
 });
 
 // 加载版本信息
@@ -668,3 +676,131 @@ function addTooltips() {
 
 // 初始化工具提示
 addTooltips();
+
+// 高级设置功能
+function initializeAdvancedSettings() {
+    // 主题切换
+    if (elements.themeRadios) {
+        elements.themeRadios.forEach(radio => {
+            radio.addEventListener('change', handleThemeChange);
+        });
+    }
+    
+    // 设置项监听
+    if (elements.enableNotifications) {
+        elements.enableNotifications.addEventListener('change', saveAdvancedSettings);
+    }
+    if (elements.notificationSound) {
+        elements.notificationSound.addEventListener('change', saveAdvancedSettings);
+    }
+    
+    // 设置管理按钮已移除
+    
+    // 加载高级设置
+    loadAdvancedSettings();
+}
+
+async function handleThemeChange(event) {
+    const theme = event.target.value;
+    await chrome.storage.local.set({ theme });
+    applyTheme(theme);
+    
+    // 更新选中主题的视觉标识
+    updateThemeSelection(theme);
+}
+
+// 更新主题选择的视觉标识
+function updateThemeSelection(selectedTheme) {
+    // 移除所有主题选项的选中样式
+    document.querySelectorAll('.theme-option').forEach(option => {
+        option.classList.remove('selected');
+    });
+    
+    // 为选中的主题选项添加选中样式
+    const selectedOption = document.querySelector(`.theme-option input[value="${selectedTheme}"]`);
+    if (selectedOption) {
+        selectedOption.closest('.theme-option').classList.add('selected');
+    }
+}
+
+function applyTheme(theme) {
+    const container = document.querySelector('.container');
+    const body = document.body;
+    if (!container) return;
+    
+    // 移除所有主题类
+    container.classList.remove('theme-dark', 'theme-light', 'theme-auto');
+    body.classList.remove('theme-dark', 'theme-light', 'theme-auto');
+    
+    // 添加主题过渡动画
+    container.classList.add('theme-transition');
+    
+    // 处理自动主题 - 根据时间判断使用亮色还是暗色
+    let actualTheme = theme;
+    if (theme === 'auto') {
+        // 获取当前小时
+        const currentHour = new Date().getHours();
+        // 6:00 - 19:00 使用浅色主题，其他时间使用深色主题
+        actualTheme = (currentHour >= 6 && currentHour < 19) ? 'light' : 'dark';
+        console.log(`自动主题: 当前时间 ${currentHour}时，应用${actualTheme === 'light' ? '浅色' : '深色'}主题`);
+    }
+    
+    // 应用实际的主题类（对于自动主题，应用计算出的主题）
+    container.classList.add(`theme-${actualTheme}`);
+    body.classList.add(`theme-${actualTheme}`);
+    
+    // 移除过渡动画类（避免影响其他动画）
+    setTimeout(() => {
+        container.classList.remove('theme-transition');
+    }, 500);
+}
+
+async function loadAdvancedSettings() {
+    try {
+        const settings = await chrome.storage.local.get([
+            'theme',
+            'enableNotifications',
+            'notificationSound'
+        ]);
+        
+        // 设置主题
+        const theme = settings.theme || 'dark'; // 默认使用深色主题
+        const themeRadio = document.querySelector(`input[name="theme"][value="${theme}"]`);
+        if (themeRadio) {
+            themeRadio.checked = true;
+            applyTheme(theme);
+            // 更新主题选择的视觉标识
+            updateThemeSelection(theme);
+        }
+        
+        // 设置其他选项
+        if (elements.enableNotifications) {
+            elements.enableNotifications.checked = settings.enableNotifications !== false;
+        }
+        if (elements.notificationSound) {
+            elements.notificationSound.checked = settings.notificationSound === true;
+        }
+    } catch (error) {
+        console.error('加载高级设置失败:', error);
+    }
+}
+
+async function saveAdvancedSettings() {
+    try {
+        const settings = {
+            enableNotifications: elements.enableNotifications?.checked !== false,
+            notificationSound: elements.notificationSound?.checked === true,
+            clearPasswords: elements.clearPasswords?.checked !== false,
+            clearFormData: elements.clearFormData?.checked !== false,
+            includeProtected: elements.includeProtected?.checked !== false
+        };
+        
+        await chrome.storage.local.set(settings);
+        showStatus('设置已保存', 'success');
+    } catch (error) {
+        console.error('保存高级设置失败:', error);
+        showStatus('保存设置失败', 'error');
+    }
+}
+
+// 设置管理功能已移除

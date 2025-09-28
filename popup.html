@@ -34,6 +34,10 @@
                 <span class="tab-icon">🌐</span>
                 <span class="tab-text">整个浏览器</span>
             </button>
+            <button class="tab-btn" data-tab="settings">
+                <span class="tab-icon">⚙️</span>
+                <span class="tab-text">高级设置</span>
+            </button>
         </div>
 
         <div class="actions-container">
@@ -141,30 +145,88 @@
                     </button>
                 </div>
             </div>
-        </div>
 
-        <!-- 高级选项 -->
-        <div class="settings-section">
-            <div class="settings-header">
-                <span class="settings-icon">⚙️</span>
-                <span class="settings-title">高级选项</span>
-            </div>
-            <div class="settings-grid">
-                <label class="setting-item">
-                    <input type="checkbox" id="clear-passwords" checked>
-                    <span class="setting-check"></span>
-                    <span class="setting-text">保留密码</span>
-                </label>
-                <label class="setting-item">
-                    <input type="checkbox" id="clear-formdata" checked>
-                    <span class="setting-check"></span>
-                    <span class="setting-text">保留表单</span>
-                </label>
-                <label class="setting-item">
-                    <input type="checkbox" id="include-protected">
-                    <span class="setting-check"></span>
-                    <span class="setting-text">受保护数据</span>
-                </label>
+            <!-- 高级设置 Tab 内容 -->
+            <div class="tab-content" id="settings-tab">
+                <!-- 主题设置 -->
+                <div class="settings-group">
+                    <div class="group-header">
+                        <span class="group-icon">🎨</span>
+                        <span class="group-title">外观主题</span>
+                    </div>
+                    <div class="theme-selector">
+                        <label class="theme-option">
+                            <input type="radio" name="theme" value="auto">
+                            <span class="theme-preview auto-theme"></span>
+                            <span class="theme-name">自动</span>
+                            <span class="theme-selected-mark">✓</span>
+                        </label>
+                        <label class="theme-option">
+                            <input type="radio" name="theme" value="dark" checked>
+                            <span class="theme-preview dark-theme"></span>
+                            <span class="theme-name">深色</span>
+                            <span class="theme-selected-mark">✓</span>
+                        </label>
+                        <label class="theme-option">
+                            <input type="radio" name="theme" value="light">
+                            <span class="theme-preview light-theme"></span>
+                            <span class="theme-name">浅色</span>
+                            <span class="theme-selected-mark">✓</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- 分割线 -->
+                <div class="section-divider"></div>
+                
+                <!-- 清理选项 -->
+                <div class="settings-group">
+                    <div class="group-header">
+                        <span class="group-icon">🔧</span>
+                        <span class="group-title">清理选项</span>
+                    </div>
+                    <div class="settings-options">
+                        <label class="setting-item">
+                            <input type="checkbox" id="clear-passwords" checked>
+                            <span class="setting-check"></span>
+                            <span class="setting-text">保留密码</span>
+                        </label>
+                        <label class="setting-item">
+                            <input type="checkbox" id="clear-formdata" checked>
+                            <span class="setting-check"></span>
+                            <span class="setting-text">保留表单数据</span>
+                        </label>
+                        <label class="setting-item">
+                            <input type="checkbox" id="include-protected" checked>
+                            <span class="setting-check"></span>
+                            <span class="setting-text">包含受保护数据</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- 分割线 -->
+                <div class="section-divider"></div>
+                
+                <!-- 通知设置 -->
+                <div class="settings-group">
+                    <div class="group-header">
+                        <span class="group-icon">🔔</span>
+                        <span class="group-title">通知设置</span>
+                    </div>
+                    <div class="settings-options">
+                        <label class="setting-item">
+                            <input type="checkbox" id="enable-notifications" checked>
+                            <span class="setting-check"></span>
+                            <span class="setting-text">启用通知</span>
+                        </label>
+                        <label class="setting-item">
+                            <input type="checkbox" id="notification-sound">
+                            <span class="setting-check"></span>
+                            <span class="setting-text">通知声音</span>
+                        </label>
+                    </div>
+                </div>
+                
             </div>
         </div>
 
