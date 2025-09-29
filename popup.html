@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>缓存清理助手</title>
+    <title data-i18n="extensionName">缓存清理助手</title>
     <link rel="stylesheet" href="popup.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 </head>
@@ -12,15 +12,15 @@
         <header class="header">
             <div class="header-icon"><svg t="1758867277084" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4711" data-spm-anchor-id="a313x.search_index.0.i0.65b83a81ebeYri" width="36" height="36"><path d="M768.036 354.847l184.73-184.336c26.695-26.598 26.695-69.785 0.097-96.486-26.599-26.598-69.689-26.598-96.39-0.097L671.55 258.458c-1.218 0.148-2.268 0.271-3.317 0.389h-0.016l-3.338 0.4c-71.066-41.227-153.416-41.033-216.73 19.43-1.863 1.766-1.96 5.007-0.097 6.87l292.895 292.895c1.864 1.864 5.105 1.767 6.871-0.097 60.365-63.411 60.56-145.664 19.435-216.73 0.128-1.653 0.297-2.933 0.477-4.331 0.102-0.753 0.204-1.541 0.307-2.437z m-493.03-148.803a58.301 58.301 0 1 0 116.607 0 58.301 58.301 0 0 0-116.608 0z m374.548 695.92a73.027 73.027 0 1 1 103.28-103.28 73.027 73.027 0 0 1-103.28 103.28zM790.81 773.182a39.752 39.752 0 1 0 79.508 0 39.752 39.752 0 0 0-79.508 0zM688.04 624.476L396.032 332.564a6.164 6.164 0 0 0-8.049-0.88C286.587 401.664 77.711 445.05 52.685 450.058c-1.372 0.292-1.864 1.762-1.178 2.944l52.613 98.74c0.492 0.885 1.567 1.28 2.55 0.982l142.229-50.35S147.896 587.96 130.033 602.388c-0.686 0.594-0.686 1.183-0.297 1.87 17.853 32.112 79.247 100.095 89.477 111.42l0.338 0.374c0.686 0.789 1.664 0.886 2.55 0.395L409.67 603.96S299.347 747.366 278.15 773.08c-0.589 0.589-0.491 1.183 0 1.869 32.195 43.679 136.53 113.858 136.53 113.858l26.598-36.613c46.234-67.041 107.971-132.608 117.591-142.223 9.12-9.119-79.897 177.346-89.39 197.222l-0.03 0.067c-0.487 0.983-0.098 2.058 0.788 2.652l99.134 59.776a2.079 2.079 0 0 0 3.046-1.572c21.3-176.68 100.9-310.364 116.705-335.59 1.567-2.652 1.075-5.888-1.08-8.049z" p-id="4712" data-spm-anchor-id="a313x.search_index.0.i1.65b83a81ebeYri" class="" fill="#f5222d"></path></svg></div>
             <div class="header-content">
-                <h1 class="title">缓存清理助手 - 您的浏览器清理专家</h1>
-                <div class="version">加载中...</div>
+                <h1 class="title" data-i18n="popupTitle">缓存清理助手 - 您的浏览器清理专家</h1>
+                <div class="version" data-i18n="loading">加载中...</div>
             </div>
         </header>
 
         <div class="current-site">
             <div class="site-info">
-                <span class="site-label">当前网站：</span>
-                <span id="current-url" class="site-url">加载中...</span>
+                <span class="site-label" data-i18n="currentSite">当前网站：</span>
+                <span id="current-url" class="site-url" data-i18n="loading">加载中...</span>
             </div>
         </div>
 
@@ -28,15 +28,15 @@
         <div class="tab-nav">
             <button class="tab-btn active" data-tab="current-site">
                 <span class="tab-icon">🎯</span>
-                <span class="tab-text">当前网站</span>
+                <span class="tab-text" data-i18n="tabCurrentSite">当前网站</span>
             </button>
             <button class="tab-btn" data-tab="all-browser">
                 <span class="tab-icon">🌐</span>
-                <span class="tab-text">整个浏览器</span>
+                <span class="tab-text" data-i18n="tabAllBrowser">整个浏览器</span>
             </button>
             <button class="tab-btn" data-tab="settings">
                 <span class="tab-icon">⚙️</span>
-                <span class="tab-text">高级设置</span>
+                <span class="tab-text" data-i18n="tabSettings">高级设置</span>
             </button>
         </div>
 
@@ -45,17 +45,17 @@
             <div class="tab-content active" id="current-site-tab">
                 <!-- 重载功能区域 -->
                 <div class="actions-grid">
-                    <button id="normal-reload" class="btn btn-reload">
+                    <button id="normal-reload" class="btn btn-reload" data-i18n-title="normalReloadDesc">
                         <span class="btn-icon">🔄</span>
-                        <span class="btn-text">正常重新加载</span>
+                        <span class="btn-text" data-i18n="normalReload">正常重新加载</span>
                     </button>
-                    <button id="hard-reload-only" class="btn btn-reload">
+                    <button id="hard-reload-only" class="btn btn-reload" data-i18n-title="hardReloadDesc">
                         <span class="btn-icon">⚡</span>
-                        <span class="btn-text">硬性重新加载</span>
+                        <span class="btn-text" data-i18n="hardReload">硬性重新加载</span>
                     </button>
-                    <button id="hard-reload-cache-only" class="btn btn-reload-cache">
+                    <button id="hard-reload-cache-only" class="btn btn-reload-cache" data-i18n-title="clearCacheAndHardReloadDesc">
                         <span class="btn-icon">🧹</span>
-                        <span class="btn-text">清空缓存并硬性重新加载</span>
+                        <span class="btn-text" data-i18n="clearCacheAndHardReload">清空缓存并硬性重新加载</span>
                     </button>
                 </div>
                 
@@ -64,13 +64,13 @@
                 
                 <!-- 清理功能区域 -->
                 <div class="actions-grid">
-                    <button id="clear-current-all" class="btn btn-clean-primary">
+                    <button id="clear-current-all" class="btn btn-clean-primary" data-i18n-title="clearCacheDesc">
                         <span class="btn-icon">🗑️</span>
-                        <span class="btn-text">清空缓存</span>
+                        <span class="btn-text" data-i18n="clearCache">清空缓存</span>
                     </button>
-                    <button id="hard-reload" class="btn btn-clean-danger">
+                    <button id="hard-reload" class="btn btn-clean-danger" data-i18n-title="clearAllAndReloadDesc">
                         <span class="btn-icon">💥</span>
-                        <span class="btn-text">全部清空重载</span>
+                        <span class="btn-text" data-i18n="clearAllAndReload">全部清空重载</span>
                     </button>
                 </div>
                 
@@ -78,21 +78,21 @@
                 <div class="section-divider"></div>
                 
                 <div class="actions-grid">
-                    <button id="clear-current-cookies" class="btn btn-clean">
+                    <button id="clear-current-cookies" class="btn btn-clean" data-i18n-title="cookiesDesc">
                         <span class="btn-icon">🍪</span>
-                        <span class="btn-text">Cookies</span>
+                        <span class="btn-text" data-i18n="cookies">Cookies</span>
                     </button>
-                    <button id="clear-localstorage" class="btn btn-clean">
+                    <button id="clear-localstorage" class="btn btn-clean" data-i18n-title="localStorageDesc">
                         <span class="btn-icon">💾</span>
-                        <span class="btn-text">LocalStorage</span>
+                        <span class="btn-text" data-i18n="localStorage">LocalStorage</span>
                     </button>
-                    <button id="clear-sessionstorage" class="btn btn-clean">
+                    <button id="clear-sessionstorage" class="btn btn-clean" data-i18n-title="sessionStorageDesc">
                         <span class="btn-icon">📂</span>
-                        <span class="btn-text">SessionStorage</span>
+                        <span class="btn-text" data-i18n="sessionStorage">SessionStorage</span>
                     </button>
-                    <button id="clear-current-indexeddb" class="btn btn-clean">
+                    <button id="clear-current-indexeddb" class="btn btn-clean" data-i18n-title="indexedDBDesc">
                         <span class="btn-icon">🗄️</span>
-                        <span class="btn-text">IndexedDB</span>
+                        <span class="btn-text" data-i18n="indexedDB">IndexedDB</span>
                     </button>
                 </div>
             </div>
@@ -101,9 +101,9 @@
             <div class="tab-content" id="all-browser-tab">
                 <!-- 一键清理区域 -->
                 <div class="actions-grid single-button">
-                    <button id="clear-all" class="btn btn-primary">
+                    <button id="clear-all" class="btn btn-primary" data-i18n-title="clearAllCacheDesc">
                         <span class="btn-icon">🗑️</span>
-                        <span class="btn-text">一键清空所有缓存</span>
+                        <span class="btn-text" data-i18n="clearAllCache">一键清空所有缓存</span>
                     </button>
                 </div>
                 
@@ -114,19 +114,19 @@
                 <div class="actions-grid">
                     <button id="clear-cache" class="btn btn-clean">
                         <span class="btn-icon">📋</span>
-                        <span class="btn-text">浏览器缓存</span>
+                        <span class="btn-text" data-i18n="browserCache">浏览器缓存</span>
                     </button>
                     <button id="clear-cookies" class="btn btn-clean">
                         <span class="btn-icon">🍪</span>
-                        <span class="btn-text">所有 Cookies</span>
+                        <span class="btn-text" data-i18n="allCookies">所有 Cookies</span>
                     </button>
                     <button id="clear-indexeddb" class="btn btn-clean">
                         <span class="btn-icon">🗄️</span>
-                        <span class="btn-text">所有 IndexedDB</span>
+                        <span class="btn-text" data-i18n="allIndexedDB">所有 IndexedDB</span>
                     </button>
                     <button id="clear-history" class="btn btn-clean">
                         <span class="btn-icon">📖</span>
-                        <span class="btn-text">清空历史记录</span>
+                        <span class="btn-text" data-i18n="clearHistory">清空历史记录</span>
                     </button>
                 </div>
                 
@@ -137,40 +137,64 @@
                 <div class="actions-grid">
                     <button id="clear-downloads" class="btn btn-clean">
                         <span class="btn-icon">⬇️</span>
-                        <span class="btn-text">下载记录</span>
+                        <span class="btn-text" data-i18n="downloadHistory">下载记录</span>
                     </button>
                     <button id="clear-downloads-files" class="btn btn-danger">
                         <span class="btn-icon">🗂️</span>
-                        <span class="btn-text">删除下载文件</span>
+                        <span class="btn-text" data-i18n="deleteDownloadFiles">删除下载文件</span>
                     </button>
                 </div>
             </div>
 
             <!-- 高级设置 Tab 内容 -->
             <div class="tab-content" id="settings-tab">
+                <!-- 语言设置 -->
+                <div class="settings-group">
+                    <div class="group-header">
+                        <span class="group-icon">🌐</span>
+                        <span class="group-title" data-i18n="languageSettings">语言设置</span>
+                    </div>
+                    <div class="language-selector">
+                        <select id="language-select" class="language-dropdown">
+                            <option value="auto" data-i18n="languageAuto">🌐 跟随系统</option>
+                            <option value="zh_CN">🇨🇳 简体中文</option>
+                            <option value="en">🇺🇸 English</option>
+                            <option value="ja">🇯🇵 日本語</option>
+                            <option value="ko">🇰🇷 한국어</option>
+                            <option value="fr">🇫🇷 Français</option>
+                            <option value="de">🇩🇪 Deutsch</option>
+                            <option value="es">🇪🇸 Español</option>
+                            <option value="ru">🇷🇺 Русский</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- 分割线 -->
+                <div class="section-divider"></div>
+                
                 <!-- 主题设置 -->
                 <div class="settings-group">
                     <div class="group-header">
                         <span class="group-icon">🎨</span>
-                        <span class="group-title">外观主题</span>
+                        <span class="group-title" data-i18n="themeSettings">外观主题</span>
                     </div>
                     <div class="theme-selector">
                         <label class="theme-option">
                             <input type="radio" name="theme" value="auto">
                             <span class="theme-preview auto-theme"></span>
-                            <span class="theme-name">自动</span>
+                            <span class="theme-name" data-i18n="themeAuto">自动</span>
                             <span class="theme-selected-mark">✓</span>
                         </label>
                         <label class="theme-option">
                             <input type="radio" name="theme" value="dark" checked>
                             <span class="theme-preview dark-theme"></span>
-                            <span class="theme-name">深色</span>
+                            <span class="theme-name" data-i18n="themeDark">深色</span>
                             <span class="theme-selected-mark">✓</span>
                         </label>
                         <label class="theme-option">
                             <input type="radio" name="theme" value="light">
                             <span class="theme-preview light-theme"></span>
-                            <span class="theme-name">浅色</span>
+                            <span class="theme-name" data-i18n="themeLight">浅色</span>
                             <span class="theme-selected-mark">✓</span>
                         </label>
                     </div>
@@ -183,23 +207,23 @@
                 <div class="settings-group">
                     <div class="group-header">
                         <span class="group-icon">🔧</span>
-                        <span class="group-title">清理选项</span>
+                        <span class="group-title" data-i18n="cleaningOptions">清理选项</span>
                     </div>
                     <div class="settings-options">
                         <label class="setting-item">
                             <input type="checkbox" id="clear-passwords" checked>
                             <span class="setting-check"></span>
-                            <span class="setting-text">保留密码</span>
+                            <span class="setting-text" data-i18n="keepPasswords">保留密码</span>
                         </label>
                         <label class="setting-item">
                             <input type="checkbox" id="clear-formdata" checked>
                             <span class="setting-check"></span>
-                            <span class="setting-text">保留表单数据</span>
+                            <span class="setting-text" data-i18n="keepFormData">保留表单数据</span>
                         </label>
                         <label class="setting-item">
                             <input type="checkbox" id="include-protected" checked>
                             <span class="setting-check"></span>
-                            <span class="setting-text">包含受保护数据</span>
+                            <span class="setting-text" data-i18n="includeProtectedData">包含受保护数据</span>
                         </label>
                     </div>
                 </div>
@@ -211,18 +235,18 @@
                 <div class="settings-group">
                     <div class="group-header">
                         <span class="group-icon">🔔</span>
-                        <span class="group-title">通知设置</span>
+                        <span class="group-title" data-i18n="notificationSettings">通知设置</span>
                     </div>
                     <div class="settings-options">
                         <label class="setting-item">
                             <input type="checkbox" id="enable-notifications" checked>
                             <span class="setting-check"></span>
-                            <span class="setting-text">启用通知</span>
+                            <span class="setting-text" data-i18n="enableNotifications">启用通知</span>
                         </label>
                         <label class="setting-item">
                             <input type="checkbox" id="notification-sound">
                             <span class="setting-check"></span>
-                            <span class="setting-text">通知声音</span>
+                            <span class="setting-text" data-i18n="notificationSound">通知声音</span>
                         </label>
                     </div>
                 </div>
@@ -238,7 +262,7 @@
         </div>
 
         <footer class="footer">
-            <div class="footer-text">💡 提示：请谨慎使用删除功能，删除的数据无法恢复</div>
+            <div class="footer-text" data-i18n="footerTip">💡 提示：请谨慎使用删除功能，删除的数据无法恢复</div>
         </footer>
     </div>
 

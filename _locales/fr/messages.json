@@ -1,0 +1,378 @@
+{
+  "extensionName": {
+    "message": "Assistant de Nettoyage de Cache",
+    "description": "Nom de l'extension"
+  },
+  "extensionDescription": {
+    "message": "Un outil puissant pour effacer en un clic le cache du navigateur, les cookies, localStorage, sessionStorage et autres données",
+    "description": "Description de l'extension"
+  },
+  "popupTitle": {
+    "message": "Assistant de Nettoyage de Cache - Votre Expert en Nettoyage de Navigateur",
+    "description": "Titre de la popup"
+  },
+  "currentSite": {
+    "message": "Site actuel :",
+    "description": "Libellé du site actuel"
+  },
+  "loading": {
+    "message": "Chargement...",
+    "description": "État de chargement"
+  },
+  "unknownSite": {
+    "message": "Site inconnu",
+    "description": "Site inconnu"
+  },
+  "tabCurrentSite": {
+    "message": "Site actuel",
+    "description": "Onglet site actuel"
+  },
+  "tabAllBrowser": {
+    "message": "Tout le navigateur",
+    "description": "Onglet tout le navigateur"
+  },
+  "tabSettings": {
+    "message": "Paramètres avancés",
+    "description": "Onglet paramètres avancés"
+  },
+  "normalReload": {
+    "message": "Rechargement normal",
+    "description": "Bouton rechargement normal"
+  },
+  "hardReload": {
+    "message": "Rechargement forcé",
+    "description": "Bouton rechargement forcé"
+  },
+  "clearCacheAndHardReload": {
+    "message": "Vider le cache et rechargement forcé",
+    "description": "Bouton vider cache et rechargement forcé"
+  },
+  "clearCache": {
+    "message": "Vider le cache",
+    "description": "Bouton vider le cache"
+  },
+  "clearAllAndReload": {
+    "message": "Tout vider et recharger",
+    "description": "Bouton tout vider et recharger"
+  },
+  "cookies": {
+    "message": "Cookies",
+    "description": "Bouton cookies"
+  },
+  "localStorage": {
+    "message": "LocalStorage",
+    "description": "Bouton localStorage"
+  },
+  "sessionStorage": {
+    "message": "SessionStorage",
+    "description": "Bouton sessionStorage"
+  },
+  "indexedDB": {
+    "message": "IndexedDB",
+    "description": "Bouton indexedDB"
+  },
+  "clearAllCache": {
+    "message": "Vider tout le cache",
+    "description": "Bouton vider tout le cache"
+  },
+  "browserCache": {
+    "message": "Cache du navigateur",
+    "description": "Bouton cache du navigateur"
+  },
+  "allCookies": {
+    "message": "Tous les cookies",
+    "description": "Bouton tous les cookies"
+  },
+  "allIndexedDB": {
+    "message": "Toutes les IndexedDB",
+    "description": "Bouton toutes les IndexedDB"
+  },
+  "clearHistory": {
+    "message": "Effacer l'historique",
+    "description": "Bouton effacer l'historique"
+  },
+  "downloadHistory": {
+    "message": "Historique des téléchargements",
+    "description": "Bouton historique des téléchargements"
+  },
+  "deleteDownloadFiles": {
+    "message": "Supprimer les fichiers téléchargés",
+    "description": "Bouton supprimer les fichiers téléchargés"
+  },
+  "themeSettings": {
+    "message": "Thème d'apparence",
+    "description": "Paramètres du thème d'apparence"
+  },
+  "themeAuto": {
+    "message": "Auto",
+    "description": "Thème automatique"
+  },
+  "themeDark": {
+    "message": "Sombre",
+    "description": "Thème sombre"
+  },
+  "themeLight": {
+    "message": "Clair",
+    "description": "Thème clair"
+  },
+  "cleaningOptions": {
+    "message": "Options de nettoyage",
+    "description": "Paramètres des options de nettoyage"
+  },
+  "keepPasswords": {
+    "message": "Conserver les mots de passe",
+    "description": "Option conserver les mots de passe"
+  },
+  "keepFormData": {
+    "message": "Conserver les données de formulaire",
+    "description": "Option conserver les données de formulaire"
+  },
+  "includeProtectedData": {
+    "message": "Inclure les données protégées",
+    "description": "Option inclure les données protégées"
+  },
+  "notificationSettings": {
+    "message": "Paramètres de notification",
+    "description": "Paramètres de notification"
+  },
+  "enableNotifications": {
+    "message": "Activer les notifications",
+    "description": "Option activer les notifications"
+  },
+  "notificationSound": {
+    "message": "Son de notification",
+    "description": "Option son de notification"
+  },
+  "footerTip": {
+    "message": "💡 Conseil : Utilisez les fonctions de suppression avec prudence, les données supprimées ne peuvent pas être récupérées",
+    "description": "Conseil du pied de page"
+  },
+  "settingsSaved": {
+    "message": "Paramètres sauvegardés",
+    "description": "Message de succès de sauvegarde des paramètres"
+  },
+  "settingsSaveFailed": {
+    "message": "Échec de la sauvegarde des paramètres",
+    "description": "Message d'échec de sauvegarde des paramètres"
+  },
+  "currentSiteCacheCleared": {
+    "message": "🌐 Cache du site actuel vidé",
+    "description": "Message de succès de vidage du cache du site actuel"
+  },
+  "currentSiteCacheClearFailed": {
+    "message": "❌ Échec du vidage du cache du site actuel",
+    "description": "Message d'échec de vidage du cache du site actuel"
+  },
+  "allCacheCleared": {
+    "message": "🌐 Tout le cache vidé",
+    "description": "Message de succès de vidage de tout le cache"
+  },
+  "allCacheClearFailed": {
+    "message": "❌ Échec du vidage de tout le cache",
+    "description": "Message d'échec de vidage de tout le cache"
+  },
+  "cacheCleared": {
+    "message": "🗑️ Cache vidé",
+    "description": "Message de succès de vidage du cache"
+  },
+  "cacheClearFailed": {
+    "message": "❌ Échec du vidage du cache",
+    "description": "Message d'échec de vidage du cache"
+  },
+  "cookiesCleared": {
+    "message": "🍪 Cookies vidés",
+    "description": "Message de succès de vidage des cookies"
+  },
+  "cookiesClearFailed": {
+    "message": "❌ Échec du vidage des cookies",
+    "description": "Message d'échec de vidage des cookies"
+  },
+  "localStorageCleared": {
+    "message": "💾 LocalStorage vidé",
+    "description": "Message de succès de vidage du localStorage"
+  },
+  "localStorageClearFailed": {
+    "message": "❌ Échec du vidage du localStorage",
+    "description": "Message d'échec de vidage du localStorage"
+  },
+  "sessionStorageCleared": {
+    "message": "📂 SessionStorage vidé",
+    "description": "Message de succès de vidage du sessionStorage"
+  },
+  "sessionStorageClearFailed": {
+    "message": "❌ Échec du vidage du sessionStorage",
+    "description": "Message d'échec de vidage du sessionStorage"
+  },
+  "indexedDBCleared": {
+    "message": "📊 IndexedDB vidée",
+    "description": "Message de succès de vidage d'IndexedDB"
+  },
+  "indexedDBClearFailed": {
+    "message": "❌ Échec du vidage d'IndexedDB",
+    "description": "Message d'échec de vidage d'IndexedDB"
+  },
+  "allIndexedDBCleared": {
+    "message": "📊 Toutes les IndexedDB vidées",
+    "description": "Message de succès de vidage de toutes les IndexedDB"
+  },
+  "historyCleared": {
+    "message": "📜 Historique effacé",
+    "description": "Message de succès d'effacement de l'historique"
+  },
+  "historyClearFailed": {
+    "message": "❌ Échec de l'effacement de l'historique",
+    "description": "Message d'échec d'effacement de l'historique"
+  },
+  "downloadsCleared": {
+    "message": "📥 Historique des téléchargements effacé",
+    "description": "Message de succès d'effacement de l'historique des téléchargements"
+  },
+  "downloadsClearFailed": {
+    "message": "❌ Échec de l'effacement de l'historique des téléchargements",
+    "description": "Message d'échec d'effacement de l'historique des téléchargements"
+  },
+  "downloadFilesCleared": {
+    "message": "📁 Fichiers téléchargés supprimés",
+    "description": "Message de succès de suppression des fichiers téléchargés"
+  },
+  "downloadFilesClearFailed": {
+    "message": "❌ Échec de la suppression des fichiers téléchargés",
+    "description": "Message d'échec de suppression des fichiers téléchargés"
+  },
+  "pageReloading": {
+    "message": "🔄 La page se recharge",
+    "description": "Message de rechargement de page"
+  },
+  "reloadFailed": {
+    "message": "❌ Échec du rechargement",
+    "description": "Message d'échec de rechargement"
+  },
+  "pageHardReloading": {
+    "message": "🔄 La page se recharge de force",
+    "description": "Message de rechargement forcé de page"
+  },
+  "hardReloadFailed": {
+    "message": "❌ Échec du rechargement forcé",
+    "description": "Message d'échec de rechargement forcé"
+  },
+  "cacheAndPageReloading": {
+    "message": "🔄 Cache vidé, la page se recharge",
+    "description": "Message de vidage du cache et rechargement de page"
+  },
+  "cacheAndReloadFailed": {
+    "message": "❌ Échec du vidage du cache et du rechargement",
+    "description": "Message d'échec de vidage du cache et rechargement"
+  },
+  "allDataAndPageReloading": {
+    "message": "🔄 Toutes les données vidées, la page se recharge",
+    "description": "Message de vidage de toutes les données et rechargement de page"
+  },
+  "allDataAndReloadFailed": {
+    "message": "❌ Échec du vidage des données et du rechargement",
+    "description": "Message d'échec de vidage des données et rechargement"
+  },
+  "cannotGetCurrentTab": {
+    "message": "Impossible d'obtenir l'onglet actuel",
+    "description": "Message d'erreur impossible d'obtenir l'onglet actuel"
+  },
+  "cannotGetCurrentTabInfo": {
+    "message": "Impossible d'obtenir les informations de l'onglet actuel",
+    "description": "Message d'erreur impossible d'obtenir les informations de l'onglet actuel"
+  },
+  "loadSettingsFailed": {
+    "message": "Échec du chargement des paramètres",
+    "description": "Message d'échec de chargement des paramètres"
+  },
+  "contextMenuTitle": {
+    "message": "Assistant de Nettoyage de Cache",
+    "description": "Titre du menu contextuel"
+  },
+  "contextMenuOpenPanel": {
+    "message": "Ouvrir le panneau de nettoyage",
+    "description": "Option du menu contextuel pour ouvrir le panneau"
+  },
+  "clickExtensionIcon": {
+    "message": "Veuillez cliquer sur l'icône de l'extension dans la barre d'outils du navigateur pour ouvrir le panneau de nettoyage",
+    "description": "Conseil pour cliquer sur l'icône de l'extension"
+  },
+  "operationFailed": {
+    "message": "Échec de l'opération",
+    "description": "Message générique d'échec d'opération"
+  },
+  "unknownOperation": {
+    "message": "Opération inconnue",
+    "description": "Message d'opération inconnue"
+  },
+  "cleaningFailed": {
+    "message": "Échec du nettoyage",
+    "description": "Message générique d'échec de nettoyage"
+  },
+  "localStorageUnavailable": {
+    "message": "LocalStorage indisponible",
+    "description": "Erreur localStorage indisponible"
+  },
+  "sessionStorageUnavailable": {
+    "message": "SessionStorage indisponible",
+    "description": "Erreur sessionStorage indisponible"
+  },
+  "notificationDisabled": {
+    "message": "Notifications désactivées, non affichées",
+    "description": "Message de notifications désactivées"
+  },
+  "languageSettings": {
+    "message": "Paramètres de langue",
+    "description": "Titre des paramètres de langue"
+  },
+  "languageAuto": {
+    "message": "🌐 Suivre le système",
+    "description": "Option de langue automatique"
+  },
+  "languageChanged": {
+    "message": "Langue changée",
+    "description": "Message de succès de changement de langue"
+  },
+  "languageChangeFailed": {
+    "message": "Échec du changement de langue",
+    "description": "Message d'échec de changement de langue"
+  },
+  "normalReloadDesc": {
+    "message": "Recharger la page actuelle en conservant les données de cache",
+    "description": "Info-bulle du bouton de rechargement normal"
+  },
+  "hardReloadDesc": {
+    "message": "Forcer le rechargement de la page en ignorant le cache",
+    "description": "Info-bulle du bouton de rechargement forcé"
+  },
+  "clearCacheAndHardReloadDesc": {
+    "message": "Effacer les données de cache du site actuel et forcer le rechargement",
+    "description": "Info-bulle du bouton effacer le cache et rechargement forcé"
+  },
+  "clearCacheDesc": {
+    "message": "Effacer toutes les données de cache du site actuel",
+    "description": "Info-bulle du bouton effacer le cache"
+  },
+  "clearAllAndReloadDesc": {
+    "message": "Effacer toutes les données du site actuel et recharger la page",
+    "description": "Info-bulle du bouton tout effacer et recharger"
+  },
+  "cookiesDesc": {
+    "message": "Effacer les données de cookies du site actuel",
+    "description": "Info-bulle du bouton Cookies"
+  },
+  "localStorageDesc": {
+    "message": "Effacer les données de stockage local du site actuel",
+    "description": "Info-bulle du bouton LocalStorage"
+  },
+  "sessionStorageDesc": {
+    "message": "Effacer les données de stockage de session du site actuel",
+    "description": "Info-bulle du bouton SessionStorage"
+  },
+  "indexedDBDesc": {
+    "message": "Effacer la base de données IndexedDB du site actuel",
+    "description": "Info-bulle du bouton IndexedDB"
+  },
+  "clearAllCacheDesc": {
+    "message": "Effacer en un clic toutes les données de cache du navigateur",
+    "description": "Info-bulle du bouton effacer tout le cache"
+  }
+}

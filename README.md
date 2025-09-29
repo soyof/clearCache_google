@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![版本](https://img.shields.io/badge/版本-1.3.0-blue.svg)
+![版本](https://img.shields.io/badge/版本-1.4.0-blue.svg)
 ![平台](https://img.shields.io/badge/平台-Chrome%20%7C%20Edge-lightgrey.svg)
 ![许可证](https://img.shields.io/badge/许可证-MIT-green.svg)
 [![GitHub](https://img.shields.io/badge/GitHub-项目地址-orange.svg)](https://github.com/soyof/clearCache)
@@ -32,6 +32,15 @@
 - **主题切换** - 深色、浅色和自动主题（根据时间自动切换）
 - **通知控制** - 根据用户偏好显示通知，支持静音模式
 - **定期清理** - 设置自动清理计划，无需手动操作
+
+### 🌍 国际化支持
+
+- **多语言界面** - 支持 8 种主流语言，覆盖全球主要地区
+  - 🇨🇳 简体中文、🇺🇸 英语、🇯🇵 日语、🇰🇷 韩语
+  - 🇫🇷 法语、🇩🇪 德语、🇪🇸 西班牙语、🇷🇺 俄语
+- **智能语言检测** - 自动跟随系统语言或手动选择
+- **实时语言切换** - 无需重启扩展即可切换界面语言
+- **完整本地化** - 所有文本、提示、通知均支持多语言
 
 ### 📊 数据管理
 
@@ -80,12 +89,33 @@
   <p><i>高级设置提供个性化配置选项</i></p>
 </div>
 
-1. 在弹出面板中点击**"设置"**选项卡
+1. 在弹出面板中点击**"高级设置"**选项卡
 2. 自定义以下选项：
-   - 主题选择（深色/浅色/自动）
-   - 通知设置（开启/关闭，声音控制）
-   - 保留选项（密码、表单数据等）
-   - 定期清理计划
+   - **语言设置** - 选择界面语言或跟随系统
+   - **主题选择** - 深色/浅色/自动主题切换
+   - **通知设置** - 开启/关闭通知，声音控制
+   - **保留选项** - 密码、表单数据等保护设置
+   - **定期清理** - 自动清理计划配置
+
+### 🌐 语言设置
+
+<div align="center">
+  <img src="https://img.shields.io/badge/%F0%9F%8C%90-%E8%AF%AD%E8%A8%80%E8%AE%BE%E7%BD%AE%E7%A4%BA%E4%BE%8B%E5%9B%BE-green" alt="语言设置示例" width="200">
+  <p><i>支持8种主流语言，实时切换界面</i></p>
+</div>
+
+1. 在**"高级设置"**中找到**"语言设置"**
+2. 选择您偏好的语言：
+   - **🌐 跟随系统** - 自动检测系统语言
+   - **🇨🇳 简体中文** - 默认语言
+   - **🇺🇸 English** - 英语界面
+   - **🇯🇵 日本語** - 日语界面
+   - **🇰🇷 한국어** - 韩语界面
+   - **🇫🇷 Français** - 法语界面
+   - **🇩🇪 Deutsch** - 德语界面
+   - **🇪🇸 Español** - 西班牙语界面
+   - **🇷🇺 Русский** - 俄语界面
+3. 选择后界面将立即切换到新语言
 
 ## 🔧 技术架构
 
@@ -112,7 +142,19 @@
 │   │   ├── storage.js                # 存储操作工具
 │   │   ├── notification.js           # 通知工具
 │   │   ├── ui.js                     # UI工具
-│   │   └── cleaner.js                # 清理工具
+│   │   ├── cleaner.js                # 清理工具
+│   │   └── i18n.js                   # 国际化工具
+│
+├── 国际化文件
+│   └── _locales/                     # 多语言支持
+│       ├── zh_CN/messages.json       # 简体中文
+│       ├── en/messages.json          # 英语
+│       ├── ja/messages.json          # 日语
+│       ├── ko/messages.json          # 韩语
+│       ├── fr/messages.json          # 法语
+│       ├── de/messages.json          # 德语
+│       ├── es/messages.json          # 西班牙语
+│       └── ru/messages.json          # 俄语
 │
 ├── 资源文件
 │   └── icons/                        # 图标资源
@@ -147,6 +189,7 @@
 | **utils/notification.js**        | 通知工具              | 通知显示与管理                     |
 | **utils/ui.js**                  | UI 工具               | 界面相关通用功能                   |
 | **utils/cleaner.js**             | 清理工具              | 各种清理操作的实现                 |
+| **utils/i18n.js**                | 国际化工具            | 多语言支持、动态语言切换           |
 
 ### 🎨 设计规范
 
@@ -353,6 +396,6 @@ git push origin feature/your-feature-name
     <i>如果这个项目对您有帮助，请给我们一个 ⭐ Star！</i>
   </p>
   <p>
-    版本 1.3.0 | 作者：soyof | © 2025
+    版本 1.4.0 | 作者：soyof | © 2025
   </p>
 </div>

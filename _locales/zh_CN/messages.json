@@ -1,0 +1,378 @@
+{
+  "extensionName": {
+    "message": "缓存清理助手",
+    "description": "扩展名称"
+  },
+  "extensionDescription": {
+    "message": "一键清理浏览器缓存、Cookies、LocalStorage、SessionStorage等数据的强大工具",
+    "description": "扩展描述"
+  },
+  "popupTitle": {
+    "message": "缓存清理助手 - 您的浏览器清理专家",
+    "description": "弹窗标题"
+  },
+  "currentSite": {
+    "message": "当前网站：",
+    "description": "当前网站标签"
+  },
+  "loading": {
+    "message": "加载中...",
+    "description": "加载状态"
+  },
+  "unknownSite": {
+    "message": "未知网站",
+    "description": "未知网站"
+  },
+  "tabCurrentSite": {
+    "message": "当前网站",
+    "description": "当前网站标签页"
+  },
+  "tabAllBrowser": {
+    "message": "整个浏览器",
+    "description": "整个浏览器标签页"
+  },
+  "tabSettings": {
+    "message": "高级设置",
+    "description": "高级设置标签页"
+  },
+  "normalReload": {
+    "message": "正常重新加载",
+    "description": "正常重新加载按钮"
+  },
+  "hardReload": {
+    "message": "硬性重新加载",
+    "description": "硬性重新加载按钮"
+  },
+  "clearCacheAndHardReload": {
+    "message": "清空缓存并硬性重新加载",
+    "description": "清空缓存并硬性重新加载按钮"
+  },
+  "clearCache": {
+    "message": "清空缓存",
+    "description": "清空缓存按钮"
+  },
+  "clearAllAndReload": {
+    "message": "全部清空重载",
+    "description": "全部清空重载按钮"
+  },
+  "cookies": {
+    "message": "Cookies",
+    "description": "Cookies按钮"
+  },
+  "localStorage": {
+    "message": "LocalStorage",
+    "description": "LocalStorage按钮"
+  },
+  "sessionStorage": {
+    "message": "SessionStorage",
+    "description": "SessionStorage按钮"
+  },
+  "indexedDB": {
+    "message": "IndexedDB",
+    "description": "IndexedDB按钮"
+  },
+  "clearAllCache": {
+    "message": "一键清空所有缓存",
+    "description": "一键清空所有缓存按钮"
+  },
+  "browserCache": {
+    "message": "浏览器缓存",
+    "description": "浏览器缓存按钮"
+  },
+  "allCookies": {
+    "message": "所有 Cookies",
+    "description": "所有Cookies按钮"
+  },
+  "allIndexedDB": {
+    "message": "所有 IndexedDB",
+    "description": "所有IndexedDB按钮"
+  },
+  "clearHistory": {
+    "message": "清空历史记录",
+    "description": "清空历史记录按钮"
+  },
+  "downloadHistory": {
+    "message": "下载记录",
+    "description": "下载记录按钮"
+  },
+  "deleteDownloadFiles": {
+    "message": "删除下载文件",
+    "description": "删除下载文件按钮"
+  },
+  "themeSettings": {
+    "message": "外观主题",
+    "description": "外观主题设置"
+  },
+  "themeAuto": {
+    "message": "自动",
+    "description": "自动主题"
+  },
+  "themeDark": {
+    "message": "深色",
+    "description": "深色主题"
+  },
+  "themeLight": {
+    "message": "浅色",
+    "description": "浅色主题"
+  },
+  "cleaningOptions": {
+    "message": "清理选项",
+    "description": "清理选项设置"
+  },
+  "keepPasswords": {
+    "message": "保留密码",
+    "description": "保留密码选项"
+  },
+  "keepFormData": {
+    "message": "保留表单数据",
+    "description": "保留表单数据选项"
+  },
+  "includeProtectedData": {
+    "message": "包含受保护数据",
+    "description": "包含受保护数据选项"
+  },
+  "notificationSettings": {
+    "message": "通知设置",
+    "description": "通知设置"
+  },
+  "enableNotifications": {
+    "message": "启用通知",
+    "description": "启用通知选项"
+  },
+  "notificationSound": {
+    "message": "通知声音",
+    "description": "通知声音选项"
+  },
+  "footerTip": {
+    "message": "💡 提示：请谨慎使用删除功能，删除的数据无法恢复",
+    "description": "页脚提示"
+  },
+  "settingsSaved": {
+    "message": "设置已保存",
+    "description": "设置保存成功消息"
+  },
+  "settingsSaveFailed": {
+    "message": "保存设置失败",
+    "description": "设置保存失败消息"
+  },
+  "currentSiteCacheCleared": {
+    "message": "🌐 当前网站缓存已清空",
+    "description": "当前网站缓存清空成功消息"
+  },
+  "currentSiteCacheClearFailed": {
+    "message": "❌ 清空当前网站缓存失败",
+    "description": "当前网站缓存清空失败消息"
+  },
+  "allCacheCleared": {
+    "message": "🌐 所有缓存已清空",
+    "description": "所有缓存清空成功消息"
+  },
+  "allCacheClearFailed": {
+    "message": "❌ 清空所有缓存失败",
+    "description": "所有缓存清空失败消息"
+  },
+  "cacheCleared": {
+    "message": "🗑️ 缓存已清空",
+    "description": "缓存清空成功消息"
+  },
+  "cacheClearFailed": {
+    "message": "❌ 清空缓存失败",
+    "description": "缓存清空失败消息"
+  },
+  "cookiesCleared": {
+    "message": "🍪 Cookies 已清空",
+    "description": "Cookies清空成功消息"
+  },
+  "cookiesClearFailed": {
+    "message": "❌ 清空 Cookies 失败",
+    "description": "Cookies清空失败消息"
+  },
+  "localStorageCleared": {
+    "message": "💾 LocalStorage 已清空",
+    "description": "LocalStorage清空成功消息"
+  },
+  "localStorageClearFailed": {
+    "message": "❌ 清空 LocalStorage 失败",
+    "description": "LocalStorage清空失败消息"
+  },
+  "sessionStorageCleared": {
+    "message": "📂 SessionStorage 已清空",
+    "description": "SessionStorage清空成功消息"
+  },
+  "sessionStorageClearFailed": {
+    "message": "❌ 清空 SessionStorage 失败",
+    "description": "SessionStorage清空失败消息"
+  },
+  "indexedDBCleared": {
+    "message": "📊 IndexedDB 已清空",
+    "description": "IndexedDB清空成功消息"
+  },
+  "indexedDBClearFailed": {
+    "message": "❌ 清空 IndexedDB 失败",
+    "description": "IndexedDB清空失败消息"
+  },
+  "allIndexedDBCleared": {
+    "message": "📊 所有 IndexedDB 已清空",
+    "description": "所有IndexedDB清空成功消息"
+  },
+  "historyCleared": {
+    "message": "📜 历史记录已清空",
+    "description": "历史记录清空成功消息"
+  },
+  "historyClearFailed": {
+    "message": "❌ 清空历史记录失败",
+    "description": "历史记录清空失败消息"
+  },
+  "downloadsCleared": {
+    "message": "📥 下载记录已清空",
+    "description": "下载记录清空成功消息"
+  },
+  "downloadsClearFailed": {
+    "message": "❌ 清空下载记录失败",
+    "description": "下载记录清空失败消息"
+  },
+  "downloadFilesCleared": {
+    "message": "📁 下载文件已清除",
+    "description": "下载文件清除成功消息"
+  },
+  "downloadFilesClearFailed": {
+    "message": "❌ 清除下载文件失败",
+    "description": "下载文件清除失败消息"
+  },
+  "pageReloading": {
+    "message": "🔄 页面正在重新加载",
+    "description": "页面重新加载消息"
+  },
+  "reloadFailed": {
+    "message": "❌ 重新加载失败",
+    "description": "重新加载失败消息"
+  },
+  "pageHardReloading": {
+    "message": "🔄 页面正在硬性重新加载",
+    "description": "页面硬性重新加载消息"
+  },
+  "hardReloadFailed": {
+    "message": "❌ 硬性重新加载失败",
+    "description": "硬性重新加载失败消息"
+  },
+  "cacheAndPageReloading": {
+    "message": "🔄 缓存已清空，页面正在重载",
+    "description": "缓存清空并重载消息"
+  },
+  "cacheAndReloadFailed": {
+    "message": "❌ 清空缓存并重载失败",
+    "description": "清空缓存并重载失败消息"
+  },
+  "allDataAndPageReloading": {
+    "message": "🔄 所有数据已清空，页面正在重载",
+    "description": "所有数据清空并重载消息"
+  },
+  "allDataAndReloadFailed": {
+    "message": "❌ 清空数据并重载失败",
+    "description": "清空数据并重载失败消息"
+  },
+  "cannotGetCurrentTab": {
+    "message": "无法获取当前标签页",
+    "description": "无法获取当前标签页错误消息"
+  },
+  "cannotGetCurrentTabInfo": {
+    "message": "无法获取当前标签页信息",
+    "description": "无法获取当前标签页信息错误消息"
+  },
+  "loadSettingsFailed": {
+    "message": "加载设置失败",
+    "description": "加载设置失败消息"
+  },
+  "contextMenuTitle": {
+    "message": "清理缓存助手",
+    "description": "右键菜单标题"
+  },
+  "contextMenuOpenPanel": {
+    "message": "打开清理面板",
+    "description": "右键菜单打开面板选项"
+  },
+  "clickExtensionIcon": {
+    "message": "请点击浏览器工具栏中的扩展图标打开清理面板",
+    "description": "点击扩展图标提示"
+  },
+  "operationFailed": {
+    "message": "操作失败",
+    "description": "操作失败通用消息"
+  },
+  "unknownOperation": {
+    "message": "未知操作",
+    "description": "未知操作消息"
+  },
+  "cleaningFailed": {
+    "message": "清理失败",
+    "description": "清理失败通用消息"
+  },
+  "localStorageUnavailable": {
+    "message": "LocalStorage不可用",
+    "description": "LocalStorage不可用错误"
+  },
+  "sessionStorageUnavailable": {
+    "message": "SessionStorage不可用",
+    "description": "SessionStorage不可用错误"
+  },
+  "notificationDisabled": {
+    "message": "通知已禁用，不显示",
+    "description": "通知禁用消息"
+  },
+  "languageSettings": {
+    "message": "语言设置",
+    "description": "语言设置标题"
+  },
+  "languageAuto": {
+    "message": "🌐 跟随系统",
+    "description": "自动语言选项"
+  },
+  "languageChanged": {
+    "message": "语言已切换",
+    "description": "语言切换成功消息"
+  },
+  "languageChangeFailed": {
+    "message": "语言切换失败",
+    "description": "语言切换失败消息"
+  },
+  "normalReloadDesc": {
+    "message": "重新加载当前页面，保留缓存数据",
+    "description": "正常重新加载按钮的提示信息"
+  },
+  "hardReloadDesc": {
+    "message": "强制重新加载页面，忽略缓存",
+    "description": "硬性重新加载按钮的提示信息"
+  },
+  "clearCacheAndHardReloadDesc": {
+    "message": "清空当前网站的缓存数据并强制重新加载",
+    "description": "清空缓存并硬性重新加载按钮的提示信息"
+  },
+  "clearCacheDesc": {
+    "message": "清空当前网站的所有缓存数据",
+    "description": "清空缓存按钮的提示信息"
+  },
+  "clearAllAndReloadDesc": {
+    "message": "清空当前网站的所有数据并重新加载页面",
+    "description": "全部清空重载按钮的提示信息"
+  },
+  "cookiesDesc": {
+    "message": "清空当前网站的Cookie数据",
+    "description": "Cookies按钮的提示信息"
+  },
+  "localStorageDesc": {
+    "message": "清空当前网站的本地存储数据",
+    "description": "LocalStorage按钮的提示信息"
+  },
+  "sessionStorageDesc": {
+    "message": "清空当前网站的会话存储数据",
+    "description": "SessionStorage按钮的提示信息"
+  },
+  "indexedDBDesc": {
+    "message": "清空当前网站的IndexedDB数据库",
+    "description": "IndexedDB按钮的提示信息"
+  },
+  "clearAllCacheDesc": {
+    "message": "一键清空浏览器的所有缓存数据",
+    "description": "一键清空所有缓存按钮的提示信息"
+  }
+}

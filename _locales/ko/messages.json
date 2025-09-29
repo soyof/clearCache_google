@@ -1,0 +1,378 @@
+{
+  "extensionName": {
+    "message": "캐시 클리너 어시스턴트",
+    "description": "확장 프로그램 이름"
+  },
+  "extensionDescription": {
+    "message": "브라우저 캐시, 쿠키, localStorage, sessionStorage 등의 데이터를 원클릭으로 정리하는 강력한 도구",
+    "description": "확장 프로그램 설명"
+  },
+  "popupTitle": {
+    "message": "캐시 클리너 어시스턴트 - 당신의 브라우저 정리 전문가",
+    "description": "팝업 제목"
+  },
+  "currentSite": {
+    "message": "현재 사이트:",
+    "description": "현재 사이트 라벨"
+  },
+  "loading": {
+    "message": "로딩 중...",
+    "description": "로딩 상태"
+  },
+  "unknownSite": {
+    "message": "알 수 없는 사이트",
+    "description": "알 수 없는 사이트"
+  },
+  "tabCurrentSite": {
+    "message": "현재 사이트",
+    "description": "현재 사이트 탭"
+  },
+  "tabAllBrowser": {
+    "message": "전체 브라우저",
+    "description": "전체 브라우저 탭"
+  },
+  "tabSettings": {
+    "message": "고급 설정",
+    "description": "고급 설정 탭"
+  },
+  "normalReload": {
+    "message": "일반 새로고침",
+    "description": "일반 새로고침 버튼"
+  },
+  "hardReload": {
+    "message": "하드 새로고침",
+    "description": "하드 새로고침 버튼"
+  },
+  "clearCacheAndHardReload": {
+    "message": "캐시 지우고 하드 새로고침",
+    "description": "캐시 지우고 하드 새로고침 버튼"
+  },
+  "clearCache": {
+    "message": "캐시 지우기",
+    "description": "캐시 지우기 버튼"
+  },
+  "clearAllAndReload": {
+    "message": "모두 지우고 새로고침",
+    "description": "모두 지우고 새로고침 버튼"
+  },
+  "cookies": {
+    "message": "쿠키",
+    "description": "쿠키 버튼"
+  },
+  "localStorage": {
+    "message": "로컬스토리지",
+    "description": "로컬스토리지 버튼"
+  },
+  "sessionStorage": {
+    "message": "세션스토리지",
+    "description": "세션스토리지 버튼"
+  },
+  "indexedDB": {
+    "message": "IndexedDB",
+    "description": "IndexedDB 버튼"
+  },
+  "clearAllCache": {
+    "message": "모든 캐시 지우기",
+    "description": "모든 캐시 지우기 버튼"
+  },
+  "browserCache": {
+    "message": "브라우저 캐시",
+    "description": "브라우저 캐시 버튼"
+  },
+  "allCookies": {
+    "message": "모든 쿠키",
+    "description": "모든 쿠키 버튼"
+  },
+  "allIndexedDB": {
+    "message": "모든 IndexedDB",
+    "description": "모든 IndexedDB 버튼"
+  },
+  "clearHistory": {
+    "message": "기록 지우기",
+    "description": "기록 지우기 버튼"
+  },
+  "downloadHistory": {
+    "message": "다운로드 기록",
+    "description": "다운로드 기록 버튼"
+  },
+  "deleteDownloadFiles": {
+    "message": "다운로드 파일 삭제",
+    "description": "다운로드 파일 삭제 버튼"
+  },
+  "themeSettings": {
+    "message": "외관 테마",
+    "description": "외관 테마 설정"
+  },
+  "themeAuto": {
+    "message": "자동",
+    "description": "자동 테마"
+  },
+  "themeDark": {
+    "message": "다크",
+    "description": "다크 테마"
+  },
+  "themeLight": {
+    "message": "라이트",
+    "description": "라이트 테마"
+  },
+  "cleaningOptions": {
+    "message": "정리 옵션",
+    "description": "정리 옵션 설정"
+  },
+  "keepPasswords": {
+    "message": "비밀번호 유지",
+    "description": "비밀번호 유지 옵션"
+  },
+  "keepFormData": {
+    "message": "폼 데이터 유지",
+    "description": "폼 데이터 유지 옵션"
+  },
+  "includeProtectedData": {
+    "message": "보호된 데이터 포함",
+    "description": "보호된 데이터 포함 옵션"
+  },
+  "notificationSettings": {
+    "message": "알림 설정",
+    "description": "알림 설정"
+  },
+  "enableNotifications": {
+    "message": "알림 활성화",
+    "description": "알림 활성화 옵션"
+  },
+  "notificationSound": {
+    "message": "알림 소리",
+    "description": "알림 소리 옵션"
+  },
+  "footerTip": {
+    "message": "💡 팁: 삭제 기능을 신중하게 사용하세요. 삭제된 데이터는 복구할 수 없습니다",
+    "description": "푸터 팁"
+  },
+  "settingsSaved": {
+    "message": "설정이 저장되었습니다",
+    "description": "설정 저장 성공 메시지"
+  },
+  "settingsSaveFailed": {
+    "message": "설정 저장에 실패했습니다",
+    "description": "설정 저장 실패 메시지"
+  },
+  "currentSiteCacheCleared": {
+    "message": "🌐 현재 사이트 캐시가 지워졌습니다",
+    "description": "현재 사이트 캐시 지우기 성공 메시지"
+  },
+  "currentSiteCacheClearFailed": {
+    "message": "❌ 현재 사이트 캐시 지우기에 실패했습니다",
+    "description": "현재 사이트 캐시 지우기 실패 메시지"
+  },
+  "allCacheCleared": {
+    "message": "🌐 모든 캐시가 지워졌습니다",
+    "description": "모든 캐시 지우기 성공 메시지"
+  },
+  "allCacheClearFailed": {
+    "message": "❌ 모든 캐시 지우기에 실패했습니다",
+    "description": "모든 캐시 지우기 실패 메시지"
+  },
+  "cacheCleared": {
+    "message": "🗑️ 캐시가 지워졌습니다",
+    "description": "캐시 지우기 성공 메시지"
+  },
+  "cacheClearFailed": {
+    "message": "❌ 캐시 지우기에 실패했습니다",
+    "description": "캐시 지우기 실패 메시지"
+  },
+  "cookiesCleared": {
+    "message": "🍪 쿠키가 지워졌습니다",
+    "description": "쿠키 지우기 성공 메시지"
+  },
+  "cookiesClearFailed": {
+    "message": "❌ 쿠키 지우기에 실패했습니다",
+    "description": "쿠키 지우기 실패 메시지"
+  },
+  "localStorageCleared": {
+    "message": "💾 로컬스토리지가 지워졌습니다",
+    "description": "로컬스토리지 지우기 성공 메시지"
+  },
+  "localStorageClearFailed": {
+    "message": "❌ 로컬스토리지 지우기에 실패했습니다",
+    "description": "로컬스토리지 지우기 실패 메시지"
+  },
+  "sessionStorageCleared": {
+    "message": "📂 세션스토리지가 지워졌습니다",
+    "description": "세션스토리지 지우기 성공 메시지"
+  },
+  "sessionStorageClearFailed": {
+    "message": "❌ 세션스토리지 지우기에 실패했습니다",
+    "description": "세션스토리지 지우기 실패 메시지"
+  },
+  "indexedDBCleared": {
+    "message": "📊 IndexedDB가 지워졌습니다",
+    "description": "IndexedDB 지우기 성공 메시지"
+  },
+  "indexedDBClearFailed": {
+    "message": "❌ IndexedDB 지우기에 실패했습니다",
+    "description": "IndexedDB 지우기 실패 메시지"
+  },
+  "allIndexedDBCleared": {
+    "message": "📊 모든 IndexedDB가 지워졌습니다",
+    "description": "모든 IndexedDB 지우기 성공 메시지"
+  },
+  "historyCleared": {
+    "message": "📜 기록이 지워졌습니다",
+    "description": "기록 지우기 성공 메시지"
+  },
+  "historyClearFailed": {
+    "message": "❌ 기록 지우기에 실패했습니다",
+    "description": "기록 지우기 실패 메시지"
+  },
+  "downloadsCleared": {
+    "message": "📥 다운로드 기록이 지워졌습니다",
+    "description": "다운로드 기록 지우기 성공 메시지"
+  },
+  "downloadsClearFailed": {
+    "message": "❌ 다운로드 기록 지우기에 실패했습니다",
+    "description": "다운로드 기록 지우기 실패 메시지"
+  },
+  "downloadFilesCleared": {
+    "message": "📁 다운로드 파일이 삭제되었습니다",
+    "description": "다운로드 파일 삭제 성공 메시지"
+  },
+  "downloadFilesClearFailed": {
+    "message": "❌ 다운로드 파일 삭제에 실패했습니다",
+    "description": "다운로드 파일 삭제 실패 메시지"
+  },
+  "pageReloading": {
+    "message": "🔄 페이지를 새로고침하고 있습니다",
+    "description": "페이지 새로고침 메시지"
+  },
+  "reloadFailed": {
+    "message": "❌ 새로고침에 실패했습니다",
+    "description": "새로고침 실패 메시지"
+  },
+  "pageHardReloading": {
+    "message": "🔄 페이지를 하드 새로고침하고 있습니다",
+    "description": "페이지 하드 새로고침 메시지"
+  },
+  "hardReloadFailed": {
+    "message": "❌ 하드 새로고침에 실패했습니다",
+    "description": "하드 새로고침 실패 메시지"
+  },
+  "cacheAndPageReloading": {
+    "message": "🔄 캐시가 지워지고 페이지를 새로고침하고 있습니다",
+    "description": "캐시 지우고 페이지 새로고침 메시지"
+  },
+  "cacheAndReloadFailed": {
+    "message": "❌ 캐시 지우기와 새로고침에 실패했습니다",
+    "description": "캐시 지우기와 새로고침 실패 메시지"
+  },
+  "allDataAndPageReloading": {
+    "message": "🔄 모든 데이터가 지워지고 페이지를 새로고침하고 있습니다",
+    "description": "모든 데이터 지우고 페이지 새로고침 메시지"
+  },
+  "allDataAndReloadFailed": {
+    "message": "❌ 데이터 지우기와 새로고침에 실패했습니다",
+    "description": "데이터 지우기와 새로고침 실패 메시지"
+  },
+  "cannotGetCurrentTab": {
+    "message": "현재 탭을 가져올 수 없습니다",
+    "description": "현재 탭 가져오기 불가 오류 메시지"
+  },
+  "cannotGetCurrentTabInfo": {
+    "message": "현재 탭 정보를 가져올 수 없습니다",
+    "description": "현재 탭 정보 가져오기 불가 오류 메시지"
+  },
+  "loadSettingsFailed": {
+    "message": "설정 로드에 실패했습니다",
+    "description": "설정 로드 실패 메시지"
+  },
+  "contextMenuTitle": {
+    "message": "캐시 클리너 어시스턴트",
+    "description": "컨텍스트 메뉴 제목"
+  },
+  "contextMenuOpenPanel": {
+    "message": "정리 패널 열기",
+    "description": "컨텍스트 메뉴 패널 열기 옵션"
+  },
+  "clickExtensionIcon": {
+    "message": "브라우저 도구 모음의 확장 프로그램 아이콘을 클릭하여 정리 패널을 여세요",
+    "description": "확장 프로그램 아이콘 클릭 팁"
+  },
+  "operationFailed": {
+    "message": "작업에 실패했습니다",
+    "description": "작업 실패 일반 메시지"
+  },
+  "unknownOperation": {
+    "message": "알 수 없는 작업",
+    "description": "알 수 없는 작업 메시지"
+  },
+  "cleaningFailed": {
+    "message": "정리에 실패했습니다",
+    "description": "정리 실패 일반 메시지"
+  },
+  "localStorageUnavailable": {
+    "message": "로컬스토리지를 사용할 수 없습니다",
+    "description": "로컬스토리지 사용 불가 오류"
+  },
+  "sessionStorageUnavailable": {
+    "message": "세션스토리지를 사용할 수 없습니다",
+    "description": "세션스토리지 사용 불가 오류"
+  },
+  "notificationDisabled": {
+    "message": "알림이 비활성화되어 표시되지 않습니다",
+    "description": "알림 비활성화 메시지"
+  },
+  "languageSettings": {
+    "message": "언어 설정",
+    "description": "언어 설정 제목"
+  },
+  "languageAuto": {
+    "message": "🌐 시스템 따라가기",
+    "description": "자동 언어 옵션"
+  },
+  "languageChanged": {
+    "message": "언어가 변경되었습니다",
+    "description": "언어 변경 성공 메시지"
+  },
+  "languageChangeFailed": {
+    "message": "언어 변경에 실패했습니다",
+    "description": "언어 변경 실패 메시지"
+  },
+  "normalReloadDesc": {
+    "message": "캐시 데이터를 유지하면서 현재 페이지를 새로고침합니다",
+    "description": "일반 새로고침 버튼 툴팁"
+  },
+  "hardReloadDesc": {
+    "message": "캐시를 무시하고 페이지를 강제로 새로고침합니다",
+    "description": "하드 새로고침 버튼 툴팁"
+  },
+  "clearCacheAndHardReloadDesc": {
+    "message": "현재 사이트의 캐시 데이터를 지우고 강제로 새로고침합니다",
+    "description": "캐시 지우기 및 하드 새로고침 버튼 툴팁"
+  },
+  "clearCacheDesc": {
+    "message": "현재 사이트의 모든 캐시 데이터를 지웁니다",
+    "description": "캐시 지우기 버튼 툴팁"
+  },
+  "clearAllAndReloadDesc": {
+    "message": "현재 사이트의 모든 데이터를 지우고 페이지를 새로고침합니다",
+    "description": "모두 지우기 및 새로고침 버튼 툴팁"
+  },
+  "cookiesDesc": {
+    "message": "현재 사이트의 쿠키 데이터를 지웁니다",
+    "description": "쿠키 버튼 툴팁"
+  },
+  "localStorageDesc": {
+    "message": "현재 사이트의 로컬 스토리지 데이터를 지웁니다",
+    "description": "로컬스토리지 버튼 툴팁"
+  },
+  "sessionStorageDesc": {
+    "message": "현재 사이트의 세션 스토리지 데이터를 지웁니다",
+    "description": "세션스토리지 버튼 툴팁"
+  },
+  "indexedDBDesc": {
+    "message": "현재 사이트의 IndexedDB 데이터베이스를 지웁니다",
+    "description": "IndexedDB 버튼 툴팁"
+  },
+  "clearAllCacheDesc": {
+    "message": "브라우저의 모든 캐시 데이터를 한 번에 지웁니다",
+    "description": "모든 캐시 지우기 버튼 툴팁"
+  }
+}

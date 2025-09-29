@@ -1,0 +1,378 @@
+{
+  "extensionName": {
+    "message": "Cache Cleaner Assistant",
+    "description": "Extension name"
+  },
+  "extensionDescription": {
+    "message": "A powerful tool for one-click clearing of browser cache, cookies, localStorage, sessionStorage and other data",
+    "description": "Extension description"
+  },
+  "popupTitle": {
+    "message": "Cache Cleaner Assistant - Your Browser Cleaning Expert",
+    "description": "Popup title"
+  },
+  "currentSite": {
+    "message": "Current Site:",
+    "description": "Current site label"
+  },
+  "loading": {
+    "message": "Loading...",
+    "description": "Loading status"
+  },
+  "unknownSite": {
+    "message": "Unknown Site",
+    "description": "Unknown site"
+  },
+  "tabCurrentSite": {
+    "message": "Current Site",
+    "description": "Current site tab"
+  },
+  "tabAllBrowser": {
+    "message": "All Browser",
+    "description": "All browser tab"
+  },
+  "tabSettings": {
+    "message": "Advanced Settings",
+    "description": "Advanced settings tab"
+  },
+  "normalReload": {
+    "message": "Normal Reload",
+    "description": "Normal reload button"
+  },
+  "hardReload": {
+    "message": "Hard Reload",
+    "description": "Hard reload button"
+  },
+  "clearCacheAndHardReload": {
+    "message": "Empty Cache and Hard Reload",
+    "description": "Empty cache and hard reload button"
+  },
+  "clearCache": {
+    "message": "Clear Cache",
+    "description": "Clear cache button"
+  },
+  "clearAllAndReload": {
+    "message": "Clear All & Reload",
+    "description": "Clear all and reload button"
+  },
+  "cookies": {
+    "message": "Cookies",
+    "description": "Cookies button"
+  },
+  "localStorage": {
+    "message": "LocalStorage",
+    "description": "LocalStorage button"
+  },
+  "sessionStorage": {
+    "message": "SessionStorage",
+    "description": "SessionStorage button"
+  },
+  "indexedDB": {
+    "message": "IndexedDB",
+    "description": "IndexedDB button"
+  },
+  "clearAllCache": {
+    "message": "Clear All Cache",
+    "description": "Clear all cache button"
+  },
+  "browserCache": {
+    "message": "Browser Cache",
+    "description": "Browser cache button"
+  },
+  "allCookies": {
+    "message": "All Cookies",
+    "description": "All cookies button"
+  },
+  "allIndexedDB": {
+    "message": "All IndexedDB",
+    "description": "All IndexedDB button"
+  },
+  "clearHistory": {
+    "message": "Clear History",
+    "description": "Clear history button"
+  },
+  "downloadHistory": {
+    "message": "Download History",
+    "description": "Download history button"
+  },
+  "deleteDownloadFiles": {
+    "message": "Delete Download Files",
+    "description": "Delete download files button"
+  },
+  "themeSettings": {
+    "message": "Appearance Theme",
+    "description": "Appearance theme settings"
+  },
+  "themeAuto": {
+    "message": "Auto",
+    "description": "Auto theme"
+  },
+  "themeDark": {
+    "message": "Dark",
+    "description": "Dark theme"
+  },
+  "themeLight": {
+    "message": "Light",
+    "description": "Light theme"
+  },
+  "cleaningOptions": {
+    "message": "Cleaning Options",
+    "description": "Cleaning options settings"
+  },
+  "keepPasswords": {
+    "message": "Keep Passwords",
+    "description": "Keep passwords option"
+  },
+  "keepFormData": {
+    "message": "Keep Form Data",
+    "description": "Keep form data option"
+  },
+  "includeProtectedData": {
+    "message": "Include Protected Data",
+    "description": "Include protected data option"
+  },
+  "notificationSettings": {
+    "message": "Notification Settings",
+    "description": "Notification settings"
+  },
+  "enableNotifications": {
+    "message": "Enable Notifications",
+    "description": "Enable notifications option"
+  },
+  "notificationSound": {
+    "message": "Notification Sound",
+    "description": "Notification sound option"
+  },
+  "footerTip": {
+    "message": "💡 Tip: Use delete functions carefully, deleted data cannot be recovered",
+    "description": "Footer tip"
+  },
+  "settingsSaved": {
+    "message": "Settings saved",
+    "description": "Settings saved success message"
+  },
+  "settingsSaveFailed": {
+    "message": "Failed to save settings",
+    "description": "Settings save failed message"
+  },
+  "currentSiteCacheCleared": {
+    "message": "🌐 Current site cache cleared",
+    "description": "Current site cache cleared success message"
+  },
+  "currentSiteCacheClearFailed": {
+    "message": "❌ Failed to clear current site cache",
+    "description": "Current site cache clear failed message"
+  },
+  "allCacheCleared": {
+    "message": "🌐 All cache cleared",
+    "description": "All cache cleared success message"
+  },
+  "allCacheClearFailed": {
+    "message": "❌ Failed to clear all cache",
+    "description": "All cache clear failed message"
+  },
+  "cacheCleared": {
+    "message": "🗑️ Cache cleared",
+    "description": "Cache cleared success message"
+  },
+  "cacheClearFailed": {
+    "message": "❌ Failed to clear cache",
+    "description": "Cache clear failed message"
+  },
+  "cookiesCleared": {
+    "message": "🍪 Cookies cleared",
+    "description": "Cookies cleared success message"
+  },
+  "cookiesClearFailed": {
+    "message": "❌ Failed to clear cookies",
+    "description": "Cookies clear failed message"
+  },
+  "localStorageCleared": {
+    "message": "💾 LocalStorage cleared",
+    "description": "LocalStorage cleared success message"
+  },
+  "localStorageClearFailed": {
+    "message": "❌ Failed to clear LocalStorage",
+    "description": "LocalStorage clear failed message"
+  },
+  "sessionStorageCleared": {
+    "message": "📂 SessionStorage cleared",
+    "description": "SessionStorage cleared success message"
+  },
+  "sessionStorageClearFailed": {
+    "message": "❌ Failed to clear SessionStorage",
+    "description": "SessionStorage clear failed message"
+  },
+  "indexedDBCleared": {
+    "message": "📊 IndexedDB cleared",
+    "description": "IndexedDB cleared success message"
+  },
+  "indexedDBClearFailed": {
+    "message": "❌ Failed to clear IndexedDB",
+    "description": "IndexedDB clear failed message"
+  },
+  "allIndexedDBCleared": {
+    "message": "📊 All IndexedDB cleared",
+    "description": "All IndexedDB cleared success message"
+  },
+  "historyCleared": {
+    "message": "📜 History cleared",
+    "description": "History cleared success message"
+  },
+  "historyClearFailed": {
+    "message": "❌ Failed to clear history",
+    "description": "History clear failed message"
+  },
+  "downloadsCleared": {
+    "message": "📥 Download history cleared",
+    "description": "Download history cleared success message"
+  },
+  "downloadsClearFailed": {
+    "message": "❌ Failed to clear download history",
+    "description": "Download history clear failed message"
+  },
+  "downloadFilesCleared": {
+    "message": "📁 Download files deleted",
+    "description": "Download files deleted success message"
+  },
+  "downloadFilesClearFailed": {
+    "message": "❌ Failed to delete download files",
+    "description": "Download files delete failed message"
+  },
+  "pageReloading": {
+    "message": "🔄 Page is reloading",
+    "description": "Page reloading message"
+  },
+  "reloadFailed": {
+    "message": "❌ Reload failed",
+    "description": "Reload failed message"
+  },
+  "pageHardReloading": {
+    "message": "🔄 Page is hard reloading",
+    "description": "Page hard reloading message"
+  },
+  "hardReloadFailed": {
+    "message": "❌ Hard reload failed",
+    "description": "Hard reload failed message"
+  },
+  "cacheAndPageReloading": {
+    "message": "🔄 Cache cleared, page is reloading",
+    "description": "Cache cleared and page reloading message"
+  },
+  "cacheAndReloadFailed": {
+    "message": "❌ Failed to clear cache and reload",
+    "description": "Clear cache and reload failed message"
+  },
+  "allDataAndPageReloading": {
+    "message": "🔄 All data cleared, page is reloading",
+    "description": "All data cleared and page reloading message"
+  },
+  "allDataAndReloadFailed": {
+    "message": "❌ Failed to clear data and reload",
+    "description": "Clear data and reload failed message"
+  },
+  "cannotGetCurrentTab": {
+    "message": "Cannot get current tab",
+    "description": "Cannot get current tab error message"
+  },
+  "cannotGetCurrentTabInfo": {
+    "message": "Cannot get current tab information",
+    "description": "Cannot get current tab info error message"
+  },
+  "loadSettingsFailed": {
+    "message": "Failed to load settings",
+    "description": "Load settings failed message"
+  },
+  "contextMenuTitle": {
+    "message": "Cache Cleaner Assistant",
+    "description": "Context menu title"
+  },
+  "contextMenuOpenPanel": {
+    "message": "Open Cleaning Panel",
+    "description": "Context menu open panel option"
+  },
+  "clickExtensionIcon": {
+    "message": "Please click the extension icon in the browser toolbar to open the cleaning panel",
+    "description": "Click extension icon tip"
+  },
+  "operationFailed": {
+    "message": "Operation failed",
+    "description": "Operation failed generic message"
+  },
+  "unknownOperation": {
+    "message": "Unknown operation",
+    "description": "Unknown operation message"
+  },
+  "cleaningFailed": {
+    "message": "Cleaning failed",
+    "description": "Cleaning failed generic message"
+  },
+  "localStorageUnavailable": {
+    "message": "LocalStorage unavailable",
+    "description": "LocalStorage unavailable error"
+  },
+  "sessionStorageUnavailable": {
+    "message": "SessionStorage unavailable",
+    "description": "SessionStorage unavailable error"
+  },
+  "notificationDisabled": {
+    "message": "Notifications disabled, not showing",
+    "description": "Notification disabled message"
+  },
+  "languageSettings": {
+    "message": "Language Settings",
+    "description": "Language settings title"
+  },
+  "languageAuto": {
+    "message": "🌐 Follow System",
+    "description": "Auto language option"
+  },
+  "languageChanged": {
+    "message": "Language changed",
+    "description": "Language change success message"
+  },
+  "languageChangeFailed": {
+    "message": "Failed to change language",
+    "description": "Language change failed message"
+  },
+  "normalReloadDesc": {
+    "message": "Reload the current page while keeping cache data",
+    "description": "Normal reload button tooltip"
+  },
+  "hardReloadDesc": {
+    "message": "Force reload the page, ignoring cache",
+    "description": "Hard reload button tooltip"
+  },
+  "clearCacheAndHardReloadDesc": {
+    "message": "Clear current site cache data and force reload",
+    "description": "Clear cache and hard reload button tooltip"
+  },
+  "clearCacheDesc": {
+    "message": "Clear all cache data for the current site",
+    "description": "Clear cache button tooltip"
+  },
+  "clearAllAndReloadDesc": {
+    "message": "Clear all data for the current site and reload page",
+    "description": "Clear all and reload button tooltip"
+  },
+  "cookiesDesc": {
+    "message": "Clear cookie data for the current site",
+    "description": "Cookies button tooltip"
+  },
+  "localStorageDesc": {
+    "message": "Clear local storage data for the current site",
+    "description": "LocalStorage button tooltip"
+  },
+  "sessionStorageDesc": {
+    "message": "Clear session storage data for the current site",
+    "description": "SessionStorage button tooltip"
+  },
+  "indexedDBDesc": {
+    "message": "Clear IndexedDB database for the current site",
+    "description": "IndexedDB button tooltip"
+  },
+  "clearAllCacheDesc": {
+    "message": "One-click clear all browser cache data",
+    "description": "Clear all cache button tooltip"
+  }
+}

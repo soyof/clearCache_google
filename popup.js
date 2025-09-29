@@ -11,7 +11,11 @@ import {
     SettingsManager,
     StatusManager,
     TabManager,
-    ThemeManager
+    ThemeManager,
+    getMessage,
+    initializePageI18n,
+    getUserLanguage,
+    switchLanguage
 } from './utils/index.js';
 
 // 获取当前标签页信息
@@ -55,19 +59,26 @@ const elements = {
     themeRadios: document.querySelectorAll('input[name="theme"]'),
     enableNotifications: document.getElementById('enable-notifications'),
     notificationSound: document.getElementById('notification-sound'),
+    languageSelect: document.getElementById('language-select'),
 };
 
 /**
  * 初始化
  */
 document.addEventListener('DOMContentLoaded', async () => {
+    // 初始化国际化
+    await initializePageI18n();
+
     await initializeCurrentTab();
     loadVersionInfo();
     bindEventListeners();
     loadSettings();
     restoreTabState();
     initializeAdvancedSettings();
-    
+
+    // 调整标签页文本大小
+    adjustTabTextSize();
+
     // Service Worker状态检查已移除
 });
 
@@ -80,7 +91,7 @@ async function initializeCurrentTab() {
         if (tabs.length > 0) {
             currentTab = tabs[0];
             currentUrl = currentTab.url;
-            
+
             // 显示当前URL
             if (elements.currentUrl) {
                 elements.currentUrl.textContent = formatUrl(currentUrl);
@@ -88,7 +99,7 @@ async function initializeCurrentTab() {
             }
         }
     } catch (error) {
-        showStatus('无法获取当前标签页信息', 'error');
+        showStatus(getMessage('cannotGetCurrentTabInfo'), 'error');
     }
 }
 
@@ -99,22 +110,22 @@ async function initializeCurrentTab() {
  */
 function formatUrl(url) {
     try {
-        if (!url) return '未知网站';
-        
+        if (!url) return getMessage('unknownSite');
+
         // 移除协议
         let formattedUrl = url.replace(/^(https?:\/\/)/, '');
-        
+
         // 移除路径和查询参数
         formattedUrl = formattedUrl.split('/')[0];
-        
+
         // 如果URL太长，截断它
         if (formattedUrl.length > 30) {
             formattedUrl = formattedUrl.substring(0, 27) + '...';
         }
-        
+
         return formattedUrl;
     } catch (error) {
-        return '未知网站';
+        return getMessage('unknownSite');
     }
 }
 
@@ -147,7 +158,7 @@ function bindEventListeners() {
     bindButtonEvent(elements.clearLocalStorage, clearLocalStorage);
     bindButtonEvent(elements.clearSessionStorage, clearSessionStorage);
     bindButtonEvent(elements.clearCurrentIndexedDB, clearCurrentIndexedDB);
-    
+
     // 整个浏览器标签页按钮
     bindButtonEvent(elements.clearAll, clearAllData);
     bindButtonEvent(elements.clearCache, clearCache);
@@ -156,18 +167,18 @@ function bindEventListeners() {
     bindButtonEvent(elements.clearHistory, clearHistory);
     bindButtonEvent(elements.clearDownloads, clearDownloads);
     bindButtonEvent(elements.clearDownloadsFiles, clearDownloadFiles);
-    
+
     // Tab切换
     const tabButtons = document.querySelectorAll('.tab-btn');
     tabButtons.forEach(button => {
         button.addEventListener('click', handleTabClick);
     });
-    
+
     // 主题切换
     elements.themeRadios.forEach(radio => {
         radio.addEventListener('change', handleThemeChange);
     });
-    
+
     // 设置变更
     if (elements.clearPasswords) {
         elements.clearPasswords.addEventListener('change', saveAdvancedSettings);
@@ -183,6 +194,11 @@ function bindEventListeners() {
     }
     if (elements.notificationSound) {
         elements.notificationSound.addEventListener('change', saveAdvancedSettings);
+    }
+
+    // 语言切换
+    if (elements.languageSelect) {
+        elements.languageSelect.addEventListener('change', handleLanguageChange);
     }
 }
 
@@ -205,7 +221,7 @@ function handleTabClick(event) {
     const tabId = event.currentTarget.dataset.tab;
     const tabButtons = document.querySelectorAll('.tab-btn');
     const tabContents = document.querySelectorAll('.tab-content');
-    
+
     TabManager.switchTo(tabId, tabButtons, tabContents);
 }
 
@@ -235,20 +251,20 @@ async function loadSettings() {
             'clearFormData',
             'includeProtected'
         ]);
-        
+
         if (elements.clearPasswords) {
             elements.clearPasswords.checked = settings.clearPasswords !== false;
         }
-        
+
         if (elements.clearFormData) {
             elements.clearFormData.checked = settings.clearFormData !== false;
         }
-        
+
         if (elements.includeProtected) {
             elements.includeProtected.checked = settings.includeProtected !== false;
         }
     } catch (error) {
-        showStatus('加载设置失败', 'error');
+        showStatus(getMessage('loadSettingsFailed'), 'error');
     }
 }
 
@@ -263,19 +279,19 @@ async function executeCleanup(cleanupFunction, button, successMessage, errorMess
     try {
         // 设置按钮为加载状态
         ButtonManager.setLoading(button);
-        
+
         // 执行清理操作
         await cleanupFunction();
-        
+
         // 设置按钮为成功状态
         ButtonManager.setSuccess(button);
-        
+
         // 显示成功消息
         showStatus(successMessage, 'success');
     } catch (error) {
         // 设置按钮为错误状态
         ButtonManager.setError(button);
-        
+
         // 显示错误消息
         showStatus(errorMessage + ': ' + error.message, 'error');
     }
@@ -297,9 +313,9 @@ function showStatus(message, type = 'info') {
  */
 async function clearCurrentWebsiteData() {
     await executeCleanup(async () => {
-        if (!currentTab) throw new Error('无法获取当前标签页');
+        if (!currentTab) throw new Error(getMessage('cannotGetCurrentTab'));
         await CleanerManager.clearCurrentWebsiteData(currentTab);
-    }, elements.clearCurrentAll, '🌐 当前网站缓存已清空', '❌ 清空当前网站缓存失败');
+    }, elements.clearCurrentAll, getMessage('currentSiteCacheCleared'), getMessage('currentSiteCacheClearFailed'));
 }
 
 /**
@@ -307,17 +323,17 @@ async function clearCurrentWebsiteData() {
  */
 async function clearAllData() {
     await executeCleanup(async () => {
-        if (!currentTab) throw new Error('无法获取当前标签页');
-        
+        if (!currentTab) throw new Error(getMessage('cannotGetCurrentTab'));
+
         // 获取清理选项设置
         const settings = await SettingsManager.get([
             'clearPasswords',
             'clearFormData',
             'includeProtected'
         ]);
-        
+
         await CleanerManager.clearAllData(currentTab, settings);
-    }, elements.clearAll, '🌐 所有缓存已清空', '❌ 清空所有缓存失败');
+    }, elements.clearAll, getMessage('allCacheCleared'), getMessage('allCacheClearFailed'));
 }
 
 /**
@@ -326,7 +342,7 @@ async function clearAllData() {
 async function clearCache() {
     await executeCleanup(async () => {
         await BrowsingDataManager.clearCache({ since: 0 });
-    }, elements.clearCache, '🗑️ 缓存已清空', '❌ 清空缓存失败');
+    }, elements.clearCache, getMessage('cacheCleared'), getMessage('cacheClearFailed'));
 }
 
 /**
@@ -334,9 +350,9 @@ async function clearCache() {
  */
 async function clearCookies() {
     await executeCleanup(async () => {
-        if (!currentTab) throw new Error('无法获取当前标签页');
+        if (!currentTab) throw new Error(getMessage('cannotGetCurrentTab'));
         await CleanerManager.clearCookiesData(currentTab);
-    }, elements.clearCurrentCookies, '🍪 Cookies 已清空', '❌ 清空 Cookies 失败');
+    }, elements.clearCurrentCookies, getMessage('cookiesCleared'), getMessage('cookiesClearFailed'));
 }
 
 /**
@@ -344,9 +360,9 @@ async function clearCookies() {
  */
 async function clearLocalStorage() {
     await executeCleanup(async () => {
-        if (!currentTab) throw new Error('无法获取当前标签页');
+        if (!currentTab) throw new Error(getMessage('cannotGetCurrentTab'));
         await CleanerManager.clearLocalStorageData(currentTab);
-    }, elements.clearLocalStorage, '💾 LocalStorage 已清空', '❌ 清空 LocalStorage 失败');
+    }, elements.clearLocalStorage, getMessage('localStorageCleared'), getMessage('localStorageClearFailed'));
 }
 
 /**
@@ -354,9 +370,9 @@ async function clearLocalStorage() {
  */
 async function clearSessionStorage() {
     await executeCleanup(async () => {
-        if (!currentTab) throw new Error('无法获取当前标签页');
+        if (!currentTab) throw new Error(getMessage('cannotGetCurrentTab'));
         await CleanerManager.clearSessionStorageData(currentTab);
-    }, elements.clearSessionStorage, '📂 SessionStorage 已清空', '❌ 清空 SessionStorage 失败');
+    }, elements.clearSessionStorage, getMessage('sessionStorageCleared'), getMessage('sessionStorageClearFailed'));
 }
 
 /**
@@ -364,9 +380,9 @@ async function clearSessionStorage() {
  */
 async function clearCurrentIndexedDB() {
     await executeCleanup(async () => {
-        if (!currentTab) throw new Error('无法获取当前标签页');
+        if (!currentTab) throw new Error(getMessage('cannotGetCurrentTab'));
         await CleanerManager.clearIndexedDBData(currentTab);
-    }, elements.clearCurrentIndexedDB, '📊 IndexedDB 已清空', '❌ 清空 IndexedDB 失败');
+    }, elements.clearCurrentIndexedDB, getMessage('indexedDBCleared'), getMessage('indexedDBClearFailed'));
 }
 
 /**
@@ -375,7 +391,7 @@ async function clearCurrentIndexedDB() {
 async function clearIndexedDB() {
     await executeCleanup(async () => {
         await BrowsingDataManager.clearIndexedDB({ since: 0 });
-    }, elements.clearIndexedDB, '📊 所有 IndexedDB 已清空', '❌ 清空 IndexedDB 失败');
+    }, elements.clearIndexedDB, getMessage('allIndexedDBCleared'), getMessage('indexedDBClearFailed'));
 }
 
 /**
@@ -384,7 +400,7 @@ async function clearIndexedDB() {
 async function clearHistory() {
     await executeCleanup(async () => {
         await CleanerManager.clearHistoryData();
-    }, elements.clearHistory, '📜 历史记录已清空', '❌ 清空历史记录失败');
+    }, elements.clearHistory, getMessage('historyCleared'), getMessage('historyClearFailed'));
 }
 
 /**
@@ -393,7 +409,7 @@ async function clearHistory() {
 async function clearDownloads() {
     await executeCleanup(async () => {
         await CleanerManager.clearDownloadsData();
-    }, elements.clearDownloads, '📥 下载记录已清空', '❌ 清空下载记录失败');
+    }, elements.clearDownloads, getMessage('downloadsCleared'), getMessage('downloadsClearFailed'));
 }
 
 /**
@@ -402,7 +418,7 @@ async function clearDownloads() {
 async function clearDownloadFiles() {
     await executeCleanup(async () => {
         await CleanerManager.clearDownloadFiles();
-    }, elements.clearDownloadsFiles, '📁 下载文件已清除', '❌ 清除下载文件失败');
+    }, elements.clearDownloadsFiles, getMessage('downloadFilesCleared'), getMessage('downloadFilesClearFailed'));
 }
 
 /**
@@ -410,9 +426,9 @@ async function clearDownloadFiles() {
  */
 async function normalReload() {
     await executeCleanup(async () => {
-        if (!currentTab) throw new Error('无法获取当前标签页');
+        if (!currentTab) throw new Error(getMessage('cannotGetCurrentTab'));
         await CleanerManager.normalReload(currentTab);
-    }, elements.normalReload, '🔄 页面正在重新加载', '❌ 重新加载失败');
+    }, elements.normalReload, getMessage('pageReloading'), getMessage('reloadFailed'));
 }
 
 /**
@@ -420,9 +436,9 @@ async function normalReload() {
  */
 async function hardReloadOnly() {
     await executeCleanup(async () => {
-        if (!currentTab) throw new Error('无法获取当前标签页');
+        if (!currentTab) throw new Error(getMessage('cannotGetCurrentTab'));
         await CleanerManager.hardReloadOnly(currentTab);
-    }, elements.hardReloadOnly, '🔄 页面正在硬性重新加载', '❌ 硬性重新加载失败');
+    }, elements.hardReloadOnly, getMessage('pageHardReloading'), getMessage('hardReloadFailed'));
 }
 
 /**
@@ -430,9 +446,9 @@ async function hardReloadOnly() {
  */
 async function hardReloadCacheOnly() {
     await executeCleanup(async () => {
-        if (!currentTab) throw new Error('无法获取当前标签页');
+        if (!currentTab) throw new Error(getMessage('cannotGetCurrentTab'));
         await CleanerManager.hardReloadCacheOnly(currentTab);
-    }, elements.hardReloadCacheOnly, '🔄 缓存已清空，页面正在重载', '❌ 清空缓存并重载失败');
+    }, elements.hardReloadCacheOnly, getMessage('cacheAndPageReloading'), getMessage('cacheAndReloadFailed'));
 }
 
 /**
@@ -440,9 +456,9 @@ async function hardReloadCacheOnly() {
  */
 async function hardReloadPage() {
     await executeCleanup(async () => {
-        if (!currentTab) throw new Error('无法获取当前标签页');
+        if (!currentTab) throw new Error(getMessage('cannotGetCurrentTab'));
         await CleanerManager.hardReloadPage(currentTab);
-    }, elements.hardReload, '🔄 所有数据已清空，页面正在重载', '❌ 清空数据并重载失败');
+    }, elements.hardReload, getMessage('allDataAndPageReloading'), getMessage('allDataAndReloadFailed'));
 }
 
 /**
@@ -450,7 +466,8 @@ async function hardReloadPage() {
  */
 async function initializeAdvancedSettings() {
     await loadAdvancedSettings();
-    
+    await loadLanguageSettings();
+
     // 绑定主题切换事件
     elements.themeRadios.forEach(radio => {
         radio.addEventListener('change', handleThemeChange);
@@ -465,7 +482,7 @@ function handleThemeChange(event) {
     const theme = event.target.value;
     applyTheme(theme);
     updateThemeSelection(theme);
-    
+
     // 保存主题设置
     chrome.storage.local.set({ theme });
 }
@@ -477,7 +494,7 @@ function handleThemeChange(event) {
 function applyTheme(theme) {
     const container = document.querySelector('.container');
     const body = document.body;
-    
+
     ThemeManager.apply(theme, container, body);
 }
 
@@ -499,7 +516,7 @@ async function loadAdvancedSettings() {
             'enableNotifications',
             'notificationSound'
         ]);
-        
+
         // 设置主题
         const theme = settings.theme || 'dark'; // 默认使用深色主题
         const themeRadio = document.querySelector(`input[name="theme"][value="${theme}"]`);
@@ -509,7 +526,7 @@ async function loadAdvancedSettings() {
             // 更新主题选择的视觉标识
             updateThemeSelection(theme);
         }
-        
+
         // 设置其他选项
         if (elements.enableNotifications) {
             elements.enableNotifications.checked = settings.enableNotifications !== false;
@@ -519,6 +536,151 @@ async function loadAdvancedSettings() {
         }
     } catch (error) {
         // 加载高级设置失败
+    }
+}
+
+/**
+ * 处理语言切换
+ * @param {Event} event - 事件对象
+ */
+async function handleLanguageChange(event) {
+    try {
+        const selectedLanguage = event.target.value;
+        const success = await switchLanguage(selectedLanguage);
+
+        if (success) {
+            showStatus(getMessage('languageChanged'), 'success');
+
+            // 重新加载当前URL显示（因为"未知网站"等文本可能需要更新）
+            if (elements.currentUrl && currentUrl) {
+                elements.currentUrl.textContent = formatUrl(currentUrl);
+            }
+
+            // 重新加载版本信息
+            loadVersionInfo();
+
+            // 重新调整标签页文本大小
+            setTimeout(() => {
+                adjustTabTextSize();
+            }, 100);
+        } else {
+            showStatus(getMessage('languageChangeFailed'), 'error');
+            // 恢复到之前的选择
+            const currentLang = await getUserLanguage();
+            elements.languageSelect.value = currentLang;
+        }
+    } catch (error) {
+        showStatus(getMessage('languageChangeFailed'), 'error');
+    }
+}
+
+/**
+ * 加载语言设置
+ */
+async function loadLanguageSettings() {
+    try {
+        const userLanguage = await getUserLanguage();
+        if (elements.languageSelect) {
+            elements.languageSelect.value = userLanguage;
+        }
+    } catch (error) {
+        // 加载语言设置失败，使用默认值
+    }
+}
+
+/**
+ * 调整标签页文本大小以防止换行
+ */
+function adjustTabTextSize() {
+    try {
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const containerWidth = document.querySelector('.tab-nav')?.offsetWidth || 520;
+        const buttonWidth = containerWidth / 3; // 三个按钮平分宽度
+
+        tabButtons.forEach(button => {
+            const textElement = button.querySelector('.tab-text');
+            const iconElement = button.querySelector('.tab-icon');
+
+            if (!textElement) return;
+
+            // 重置字体大小
+            textElement.style.fontSize = '';
+
+            // 计算可用宽度（减去图标、间距和内边距）
+            const iconWidth = iconElement ? 18 : 0; // 图标宽度
+            const gap = 4; // gap 宽度
+            const padding = 16; // 左右内边距总和
+            const availableWidth = buttonWidth - iconWidth - gap - padding;
+
+            const textContent = textElement.textContent;
+            const textLength = textContent.length;
+
+            // 检测文本语言类型（中文、日文、韩文字符密度更高）
+            const isCJK = /[\u4e00-\u9fff\u3400-\u4dbf\u3040-\u309f\u30a0-\u30ff\uac00-\ud7af]/.test(textContent);
+
+            // 根据文本长度和语言类型智能调整字体大小
+            let baseFontSize;
+            if (isCJK) {
+                // 中日韩文字密度高，需要稍微调整阈值
+                if (textLength <= 3) {
+                    baseFontSize = 0.95; // 短文本使用较大字体
+                } else if (textLength <= 5) {
+                    baseFontSize = 0.85; // 中等文本使用中等字体
+                } else {
+                    baseFontSize = 0.8; // 长文本使用较小字体
+                }
+            } else {
+                // 拉丁文字
+                if (textLength <= 4) {
+                    baseFontSize = 0.9; // 短文本使用较大字体
+                } else if (textLength <= 8) {
+                    baseFontSize = 0.85; // 中等文本使用中等字体
+                } else {
+                    baseFontSize = 0.8; // 长文本使用较小字体
+                }
+            }
+
+            // 测量文本宽度
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+
+            // 先尝试基础字体大小
+            let fontSize = baseFontSize;
+            context.font = `600 ${fontSize}rem SF Pro Display, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif`;
+            let textWidth = context.measureText(textContent).width;
+
+            // 如果文本太宽，逐步减小字体大小
+            while (textWidth > availableWidth && fontSize > 0.6) {
+                fontSize -= 0.05;
+                context.font = `600 ${fontSize}rem SF Pro Display, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif`;
+                textWidth = context.measureText(textContent).width;
+            }
+
+            // 如果文本很短且有足够空间，可以适当增大字体
+            if (textLength <= 3 && textWidth < availableWidth * 0.7 && fontSize < 1.0) {
+                const maxFontSize = Math.min(1.0, baseFontSize + 0.1);
+                let testFontSize = fontSize + 0.05;
+
+                while (testFontSize <= maxFontSize) {
+                    context.font = `600 ${testFontSize}rem SF Pro Display, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif`;
+                    const testWidth = context.measureText(textContent).width;
+
+                    if (testWidth <= availableWidth) {
+                        fontSize = testFontSize;
+                        testFontSize += 0.05;
+                    } else {
+                        break;
+                    }
+                }
+            }
+
+            // 应用字体大小
+            if (Math.abs(fontSize - 0.85) > 0.01) { // 只有当字体大小与默认不同时才设置
+                textElement.style.fontSize = `${fontSize}rem`;
+            }
+        });
+    } catch (error) {
+        // 调整标签页文本大小失败，使用默认样式
     }
 }
 
@@ -534,11 +696,11 @@ async function saveAdvancedSettings() {
             clearFormData: elements.clearFormData?.checked !== false,
             includeProtected: elements.includeProtected?.checked !== false
         };
-        
+
         await SettingsManager.save(settings);
-        showStatus('设置已保存', 'success');
+        showStatus(getMessage('settingsSaved'), 'success');
     } catch (error) {
         // 保存高级设置失败
-        showStatus('保存设置失败', 'error');
+        showStatus(getMessage('settingsSaveFailed'), 'error');
     }
 }

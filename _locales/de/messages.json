@@ -1,0 +1,378 @@
+{
+  "extensionName": {
+    "message": "Cache-Reinigungsassistent",
+    "description": "Name der Erweiterung"
+  },
+  "extensionDescription": {
+    "message": "Ein mächtiges Tool zum Ein-Klick-Löschen von Browser-Cache, Cookies, localStorage, sessionStorage und anderen Daten",
+    "description": "Beschreibung der Erweiterung"
+  },
+  "popupTitle": {
+    "message": "Cache-Reinigungsassistent - Ihr Browser-Reinigungsexperte",
+    "description": "Popup-Titel"
+  },
+  "currentSite": {
+    "message": "Aktuelle Website:",
+    "description": "Label für aktuelle Website"
+  },
+  "loading": {
+    "message": "Lädt...",
+    "description": "Ladestatus"
+  },
+  "unknownSite": {
+    "message": "Unbekannte Website",
+    "description": "Unbekannte Website"
+  },
+  "tabCurrentSite": {
+    "message": "Aktuelle Website",
+    "description": "Tab für aktuelle Website"
+  },
+  "tabAllBrowser": {
+    "message": "Gesamter Browser",
+    "description": "Tab für gesamten Browser"
+  },
+  "tabSettings": {
+    "message": "Erweiterte Einstellungen",
+    "description": "Tab für erweiterte Einstellungen"
+  },
+  "normalReload": {
+    "message": "Normales Neuladen",
+    "description": "Button für normales Neuladen"
+  },
+  "hardReload": {
+    "message": "Hartes Neuladen",
+    "description": "Button für hartes Neuladen"
+  },
+  "clearCacheAndHardReload": {
+    "message": "Cache leeren und hart neuladen",
+    "description": "Button für Cache leeren und hart neuladen"
+  },
+  "clearCache": {
+    "message": "Cache leeren",
+    "description": "Button für Cache leeren"
+  },
+  "clearAllAndReload": {
+    "message": "Alles leeren & neuladen",
+    "description": "Button für alles leeren und neuladen"
+  },
+  "cookies": {
+    "message": "Cookies",
+    "description": "Cookies-Button"
+  },
+  "localStorage": {
+    "message": "LocalStorage",
+    "description": "LocalStorage-Button"
+  },
+  "sessionStorage": {
+    "message": "SessionStorage",
+    "description": "SessionStorage-Button"
+  },
+  "indexedDB": {
+    "message": "IndexedDB",
+    "description": "IndexedDB-Button"
+  },
+  "clearAllCache": {
+    "message": "Gesamten Cache leeren",
+    "description": "Button für gesamten Cache leeren"
+  },
+  "browserCache": {
+    "message": "Browser-Cache",
+    "description": "Browser-Cache-Button"
+  },
+  "allCookies": {
+    "message": "Alle Cookies",
+    "description": "Alle Cookies-Button"
+  },
+  "allIndexedDB": {
+    "message": "Alle IndexedDB",
+    "description": "Alle IndexedDB-Button"
+  },
+  "clearHistory": {
+    "message": "Verlauf löschen",
+    "description": "Verlauf löschen-Button"
+  },
+  "downloadHistory": {
+    "message": "Download-Verlauf",
+    "description": "Download-Verlauf-Button"
+  },
+  "deleteDownloadFiles": {
+    "message": "Download-Dateien löschen",
+    "description": "Download-Dateien löschen-Button"
+  },
+  "themeSettings": {
+    "message": "Erscheinungsbild-Theme",
+    "description": "Erscheinungsbild-Theme-Einstellungen"
+  },
+  "themeAuto": {
+    "message": "Auto",
+    "description": "Automatisches Theme"
+  },
+  "themeDark": {
+    "message": "Dunkel",
+    "description": "Dunkles Theme"
+  },
+  "themeLight": {
+    "message": "Hell",
+    "description": "Helles Theme"
+  },
+  "cleaningOptions": {
+    "message": "Reinigungsoptionen",
+    "description": "Reinigungsoptionen-Einstellungen"
+  },
+  "keepPasswords": {
+    "message": "Passwörter behalten",
+    "description": "Passwörter behalten-Option"
+  },
+  "keepFormData": {
+    "message": "Formulardaten behalten",
+    "description": "Formulardaten behalten-Option"
+  },
+  "includeProtectedData": {
+    "message": "Geschützte Daten einschließen",
+    "description": "Geschützte Daten einschließen-Option"
+  },
+  "notificationSettings": {
+    "message": "Benachrichtigungseinstellungen",
+    "description": "Benachrichtigungseinstellungen"
+  },
+  "enableNotifications": {
+    "message": "Benachrichtigungen aktivieren",
+    "description": "Benachrichtigungen aktivieren-Option"
+  },
+  "notificationSound": {
+    "message": "Benachrichtigungston",
+    "description": "Benachrichtigungston-Option"
+  },
+  "footerTip": {
+    "message": "💡 Tipp: Verwenden Sie Löschfunktionen vorsichtig, gelöschte Daten können nicht wiederhergestellt werden",
+    "description": "Fußzeilen-Tipp"
+  },
+  "settingsSaved": {
+    "message": "Einstellungen gespeichert",
+    "description": "Erfolgsmeldung für gespeicherte Einstellungen"
+  },
+  "settingsSaveFailed": {
+    "message": "Speichern der Einstellungen fehlgeschlagen",
+    "description": "Fehlermeldung für Speichern der Einstellungen"
+  },
+  "currentSiteCacheCleared": {
+    "message": "🌐 Cache der aktuellen Website geleert",
+    "description": "Erfolgsmeldung für geleerten Cache der aktuellen Website"
+  },
+  "currentSiteCacheClearFailed": {
+    "message": "❌ Leeren des Caches der aktuellen Website fehlgeschlagen",
+    "description": "Fehlermeldung für Leeren des Caches der aktuellen Website"
+  },
+  "allCacheCleared": {
+    "message": "🌐 Gesamter Cache geleert",
+    "description": "Erfolgsmeldung für geleerten gesamten Cache"
+  },
+  "allCacheClearFailed": {
+    "message": "❌ Leeren des gesamten Caches fehlgeschlagen",
+    "description": "Fehlermeldung für Leeren des gesamten Caches"
+  },
+  "cacheCleared": {
+    "message": "🗑️ Cache geleert",
+    "description": "Erfolgsmeldung für geleerten Cache"
+  },
+  "cacheClearFailed": {
+    "message": "❌ Cache leeren fehlgeschlagen",
+    "description": "Fehlermeldung für Cache leeren"
+  },
+  "cookiesCleared": {
+    "message": "🍪 Cookies geleert",
+    "description": "Erfolgsmeldung für geleerte Cookies"
+  },
+  "cookiesClearFailed": {
+    "message": "❌ Cookies leeren fehlgeschlagen",
+    "description": "Fehlermeldung für Cookies leeren"
+  },
+  "localStorageCleared": {
+    "message": "💾 LocalStorage geleert",
+    "description": "Erfolgsmeldung für geleerten LocalStorage"
+  },
+  "localStorageClearFailed": {
+    "message": "❌ LocalStorage leeren fehlgeschlagen",
+    "description": "Fehlermeldung für LocalStorage leeren"
+  },
+  "sessionStorageCleared": {
+    "message": "📂 SessionStorage geleert",
+    "description": "Erfolgsmeldung für geleerten SessionStorage"
+  },
+  "sessionStorageClearFailed": {
+    "message": "❌ SessionStorage leeren fehlgeschlagen",
+    "description": "Fehlermeldung für SessionStorage leeren"
+  },
+  "indexedDBCleared": {
+    "message": "📊 IndexedDB geleert",
+    "description": "Erfolgsmeldung für geleerte IndexedDB"
+  },
+  "indexedDBClearFailed": {
+    "message": "❌ IndexedDB leeren fehlgeschlagen",
+    "description": "Fehlermeldung für IndexedDB leeren"
+  },
+  "allIndexedDBCleared": {
+    "message": "📊 Alle IndexedDB geleert",
+    "description": "Erfolgsmeldung für alle geleerten IndexedDB"
+  },
+  "historyCleared": {
+    "message": "📜 Verlauf gelöscht",
+    "description": "Erfolgsmeldung für gelöschten Verlauf"
+  },
+  "historyClearFailed": {
+    "message": "❌ Verlauf löschen fehlgeschlagen",
+    "description": "Fehlermeldung für Verlauf löschen"
+  },
+  "downloadsCleared": {
+    "message": "📥 Download-Verlauf gelöscht",
+    "description": "Erfolgsmeldung für gelöschten Download-Verlauf"
+  },
+  "downloadsClearFailed": {
+    "message": "❌ Download-Verlauf löschen fehlgeschlagen",
+    "description": "Fehlermeldung für Download-Verlauf löschen"
+  },
+  "downloadFilesCleared": {
+    "message": "📁 Download-Dateien gelöscht",
+    "description": "Erfolgsmeldung für gelöschte Download-Dateien"
+  },
+  "downloadFilesClearFailed": {
+    "message": "❌ Download-Dateien löschen fehlgeschlagen",
+    "description": "Fehlermeldung für Download-Dateien löschen"
+  },
+  "pageReloading": {
+    "message": "🔄 Seite wird neu geladen",
+    "description": "Meldung für Seite neu laden"
+  },
+  "reloadFailed": {
+    "message": "❌ Neu laden fehlgeschlagen",
+    "description": "Fehlermeldung für Neu laden"
+  },
+  "pageHardReloading": {
+    "message": "🔄 Seite wird hart neu geladen",
+    "description": "Meldung für Seite hart neu laden"
+  },
+  "hardReloadFailed": {
+    "message": "❌ Hartes Neu laden fehlgeschlagen",
+    "description": "Fehlermeldung für hartes Neu laden"
+  },
+  "cacheAndPageReloading": {
+    "message": "🔄 Cache geleert, Seite wird neu geladen",
+    "description": "Meldung für Cache geleert und Seite neu laden"
+  },
+  "cacheAndReloadFailed": {
+    "message": "❌ Cache leeren und Neu laden fehlgeschlagen",
+    "description": "Fehlermeldung für Cache leeren und Neu laden"
+  },
+  "allDataAndPageReloading": {
+    "message": "🔄 Alle Daten geleert, Seite wird neu geladen",
+    "description": "Meldung für alle Daten geleert und Seite neu laden"
+  },
+  "allDataAndReloadFailed": {
+    "message": "❌ Daten leeren und Neu laden fehlgeschlagen",
+    "description": "Fehlermeldung für Daten leeren und Neu laden"
+  },
+  "cannotGetCurrentTab": {
+    "message": "Aktueller Tab kann nicht abgerufen werden",
+    "description": "Fehlermeldung für aktueller Tab kann nicht abgerufen werden"
+  },
+  "cannotGetCurrentTabInfo": {
+    "message": "Informationen des aktuellen Tabs können nicht abgerufen werden",
+    "description": "Fehlermeldung für Informationen des aktuellen Tabs können nicht abgerufen werden"
+  },
+  "loadSettingsFailed": {
+    "message": "Laden der Einstellungen fehlgeschlagen",
+    "description": "Fehlermeldung für Laden der Einstellungen"
+  },
+  "contextMenuTitle": {
+    "message": "Cache-Reinigungsassistent",
+    "description": "Titel des Kontextmenüs"
+  },
+  "contextMenuOpenPanel": {
+    "message": "Reinigungspanel öffnen",
+    "description": "Kontextmenü-Option zum Öffnen des Panels"
+  },
+  "clickExtensionIcon": {
+    "message": "Bitte klicken Sie auf das Erweiterungssymbol in der Browser-Symbolleiste, um das Reinigungspanel zu öffnen",
+    "description": "Tipp zum Klicken auf das Erweiterungssymbol"
+  },
+  "operationFailed": {
+    "message": "Operation fehlgeschlagen",
+    "description": "Allgemeine Fehlermeldung für Operation"
+  },
+  "unknownOperation": {
+    "message": "Unbekannte Operation",
+    "description": "Meldung für unbekannte Operation"
+  },
+  "cleaningFailed": {
+    "message": "Reinigung fehlgeschlagen",
+    "description": "Allgemeine Fehlermeldung für Reinigung"
+  },
+  "localStorageUnavailable": {
+    "message": "LocalStorage nicht verfügbar",
+    "description": "Fehler LocalStorage nicht verfügbar"
+  },
+  "sessionStorageUnavailable": {
+    "message": "SessionStorage nicht verfügbar",
+    "description": "Fehler SessionStorage nicht verfügbar"
+  },
+  "notificationDisabled": {
+    "message": "Benachrichtigungen deaktiviert, werden nicht angezeigt",
+    "description": "Meldung für deaktivierte Benachrichtigungen"
+  },
+  "languageSettings": {
+    "message": "Spracheinstellungen",
+    "description": "Titel der Spracheinstellungen"
+  },
+  "languageAuto": {
+    "message": "🌐 System folgen",
+    "description": "Automatische Sprachoption"
+  },
+  "languageChanged": {
+    "message": "Sprache geändert",
+    "description": "Erfolgsmeldung für Sprachänderung"
+  },
+  "languageChangeFailed": {
+    "message": "Sprachänderung fehlgeschlagen",
+    "description": "Fehlermeldung für Sprachänderung"
+  },
+  "normalReloadDesc": {
+    "message": "Aktuelle Seite neu laden und Cache-Daten beibehalten",
+    "description": "Tooltip für normalen Neu-laden-Button"
+  },
+  "hardReloadDesc": {
+    "message": "Seite zwangsweise neu laden und Cache ignorieren",
+    "description": "Tooltip für Hard-Reload-Button"
+  },
+  "clearCacheAndHardReloadDesc": {
+    "message": "Cache-Daten der aktuellen Website löschen und zwangsweise neu laden",
+    "description": "Tooltip für Cache löschen und Hard-Reload-Button"
+  },
+  "clearCacheDesc": {
+    "message": "Alle Cache-Daten der aktuellen Website löschen",
+    "description": "Tooltip für Cache-löschen-Button"
+  },
+  "clearAllAndReloadDesc": {
+    "message": "Alle Daten der aktuellen Website löschen und Seite neu laden",
+    "description": "Tooltip für Alles-löschen-und-neu-laden-Button"
+  },
+  "cookiesDesc": {
+    "message": "Cookie-Daten der aktuellen Website löschen",
+    "description": "Tooltip für Cookies-Button"
+  },
+  "localStorageDesc": {
+    "message": "Local-Storage-Daten der aktuellen Website löschen",
+    "description": "Tooltip für LocalStorage-Button"
+  },
+  "sessionStorageDesc": {
+    "message": "Session-Storage-Daten der aktuellen Website löschen",
+    "description": "Tooltip für SessionStorage-Button"
+  },
+  "indexedDBDesc": {
+    "message": "IndexedDB-Datenbank der aktuellen Website löschen",
+    "description": "Tooltip für IndexedDB-Button"
+  },
+  "clearAllCacheDesc": {
+    "message": "Alle Browser-Cache-Daten mit einem Klick löschen",
+    "description": "Tooltip für Alle-Cache-löschen-Button"
+  }
+}

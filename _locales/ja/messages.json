@@ -1,0 +1,378 @@
+{
+  "extensionName": {
+    "message": "キャッシュクリーナーアシスタント",
+    "description": "拡張機能名"
+  },
+  "extensionDescription": {
+    "message": "ブラウザキャッシュ、Cookie、localStorage、sessionStorageなどのデータをワンクリックでクリアする強力なツール",
+    "description": "拡張機能の説明"
+  },
+  "popupTitle": {
+    "message": "キャッシュクリーナーアシスタント - あなたのブラウザクリーニングエキスパート",
+    "description": "ポップアップタイトル"
+  },
+  "currentSite": {
+    "message": "現在のサイト：",
+    "description": "現在のサイトラベル"
+  },
+  "loading": {
+    "message": "読み込み中...",
+    "description": "読み込み状態"
+  },
+  "unknownSite": {
+    "message": "不明なサイト",
+    "description": "不明なサイト"
+  },
+  "tabCurrentSite": {
+    "message": "現在のサイト",
+    "description": "現在のサイトタブ"
+  },
+  "tabAllBrowser": {
+    "message": "ブラウザ全体",
+    "description": "ブラウザ全体タブ"
+  },
+  "tabSettings": {
+    "message": "詳細設定",
+    "description": "詳細設定タブ"
+  },
+  "normalReload": {
+    "message": "通常の再読み込み",
+    "description": "通常の再読み込みボタン"
+  },
+  "hardReload": {
+    "message": "ハード再読み込み",
+    "description": "ハード再読み込みボタン"
+  },
+  "clearCacheAndHardReload": {
+    "message": "キャッシュをクリアしてハード再読み込み",
+    "description": "キャッシュクリア＆ハード再読み込みボタン"
+  },
+  "clearCache": {
+    "message": "キャッシュをクリア",
+    "description": "キャッシュクリアボタン"
+  },
+  "clearAllAndReload": {
+    "message": "すべてクリア＆再読み込み",
+    "description": "すべてクリア＆再読み込みボタン"
+  },
+  "cookies": {
+    "message": "Cookie",
+    "description": "Cookieボタン"
+  },
+  "localStorage": {
+    "message": "LocalStorage",
+    "description": "LocalStorageボタン"
+  },
+  "sessionStorage": {
+    "message": "SessionStorage",
+    "description": "SessionStorageボタン"
+  },
+  "indexedDB": {
+    "message": "IndexedDB",
+    "description": "IndexedDBボタン"
+  },
+  "clearAllCache": {
+    "message": "すべてのキャッシュをクリア",
+    "description": "すべてのキャッシュクリアボタン"
+  },
+  "browserCache": {
+    "message": "ブラウザキャッシュ",
+    "description": "ブラウザキャッシュボタン"
+  },
+  "allCookies": {
+    "message": "すべてのCookie",
+    "description": "すべてのCookieボタン"
+  },
+  "allIndexedDB": {
+    "message": "すべてのIndexedDB",
+    "description": "すべてのIndexedDBボタン"
+  },
+  "clearHistory": {
+    "message": "履歴をクリア",
+    "description": "履歴クリアボタン"
+  },
+  "downloadHistory": {
+    "message": "ダウンロード履歴",
+    "description": "ダウンロード履歴ボタン"
+  },
+  "deleteDownloadFiles": {
+    "message": "ダウンロードファイルを削除",
+    "description": "ダウンロードファイル削除ボタン"
+  },
+  "themeSettings": {
+    "message": "外観テーマ",
+    "description": "外観テーマ設定"
+  },
+  "themeAuto": {
+    "message": "自動",
+    "description": "自動テーマ"
+  },
+  "themeDark": {
+    "message": "ダーク",
+    "description": "ダークテーマ"
+  },
+  "themeLight": {
+    "message": "ライト",
+    "description": "ライトテーマ"
+  },
+  "cleaningOptions": {
+    "message": "クリーニングオプション",
+    "description": "クリーニングオプション設定"
+  },
+  "keepPasswords": {
+    "message": "パスワードを保持",
+    "description": "パスワード保持オプション"
+  },
+  "keepFormData": {
+    "message": "フォームデータを保持",
+    "description": "フォームデータ保持オプション"
+  },
+  "includeProtectedData": {
+    "message": "保護されたデータを含む",
+    "description": "保護されたデータを含むオプション"
+  },
+  "notificationSettings": {
+    "message": "通知設定",
+    "description": "通知設定"
+  },
+  "enableNotifications": {
+    "message": "通知を有効にする",
+    "description": "通知有効化オプション"
+  },
+  "notificationSound": {
+    "message": "通知音",
+    "description": "通知音オプション"
+  },
+  "footerTip": {
+    "message": "💡 ヒント：削除機能は慎重に使用してください。削除されたデータは復元できません",
+    "description": "フッターのヒント"
+  },
+  "settingsSaved": {
+    "message": "設定が保存されました",
+    "description": "設定保存成功メッセージ"
+  },
+  "settingsSaveFailed": {
+    "message": "設定の保存に失敗しました",
+    "description": "設定保存失敗メッセージ"
+  },
+  "currentSiteCacheCleared": {
+    "message": "🌐 現在のサイトのキャッシュがクリアされました",
+    "description": "現在のサイトキャッシュクリア成功メッセージ"
+  },
+  "currentSiteCacheClearFailed": {
+    "message": "❌ 現在のサイトのキャッシュクリアに失敗しました",
+    "description": "現在のサイトキャッシュクリア失敗メッセージ"
+  },
+  "allCacheCleared": {
+    "message": "🌐 すべてのキャッシュがクリアされました",
+    "description": "すべてのキャッシュクリア成功メッセージ"
+  },
+  "allCacheClearFailed": {
+    "message": "❌ すべてのキャッシュのクリアに失敗しました",
+    "description": "すべてのキャッシュクリア失敗メッセージ"
+  },
+  "cacheCleared": {
+    "message": "🗑️ キャッシュがクリアされました",
+    "description": "キャッシュクリア成功メッセージ"
+  },
+  "cacheClearFailed": {
+    "message": "❌ キャッシュのクリアに失敗しました",
+    "description": "キャッシュクリア失敗メッセージ"
+  },
+  "cookiesCleared": {
+    "message": "🍪 Cookieがクリアされました",
+    "description": "Cookieクリア成功メッセージ"
+  },
+  "cookiesClearFailed": {
+    "message": "❌ Cookieのクリアに失敗しました",
+    "description": "Cookieクリア失敗メッセージ"
+  },
+  "localStorageCleared": {
+    "message": "💾 LocalStorageがクリアされました",
+    "description": "LocalStorageクリア成功メッセージ"
+  },
+  "localStorageClearFailed": {
+    "message": "❌ LocalStorageのクリアに失敗しました",
+    "description": "LocalStorageクリア失敗メッセージ"
+  },
+  "sessionStorageCleared": {
+    "message": "📂 SessionStorageがクリアされました",
+    "description": "SessionStorageクリア成功メッセージ"
+  },
+  "sessionStorageClearFailed": {
+    "message": "❌ SessionStorageのクリアに失敗しました",
+    "description": "SessionStorageクリア失敗メッセージ"
+  },
+  "indexedDBCleared": {
+    "message": "📊 IndexedDBがクリアされました",
+    "description": "IndexedDBクリア成功メッセージ"
+  },
+  "indexedDBClearFailed": {
+    "message": "❌ IndexedDBのクリアに失敗しました",
+    "description": "IndexedDBクリア失敗メッセージ"
+  },
+  "allIndexedDBCleared": {
+    "message": "📊 すべてのIndexedDBがクリアされました",
+    "description": "すべてのIndexedDBクリア成功メッセージ"
+  },
+  "historyCleared": {
+    "message": "📜 履歴がクリアされました",
+    "description": "履歴クリア成功メッセージ"
+  },
+  "historyClearFailed": {
+    "message": "❌ 履歴のクリアに失敗しました",
+    "description": "履歴クリア失敗メッセージ"
+  },
+  "downloadsCleared": {
+    "message": "📥 ダウンロード履歴がクリアされました",
+    "description": "ダウンロード履歴クリア成功メッセージ"
+  },
+  "downloadsClearFailed": {
+    "message": "❌ ダウンロード履歴のクリアに失敗しました",
+    "description": "ダウンロード履歴クリア失敗メッセージ"
+  },
+  "downloadFilesCleared": {
+    "message": "📁 ダウンロードファイルが削除されました",
+    "description": "ダウンロードファイル削除成功メッセージ"
+  },
+  "downloadFilesClearFailed": {
+    "message": "❌ ダウンロードファイルの削除に失敗しました",
+    "description": "ダウンロードファイル削除失敗メッセージ"
+  },
+  "pageReloading": {
+    "message": "🔄 ページを再読み込み中",
+    "description": "ページ再読み込みメッセージ"
+  },
+  "reloadFailed": {
+    "message": "❌ 再読み込みに失敗しました",
+    "description": "再読み込み失敗メッセージ"
+  },
+  "pageHardReloading": {
+    "message": "🔄 ページをハード再読み込み中",
+    "description": "ページハード再読み込みメッセージ"
+  },
+  "hardReloadFailed": {
+    "message": "❌ ハード再読み込みに失敗しました",
+    "description": "ハード再読み込み失敗メッセージ"
+  },
+  "cacheAndPageReloading": {
+    "message": "🔄 キャッシュがクリアされ、ページを再読み込み中",
+    "description": "キャッシュクリア＆ページ再読み込みメッセージ"
+  },
+  "cacheAndReloadFailed": {
+    "message": "❌ キャッシュクリアと再読み込みに失敗しました",
+    "description": "キャッシュクリア＆再読み込み失敗メッセージ"
+  },
+  "allDataAndPageReloading": {
+    "message": "🔄 すべてのデータがクリアされ、ページを再読み込み中",
+    "description": "すべてのデータクリア＆ページ再読み込みメッセージ"
+  },
+  "allDataAndReloadFailed": {
+    "message": "❌ データクリアと再読み込みに失敗しました",
+    "description": "データクリア＆再読み込み失敗メッセージ"
+  },
+  "cannotGetCurrentTab": {
+    "message": "現在のタブを取得できません",
+    "description": "現在のタブ取得不可エラーメッセージ"
+  },
+  "cannotGetCurrentTabInfo": {
+    "message": "現在のタブ情報を取得できません",
+    "description": "現在のタブ情報取得不可エラーメッセージ"
+  },
+  "loadSettingsFailed": {
+    "message": "設定の読み込みに失敗しました",
+    "description": "設定読み込み失敗メッセージ"
+  },
+  "contextMenuTitle": {
+    "message": "キャッシュクリーナーアシスタント",
+    "description": "コンテキストメニュータイトル"
+  },
+  "contextMenuOpenPanel": {
+    "message": "クリーニングパネルを開く",
+    "description": "コンテキストメニューパネル開くオプション"
+  },
+  "clickExtensionIcon": {
+    "message": "ブラウザツールバーの拡張機能アイコンをクリックしてクリーニングパネルを開いてください",
+    "description": "拡張機能アイコンクリックのヒント"
+  },
+  "operationFailed": {
+    "message": "操作に失敗しました",
+    "description": "操作失敗汎用メッセージ"
+  },
+  "unknownOperation": {
+    "message": "不明な操作",
+    "description": "不明な操作メッセージ"
+  },
+  "cleaningFailed": {
+    "message": "クリーニングに失敗しました",
+    "description": "クリーニング失敗汎用メッセージ"
+  },
+  "localStorageUnavailable": {
+    "message": "LocalStorageが利用できません",
+    "description": "LocalStorage利用不可エラー"
+  },
+  "sessionStorageUnavailable": {
+    "message": "SessionStorageが利用できません",
+    "description": "SessionStorage利用不可エラー"
+  },
+  "notificationDisabled": {
+    "message": "通知が無効になっています。表示されません",
+    "description": "通知無効メッセージ"
+  },
+  "languageSettings": {
+    "message": "言語設定",
+    "description": "言語設定タイトル"
+  },
+  "languageAuto": {
+    "message": "🌐 システムに従う",
+    "description": "自動言語オプション"
+  },
+  "languageChanged": {
+    "message": "言語が変更されました",
+    "description": "言語変更成功メッセージ"
+  },
+  "languageChangeFailed": {
+    "message": "言語の変更に失敗しました",
+    "description": "言語変更失敗メッセージ"
+  },
+  "normalReloadDesc": {
+    "message": "キャッシュデータを保持したまま現在のページを再読み込みします",
+    "description": "通常の再読み込みボタンのツールチップ"
+  },
+  "hardReloadDesc": {
+    "message": "キャッシュを無視してページを強制的に再読み込みします",
+    "description": "ハード再読み込みボタンのツールチップ"
+  },
+  "clearCacheAndHardReloadDesc": {
+    "message": "現在のサイトのキャッシュデータをクリアして強制的に再読み込みします",
+    "description": "キャッシュクリア＆ハード再読み込みボタンのツールチップ"
+  },
+  "clearCacheDesc": {
+    "message": "現在のサイトのすべてのキャッシュデータをクリアします",
+    "description": "キャッシュクリアボタンのツールチップ"
+  },
+  "clearAllAndReloadDesc": {
+    "message": "現在のサイトのすべてのデータをクリアしてページを再読み込みします",
+    "description": "すべてクリア＆再読み込みボタンのツールチップ"
+  },
+  "cookiesDesc": {
+    "message": "現在のサイトのCookieデータをクリアします",
+    "description": "Cookiesボタンのツールチップ"
+  },
+  "localStorageDesc": {
+    "message": "現在のサイトのローカルストレージデータをクリアします",
+    "description": "LocalStorageボタンのツールチップ"
+  },
+  "sessionStorageDesc": {
+    "message": "現在のサイトのセッションストレージデータをクリアします",
+    "description": "SessionStorageボタンのツールチップ"
+  },
+  "indexedDBDesc": {
+    "message": "現在のサイトのIndexedDBデータベースをクリアします",
+    "description": "IndexedDBボタンのツールチップ"
+  },
+  "clearAllCacheDesc": {
+    "message": "ブラウザのすべてのキャッシュデータをワンクリックでクリアします",
+    "description": "すべてのキャッシュクリアボタンのツールチップ"
+  }
+}

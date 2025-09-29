@@ -4,6 +4,18 @@
  * 作为Chrome扩展的Service Worker入口点
  */
 
+// 国际化工具函数
+function getMessage(key, substitutions = null) {
+  try {
+    if (chrome && chrome.i18n && chrome.i18n.getMessage) {
+      return chrome.i18n.getMessage(key, substitutions) || key;
+    }
+    return key;
+  } catch (error) {
+    return key;
+  }
+}
+
 // 图标URL
 const iconUrl = chrome.runtime.getURL('icons/icon128.png');
 
@@ -16,7 +28,7 @@ self.addEventListener('install', (event) => {
 self.addEventListener('activate', (event) => {
   // Service Worker 激活
   event.waitUntil(clients.claim());
-  
+
   // 创建右键菜单
   createContextMenus();
 });
@@ -28,7 +40,7 @@ function createContextMenus() {
     // 主菜单
     chrome.contextMenus.create({
       id: 'clearCache',
-      title: '清理缓存助手',
+      title: getMessage('contextMenuTitle'),
       contexts: ['page', 'frame', 'selection', 'link', 'editable', 'image', 'video', 'audio']
     });
 
@@ -36,21 +48,21 @@ function createContextMenus() {
     chrome.contextMenus.create({
       id: 'normalReload',
       parentId: 'clearCache',
-      title: '正常重新加载',
+      title: getMessage('normalReload'),
       contexts: ['page']
     });
 
     chrome.contextMenus.create({
       id: 'hardReloadOnly',
       parentId: 'clearCache',
-      title: '硬性重新加载',
+      title: getMessage('hardReload'),
       contexts: ['page']
     });
 
     chrome.contextMenus.create({
       id: 'hardReloadCacheOnly',
       parentId: 'clearCache',
-      title: '清空缓存并硬性重新加载',
+      title: getMessage('clearCacheAndHardReload'),
       contexts: ['page']
     });
 
@@ -64,35 +76,35 @@ function createContextMenus() {
     chrome.contextMenus.create({
       id: 'clearCurrentWebsiteCache',
       parentId: 'clearCache',
-      title: '清空当前网站缓存',
+      title: getMessage('clearCache'),
       contexts: ['page']
     });
 
     chrome.contextMenus.create({
       id: 'clearCookies',
       parentId: 'clearCache',
-      title: '清空 Cookies',
+      title: getMessage('cookies'),
       contexts: ['page']
     });
 
     chrome.contextMenus.create({
       id: 'clearLocalStorage',
       parentId: 'clearCache',
-      title: '清空 LocalStorage',
+      title: getMessage('localStorage'),
       contexts: ['page']
     });
 
     chrome.contextMenus.create({
       id: 'clearSessionStorage',
       parentId: 'clearCache',
-      title: '清空 SessionStorage',
+      title: getMessage('sessionStorage'),
       contexts: ['page']
     });
 
     chrome.contextMenus.create({
       id: 'hardReload',
       parentId: 'clearCache',
-      title: '全部清空重载',
+      title: getMessage('clearAllAndReload'),
       contexts: ['page']
     });
 
@@ -106,7 +118,7 @@ function createContextMenus() {
     chrome.contextMenus.create({
       id: 'openPopup',
       parentId: 'clearCache',
-      title: '打开清理面板',
+      title: getMessage('contextMenuOpenPanel'),
       contexts: ['page']
     });
 
@@ -117,23 +129,23 @@ function createContextMenus() {
 // 处理右键菜单点击
 chrome.contextMenus.onClicked.addListener((info, tab) => {
   // 处理右键菜单点击
-  
+
   try {
     switch (info.menuItemId) {
       case 'normalReload':
         // 正常重新加载
         // 执行正常重新加载
         chrome.tabs.reload(tab.id);
-        showNotification('页面正在重新加载');
+        showNotification(getMessage('pageReloading'));
         break;
-        
+
       case 'hardReloadOnly':
         // 硬性重新加载
         // 执行硬性重新加载
         chrome.tabs.reload(tab.id, { bypassCache: true });
-        showNotification('页面正在硬性重新加载');
+        showNotification(getMessage('pageHardReloading'));
         break;
-        
+
       case 'hardReloadCacheOnly':
         // 清空缓存并硬性重新加载
         // 执行清空缓存并硬性重新加载
@@ -142,97 +154,97 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
           origins: [tab.url]
         }).then(() => {
           chrome.tabs.reload(tab.id, { bypassCache: true });
-          showNotification('缓存已清空，页面正在重载');
+          showNotification(getMessage('cacheAndPageReloading'));
         }).catch(error => {
           // 清理缓存失败
-          showNotification('清理失败: ' + error.message, 'error');
+          showNotification(getMessage('cleaningFailed') + ': ' + error.message, 'error');
         });
         break;
-      
-    case 'clearCurrentWebsiteCache':
-      // 清空当前网站缓存
-      // 执行清空当前网站缓存
-      clearCurrentWebsiteCache(tab);
-      break;
-      
-    case 'clearCookies':
-      // 清空Cookies
-      // 执行清空Cookies
-      chrome.browsingData.removeCookies({
-        since: 0,
-        origins: [tab.url]
-      }).then(() => {
-        showNotification('Cookies 已清空');
-      }).catch(error => {
-        // 清理Cookies失败
-        showNotification('清理失败: ' + error.message, 'error');
-      });
-      break;
-      
-    case 'clearLocalStorage':
-      // 清空LocalStorage
-      // 执行清空LocalStorage
-      clearLocalStorage(tab);
-      break;
-      
-    case 'clearSessionStorage':
-      // 清空SessionStorage
-      // 执行清空SessionStorage
-      clearSessionStorage(tab);
-      break;
-      
-    case 'hardReload':
-      // 全部清空重载
-      // 执行全部清空重载
-      clearAllAndReload(tab);
-      break;
-      
-    case 'openPopup':
-      // 打开清理面板
-      // 执行打开清理面板
-      try {
-        // 获取用户通知设置
-        chrome.storage.local.get(['enableNotifications'], async (settings) => {
-          // 方法1：尝试通过模拟点击扩展图标来打开弹窗
-          if (settings.enableNotifications !== false) {
-            // 只有在用户启用通知时才显示通知
-            await showNotification('请点击浏览器工具栏中的扩展图标打开清理面板');
-          }
-          
-          // 方法2：尝试通过编程方式激活扩展图标 (不受通知设置影响)
-          if (chrome.action) {
-            // 使扩展图标高亮显示，提示用户点击
-            chrome.action.setIcon({
-              path: {
-                "16": "icons/icon16.png",
-                "32": "icons/icon32.png",
-                "48": "icons/icon48.png",
-                "128": "icons/icon128.png"
-              }
-            });
-            
-            // 设置徽章提醒用户点击
-            chrome.action.setBadgeText({ text: "点击" });
-            chrome.action.setBadgeBackgroundColor({ color: "#FF0000" });
-            
-            // 3秒后清除徽章
-            setTimeout(() => {
-              chrome.action.setBadgeText({ text: "" });
-            }, 3000);
-          }
+
+      case 'clearCurrentWebsiteCache':
+        // 清空当前网站缓存
+        // 执行清空当前网站缓存
+        clearCurrentWebsiteCache(tab);
+        break;
+
+      case 'clearCookies':
+        // 清空Cookies
+        // 执行清空Cookies
+        chrome.browsingData.removeCookies({
+          since: 0,
+          origins: [tab.url]
+        }).then(() => {
+          showNotification(getMessage('cookiesCleared'));
+        }).catch(error => {
+          // 清理Cookies失败
+          showNotification(getMessage('cleaningFailed') + ': ' + error.message, 'error');
         });
-      } catch (error) {
-        // 打开清理面板失败
-      }
-      break;
-      
-    default:
-      // 未知的菜单项
-      showNotification('未知操作: ' + info.menuItemId);
-  }
+        break;
+
+      case 'clearLocalStorage':
+        // 清空LocalStorage
+        // 执行清空LocalStorage
+        clearLocalStorage(tab);
+        break;
+
+      case 'clearSessionStorage':
+        // 清空SessionStorage
+        // 执行清空SessionStorage
+        clearSessionStorage(tab);
+        break;
+
+      case 'hardReload':
+        // 全部清空重载
+        // 执行全部清空重载
+        clearAllAndReload(tab);
+        break;
+
+      case 'openPopup':
+        // 打开清理面板
+        // 执行打开清理面板
+        try {
+          // 获取用户通知设置
+          chrome.storage.local.get(['enableNotifications'], async (settings) => {
+            // 方法1：尝试通过模拟点击扩展图标来打开弹窗
+            if (settings.enableNotifications !== false) {
+              // 只有在用户启用通知时才显示通知
+              await showNotification(getMessage('clickExtensionIcon'));
+            }
+
+            // 方法2：尝试通过编程方式激活扩展图标 (不受通知设置影响)
+            if (chrome.action) {
+              // 使扩展图标高亮显示，提示用户点击
+              chrome.action.setIcon({
+                path: {
+                  "16": "icons/icon16.png",
+                  "32": "icons/icon32.png",
+                  "48": "icons/icon48.png",
+                  "128": "icons/icon128.png"
+                }
+              });
+
+              // 设置徽章提醒用户点击
+              chrome.action.setBadgeText({ text: "点击" });
+              chrome.action.setBadgeBackgroundColor({ color: "#FF0000" });
+
+              // 3秒后清除徽章
+              setTimeout(() => {
+                chrome.action.setBadgeText({ text: "" });
+              }, 3000);
+            }
+          });
+        } catch (error) {
+          // 打开清理面板失败
+        }
+        break;
+
+      default:
+        // 未知的菜单项
+        showNotification(getMessage('unknownOperation') + ': ' + info.menuItemId);
+    }
   } catch (error) {
     // 处理右键菜单点击失败
-    showNotification('操作失败: ' + error.message, 'error');
+    showNotification(getMessage('operationFailed') + ': ' + error.message, 'error');
   }
 });
 
@@ -262,10 +274,10 @@ function clearCurrentWebsiteCache(tab) {
     return clearSessionStorage(tab, false);
   }).then(() => {
     // 显示成功通知
-    showNotification('当前网站缓存已清空');
+    showNotification(getMessage('currentSiteCacheCleared'));
   }).catch(error => {
     // 清理当前网站缓存失败
-    showNotification('清理失败: ' + error.message, 'error');
+    showNotification(getMessage('cleaningFailed') + ': ' + error.message, 'error');
   });
 }
 
@@ -276,9 +288,9 @@ function clearLocalStorage(tab, showNotif = true) {
     func: () => {
       try {
         if (typeof localStorage === 'undefined') {
-          return { success: false, error: 'LocalStorage不可用' };
+          return { success: false, error: getMessage('localStorageUnavailable') };
         }
-        
+
         const itemCount = localStorage.length;
         localStorage.clear();
         return { success: true, count: itemCount };
@@ -288,15 +300,15 @@ function clearLocalStorage(tab, showNotif = true) {
     }
   }).then(result => {
     // LocalStorage清理完成
-    
+
     if (showNotif) {
-      showNotification('LocalStorage 已清空');
+      showNotification(getMessage('localStorageCleared'));
     }
     return result;
   }).catch(error => {
     // 清理LocalStorage失败
     if (showNotif) {
-      showNotification('清理LocalStorage失败: ' + error.message, 'error');
+      showNotification(getMessage('localStorageClearFailed') + ': ' + error.message, 'error');
     }
     throw error;
   });
@@ -309,9 +321,9 @@ function clearSessionStorage(tab, showNotif = true) {
     func: () => {
       try {
         if (typeof sessionStorage === 'undefined') {
-          return { success: false, error: 'SessionStorage不可用' };
+          return { success: false, error: getMessage('sessionStorageUnavailable') };
         }
-        
+
         const itemCount = sessionStorage.length;
         sessionStorage.clear();
         return { success: true, count: itemCount };
@@ -321,15 +333,15 @@ function clearSessionStorage(tab, showNotif = true) {
     }
   }).then(result => {
     // SessionStorage清理完成
-    
+
     if (showNotif) {
-      showNotification('SessionStorage 已清空');
+      showNotification(getMessage('sessionStorageCleared'));
     }
     return result;
   }).catch(error => {
     // 清理SessionStorage失败
     if (showNotif) {
-      showNotification('清理SessionStorage失败: ' + error.message, 'error');
+      showNotification(getMessage('sessionStorageClearFailed') + ': ' + error.message, 'error');
     }
     throw error;
   });
@@ -342,7 +354,7 @@ function clearAllAndReload(tab) {
     since: 0,
     origins: [tab.url]
   };
-  
+
   // 清理所有数据
   Promise.all([
     // 清理缓存
@@ -362,10 +374,10 @@ function clearAllAndReload(tab) {
     return chrome.tabs.reload(tab.id, { bypassCache: true });
   }).then(() => {
     // 显示成功通知
-    showNotification('所有数据已清空，页面正在重载');
+    showNotification(getMessage('allDataAndPageReloading'));
   }).catch(error => {
     // 全部清空重载失败
-    showNotification('清理失败: ' + error.message, 'error');
+    showNotification(getMessage('cleaningFailed') + ': ' + error.message, 'error');
   });
 }
 
@@ -374,23 +386,23 @@ async function showNotification(message, type = 'basic') {
   try {
     // 获取用户通知设置
     const settings = await chrome.storage.local.get(['enableNotifications', 'notificationSound']);
-    
+
     // 如果用户禁用了通知，则不显示
     if (settings.enableNotifications === false) {
       // 通知已禁用，不显示
       return;
     }
-    
+
     // 创建通知
     chrome.notifications.create({
       type: type,
       iconUrl: iconUrl,
-      title: '清理缓存助手',
+      title: getMessage('contextMenuTitle'),
       message: message,
       priority: 1,
       silent: !settings.notificationSound // 根据用户设置决定是否静音
     });
-    
+
     // 显示通知
   } catch (error) {
     // 显示通知失败
@@ -399,7 +411,7 @@ async function showNotification(message, type = 'basic') {
       chrome.notifications.create({
         type: type,
         iconUrl: iconUrl,
-        title: '清理缓存助手',
+        title: getMessage('contextMenuTitle'),
         message: message,
         priority: 1
       });
@@ -412,49 +424,49 @@ async function showNotification(message, type = 'basic') {
 // 处理来自弹窗和内容脚本的消息
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   // 处理消息
-  
+
   switch (message.action) {
     case 'ping':
       // 简单的ping测试
-      sendResponse({ 
-        success: true, 
+      sendResponse({
+        success: true,
         message: 'pong',
         timestamp: Date.now()
       });
       break;
-      
+
     case 'checkServiceWorkerStatus':
       // 检查Service Worker状态
-      sendResponse({ 
-        success: true, 
+      sendResponse({
+        success: true,
         message: 'Service Worker 已注册并正常运行'
       });
       break;
-      
+
     case 'keepAlive':
       // 保活请求
-      sendResponse({ 
-        success: true, 
+      sendResponse({
+        success: true,
         message: '保活机制已启动'
       });
       break;
-      
+
     case 'createContextMenus':
       // 创建右键菜单
       createContextMenus();
-      sendResponse({ 
-        success: true, 
+      sendResponse({
+        success: true,
         message: '右键菜单已创建'
       });
       break;
-      
+
     default:
-      sendResponse({ 
-        success: false, 
+      sendResponse({
+        success: false,
         message: '未知操作'
       });
   }
-  
+
   return true; // 保持消息通道开放
 });
 
