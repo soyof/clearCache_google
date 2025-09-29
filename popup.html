@@ -21,6 +21,10 @@
             <div class="site-info">
                 <span class="site-label">当前网站：</span>
                 <span id="current-url" class="site-url">加载中...</span>
+                <div id="service-worker-status" class="service-worker-status" title="Service Worker状态">
+                    <span class="status-icon">⚙️</span>
+                    <span class="status-text">检查中...</span>
+                </div>
             </div>
         </div>
 
@@ -242,6 +246,9 @@
         </footer>
     </div>
 
-    <script src="popup.js"></script>
+    <!-- Service Worker桥接脚本，用于保持Service Worker活跃 -->
+    <script src="service-worker-bridge.js"></script>
+    <!-- 主弹窗脚本 -->
+    <script src="popup.js" type="module"></script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "缓存清理助手",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "一键清理浏览器缓存、Cookies、LocalStorage、SessionStorage等数据的强大工具",
   "permissions": [
     "storage",
@@ -13,7 +13,8 @@
     "cookies",
     "unlimitedStorage",
     "contextMenus",
-    "notifications"
+    "notifications",
+    "scripting"
   ],
   "host_permissions": [
     "<all_urls>"
@@ -29,7 +30,7 @@
     }
   },
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "background-service-worker.js"
   },
   "content_scripts": [
     {

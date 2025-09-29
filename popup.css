@@ -240,6 +240,46 @@ html body.theme-light {
     animation: rainbowText 4s ease-in-out infinite;
 }
 
+/* Service Worker 状态指示器 */
+.service-worker-status {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 10px;
+    padding: 2px 6px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: help;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.service-worker-status .status-icon {
+    margin-right: 4px;
+    font-size: 14px;
+}
+
+.service-worker-status .status-text {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.service-worker-status.active {
+    background-color: rgba(46, 204, 113, 0.15);
+    border-color: rgba(46, 204, 113, 0.3);
+}
+
+.service-worker-status.active .status-text {
+    color: #2ecc71;
+}
+
+.service-worker-status.error {
+    background-color: rgba(231, 76, 60, 0.15);
+    border-color: rgba(231, 76, 60, 0.3);
+}
+
+.service-worker-status.error .status-text {
+    color: #e74c3c;
+}
+
 /* Tab 导航样式 */
 .tab-nav {
     display: grid;
