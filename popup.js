@@ -18,6 +18,19 @@ import {
     switchLanguage
 } from './utils/index.js';
 
+// requestIdleCallback polyfill
+if (!window.requestIdleCallback) {
+    window.requestIdleCallback = function (callback, options) {
+        const timeout = options && options.timeout ? options.timeout : 1;
+        return setTimeout(() => {
+            callback({
+                didTimeout: false,
+                timeRemaining: () => Math.max(0, 50)
+            });
+        }, timeout);
+    };
+}
+
 // 获取当前标签页信息
 let currentTab = null;
 let currentUrl = '';
@@ -66,40 +79,94 @@ const elements = {
  * 初始化
  */
 document.addEventListener('DOMContentLoaded', async () => {
-    // 初始化国际化
-    await initializePageI18n();
+    try {
+        // 立即设置加载中状态
+        if (elements.currentUrl) {
+            elements.currentUrl.textContent = '加载中...';
+        }
 
-    await initializeCurrentTab();
-    loadVersionInfo();
-    bindEventListeners();
-    loadSettings();
-    restoreTabState();
-    initializeAdvancedSettings();
+        // 立即绑定事件监听器，避免等待异步操作
+        bindEventListeners();
 
-    // 调整标签页文本大小
-    adjustTabTextSize();
+        // 第一步：快速初始化国际化（优先级最高）
+        await Promise.race([
+            initializePageI18n(),
+            new Promise((_, reject) => setTimeout(() => reject(new Error('i18n超时')), 1000))
+        ]).catch(err => console.warn('i18n初始化失败:', err));
 
-    // Service Worker状态检查已移除
+        // 第二步：立即获取当前标签页信息（用户最关心的）
+        initializeCurrentTab().catch(err => console.warn('标签页初始化失败:', err));
+
+        // 第三步：并行执行其他初始化任务
+        const otherInitPromises = [
+            loadVersionInfo().catch(err => console.warn('版本信息加载失败:', err)),
+            loadSettings().catch(err => console.warn('设置加载失败:', err)),
+            restoreTabState().catch(err => console.warn('标签页状态恢复失败:', err)),
+            initializeAdvancedSettings().catch(err => console.warn('高级设置初始化失败:', err))
+        ];
+
+        // 等待其他初始化完成，但设置超时防止卡死
+        await Promise.race([
+            Promise.all(otherInitPromises),
+            new Promise((_, reject) => setTimeout(() => reject(new Error('初始化超时')), 2000))
+        ]).catch(err => {
+            console.warn('部分初始化失败或超时:', err);
+        });
+
+        // 延迟执行不影响界面显示的操作
+        requestIdleCallback(() => {
+            adjustTabTextSize();
+        }, { timeout: 500 });
+
+    } catch (error) {
+        console.error('初始化过程出错:', error);
+        // 即使出错也要确保基本功能可用
+        if (elements.currentUrl && elements.currentUrl.textContent === '加载中...') {
+            elements.currentUrl.textContent = '未知网站';
+        }
+    }
 });
 
 /**
  * 初始化当前标签页信息
  */
 async function initializeCurrentTab() {
+    // 先显示国际化的"加载中..."
+    if (elements.currentUrl) {
+        elements.currentUrl.textContent = getMessage('loading') || '加载中...';
+    }
+
     try {
-        const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
-        if (tabs.length > 0) {
+        // 添加超时保护，防止chrome.tabs.query卡住
+        const tabsPromise = chrome.tabs.query({ active: true, currentWindow: true });
+        const timeoutPromise = new Promise((_, reject) =>
+            setTimeout(() => reject(new Error('获取标签页超时')), 1000)
+        );
+
+        const tabs = await Promise.race([tabsPromise, timeoutPromise]);
+
+        if (tabs && tabs.length > 0) {
             currentTab = tabs[0];
-            currentUrl = currentTab.url;
+            currentUrl = currentTab.url || '';
 
             // 显示当前URL
             if (elements.currentUrl) {
-                elements.currentUrl.textContent = formatUrl(currentUrl);
+                const formattedUrl = formatUrl(currentUrl);
+                elements.currentUrl.textContent = formattedUrl;
                 elements.currentUrl.title = currentUrl;
+            }
+        } else {
+            // 如果没有获取到标签页，显示默认信息
+            if (elements.currentUrl) {
+                elements.currentUrl.textContent = getMessage('unknownSite') || '未知网站';
             }
         }
     } catch (error) {
-        showStatus(getMessage('cannotGetCurrentTabInfo'), 'error');
+        console.warn('获取当前标签页失败:', error);
+        // 即使失败也显示友好信息
+        if (elements.currentUrl) {
+            elements.currentUrl.textContent = getMessage('unknownSite') || '未知网站';
+        }
     }
 }
 
@@ -136,11 +203,12 @@ async function loadVersionInfo() {
     try {
         const manifest = chrome.runtime.getManifest();
         const versionElement = document.querySelector('.version');
-        if (versionElement) {
+        if (versionElement && manifest && manifest.version) {
             versionElement.textContent = 'v' + manifest.version;
         }
     } catch (error) {
         // 忽略版本加载错误
+        console.warn('加载版本信息失败:', error);
     }
 }
 
@@ -230,14 +298,24 @@ function handleTabClick(event) {
  */
 async function restoreTabState() {
     try {
-        const result = await chrome.storage.local.get('activeTab');
-        if (result.activeTab) {
+        // 添加超时保护
+        const storagePromise = chrome.storage.local.get('activeTab');
+        const timeoutPromise = new Promise((_, reject) =>
+            setTimeout(() => reject(new Error('恢复标签页状态超时')), 500)
+        );
+
+        const result = await Promise.race([storagePromise, timeoutPromise]);
+
+        if (result && result.activeTab) {
             const tabButtons = document.querySelectorAll('.tab-btn');
             const tabContents = document.querySelectorAll('.tab-content');
-            TabManager.switchTo(result.activeTab, tabButtons, tabContents);
+            if (tabButtons.length > 0 && tabContents.length > 0) {
+                TabManager.switchTo(result.activeTab, tabButtons, tabContents);
+            }
         }
     } catch (error) {
-        // 忽略恢复标签页状态错误
+        // 忽略恢复标签页状态错误，使用默认标签页
+        console.warn('恢复标签页状态失败:', error);
     }
 }
 
@@ -246,11 +324,17 @@ async function restoreTabState() {
  */
 async function loadSettings() {
     try {
-        const settings = await SettingsManager.get([
+        // 添加超时保护
+        const settingsPromise = SettingsManager.get([
             'clearPasswords',
             'clearFormData',
             'includeProtected'
         ]);
+        const timeoutPromise = new Promise((_, reject) =>
+            setTimeout(() => reject(new Error('加载设置超时')), 1000)
+        );
+
+        const settings = await Promise.race([settingsPromise, timeoutPromise]);
 
         if (elements.clearPasswords) {
             elements.clearPasswords.checked = settings.clearPasswords !== false;
@@ -264,7 +348,17 @@ async function loadSettings() {
             elements.includeProtected.checked = settings.includeProtected !== false;
         }
     } catch (error) {
-        showStatus(getMessage('loadSettingsFailed'), 'error');
+        console.warn('加载设置失败:', error);
+        // 使用默认设置
+        if (elements.clearPasswords) {
+            elements.clearPasswords.checked = true;
+        }
+        if (elements.clearFormData) {
+            elements.clearFormData.checked = true;
+        }
+        if (elements.includeProtected) {
+            elements.includeProtected.checked = true;
+        }
     }
 }
 
@@ -465,13 +559,24 @@ async function hardReloadPage() {
  * 初始化高级设置
  */
 async function initializeAdvancedSettings() {
-    await loadAdvancedSettings();
-    await loadLanguageSettings();
+    try {
+        // 并行加载高级设置和语言设置
+        await Promise.all([
+            loadAdvancedSettings().catch(err => console.warn('加载高级设置失败:', err)),
+            loadLanguageSettings().catch(err => console.warn('加载语言设置失败:', err))
+        ]);
 
-    // 绑定主题切换事件
-    elements.themeRadios.forEach(radio => {
-        radio.addEventListener('change', handleThemeChange);
-    });
+        // 绑定主题切换事件（防御性检查）
+        if (elements.themeRadios && elements.themeRadios.length > 0) {
+            elements.themeRadios.forEach(radio => {
+                if (radio && radio.addEventListener) {
+                    radio.addEventListener('change', handleThemeChange);
+                }
+            });
+        }
+    } catch (error) {
+        console.warn('初始化高级设置失败:', error);
+    }
 }
 
 /**
@@ -590,27 +695,15 @@ async function loadLanguageSettings() {
 
 /**
  * 调整标签页文本大小以防止换行
+ * 使用简化的CSS方案替代复杂的Canvas计算
  */
 function adjustTabTextSize() {
     try {
         const tabButtons = document.querySelectorAll('.tab-btn');
-        const containerWidth = document.querySelector('.tab-nav')?.offsetWidth || 520;
-        const buttonWidth = containerWidth / 3; // 三个按钮平分宽度
 
         tabButtons.forEach(button => {
             const textElement = button.querySelector('.tab-text');
-            const iconElement = button.querySelector('.tab-icon');
-
             if (!textElement) return;
-
-            // 重置字体大小
-            textElement.style.fontSize = '';
-
-            // 计算可用宽度（减去图标、间距和内边距）
-            const iconWidth = iconElement ? 18 : 0; // 图标宽度
-            const gap = 4; // gap 宽度
-            const padding = 16; // 左右内边距总和
-            const availableWidth = buttonWidth - iconWidth - gap - padding;
 
             const textContent = textElement.textContent;
             const textLength = textContent.length;
@@ -618,69 +711,31 @@ function adjustTabTextSize() {
             // 检测文本语言类型（中文、日文、韩文字符密度更高）
             const isCJK = /[\u4e00-\u9fff\u3400-\u4dbf\u3040-\u309f\u30a0-\u30ff\uac00-\ud7af]/.test(textContent);
 
-            // 根据文本长度和语言类型智能调整字体大小
-            let baseFontSize;
+            // 简单的字体大小调整逻辑
+            let fontSize;
             if (isCJK) {
-                // 中日韩文字密度高，需要稍微调整阈值
-                if (textLength <= 3) {
-                    baseFontSize = 0.95; // 短文本使用较大字体
-                } else if (textLength <= 5) {
-                    baseFontSize = 0.85; // 中等文本使用中等字体
+                if (textLength <= 4) {
+                    fontSize = '0.9rem';
+                } else if (textLength <= 6) {
+                    fontSize = '0.8rem';
                 } else {
-                    baseFontSize = 0.8; // 长文本使用较小字体
+                    fontSize = '0.75rem';
                 }
             } else {
-                // 拉丁文字
-                if (textLength <= 4) {
-                    baseFontSize = 0.9; // 短文本使用较大字体
-                } else if (textLength <= 8) {
-                    baseFontSize = 0.85; // 中等文本使用中等字体
+                if (textLength <= 8) {
+                    fontSize = '0.85rem';
+                } else if (textLength <= 12) {
+                    fontSize = '0.75rem';
                 } else {
-                    baseFontSize = 0.8; // 长文本使用较小字体
+                    fontSize = '0.7rem';
                 }
             }
 
-            // 测量文本宽度
-            const canvas = document.createElement('canvas');
-            const context = canvas.getContext('2d');
-
-            // 先尝试基础字体大小
-            let fontSize = baseFontSize;
-            context.font = `600 ${fontSize}rem SF Pro Display, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif`;
-            let textWidth = context.measureText(textContent).width;
-
-            // 如果文本太宽，逐步减小字体大小
-            while (textWidth > availableWidth && fontSize > 0.6) {
-                fontSize -= 0.05;
-                context.font = `600 ${fontSize}rem SF Pro Display, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif`;
-                textWidth = context.measureText(textContent).width;
-            }
-
-            // 如果文本很短且有足够空间，可以适当增大字体
-            if (textLength <= 3 && textWidth < availableWidth * 0.7 && fontSize < 1.0) {
-                const maxFontSize = Math.min(1.0, baseFontSize + 0.1);
-                let testFontSize = fontSize + 0.05;
-
-                while (testFontSize <= maxFontSize) {
-                    context.font = `600 ${testFontSize}rem SF Pro Display, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif`;
-                    const testWidth = context.measureText(textContent).width;
-
-                    if (testWidth <= availableWidth) {
-                        fontSize = testFontSize;
-                        testFontSize += 0.05;
-                    } else {
-                        break;
-                    }
-                }
-            }
-
-            // 应用字体大小
-            if (Math.abs(fontSize - 0.85) > 0.01) { // 只有当字体大小与默认不同时才设置
-                textElement.style.fontSize = `${fontSize}rem`;
-            }
+            textElement.style.fontSize = fontSize;
         });
     } catch (error) {
         // 调整标签页文本大小失败，使用默认样式
+        console.warn('调整标签页文本大小失败:', error);
     }
 }
 

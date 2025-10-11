@@ -19,11 +19,38 @@ async function loadLanguageMessages(languageCode) {
       return cachedMessages[languageCode];
     }
 
+    // 尝试从localStorage加载缓存的语言包
+    try {
+      const cacheKey = `i18n_cache_${languageCode}`;
+      const cachedData = localStorage.getItem(cacheKey);
+      if (cachedData) {
+        const parsed = JSON.parse(cachedData);
+        // 检查缓存是否过期（24小时）
+        const cacheAge = Date.now() - (parsed.timestamp || 0);
+        if (cacheAge < 24 * 60 * 60 * 1000) {
+          cachedMessages[languageCode] = parsed.messages;
+          return parsed.messages;
+        }
+      }
+    } catch (cacheError) {
+      // 缓存加载失败，继续从网络加载
+    }
+
     // 构建语言包文件路径
     const messagesUrl = chrome.runtime.getURL(`_locales/${languageCode}/messages.json`);
 
+    // 添加超时控制
+    const fetchWithTimeout = (url, timeout = 2000) => {
+      return Promise.race([
+        fetch(url),
+        new Promise((_, reject) =>
+          setTimeout(() => reject(new Error('语言包加载超时')), timeout)
+        )
+      ]);
+    };
+
     // 获取语言包文件
-    const response = await fetch(messagesUrl);
+    const response = await fetchWithTimeout(messagesUrl);
 
     if (!response.ok) {
       throw new Error(`Failed to load language pack: ${languageCode}, status: ${response.status}`);
@@ -37,11 +64,24 @@ async function loadLanguageMessages(languageCode) {
       flatMessages[key] = messages[key].message || key;
     });
 
-    // 缓存语言包
+    // 缓存语言包到内存
     cachedMessages[languageCode] = flatMessages;
+
+    // 缓存到localStorage
+    try {
+      const cacheKey = `i18n_cache_${languageCode}`;
+      localStorage.setItem(cacheKey, JSON.stringify({
+        messages: flatMessages,
+        timestamp: Date.now()
+      }));
+    } catch (storageError) {
+      // localStorage存储失败，不影响功能
+    }
 
     return flatMessages;
   } catch (error) {
+    console.warn('语言包加载失败:', languageCode, error);
+    // 返回空对象，使用Chrome的默认i18n API
     return {};
   }
 }

@@ -1,3 +1,17 @@
+/* 简单的淡入动画 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.2s ease-in;
+}
+
 /* Chrome 插件弹窗固定尺寸 */
 html {
     width: 520px !important;
